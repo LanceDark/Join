@@ -140,9 +140,14 @@ function renderMostUrgentDate() {
  * These functions enable the greeting, depending on the time of day
  */
 const getTime = function () {
-  const date = new Date();
-  const hours = date.getHours();
-  getDaytime(hours);
+  if (window.location.href === "./summary.html") {
+    const date = new Date();
+    const hours = date.getHours();
+    getDaytime(hours);
+    renderGreetingName();
+  } else {
+    return;
+  }
 };
 
 const getDaytime = function (hours) {
@@ -176,4 +181,3 @@ function renderGreetingName() {
   }
 }
 
-renderGreetingName();
