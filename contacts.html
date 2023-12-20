@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacts</title>
+    <script src="./assets/js/storage.js"></script>
+    <link rel="stylesheet" href="./assets/css/contacts.css">
+    <script src="./assets/js/contacts.js"></script>
+    <link rel="shortcut icon" href="./assets/img/fav_icon_blue.svg" type="image/x-icon">
+    <link rel="stylesheet" href="./assets/css/board.css">
+</head>
+
+<body onload="init()">
+
+    <div class="w3-include" w3-include-html="./assets/templates/header_nav.html"></div>
+    <div id="addContacts"></div>
+    <div id="container" class="container">
+        <div class="navbarLeft"></div>
+        
+        <main id="contactsContainer">
+            <button onclick="addNewContact()" class="addButton" >Add new Contact</button>
+            
+            <div id="userList"></div>
+        </main>
+
+        <div id="showUsers"></div>
+    </div>
+    <script src="./assets/js/header_nav.js"></script>
+</body>
+
+</html>
