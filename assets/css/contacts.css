@@ -1113,10 +1113,6 @@ button:hover {
 
 @media (max-width:390px ) and (min-width:250px){
 
-    body {
-        position: fixed;
-    }
-
     .w3-include {
         width: 120%;
     }

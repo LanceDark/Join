@@ -757,6 +757,10 @@ h5 {
   .search-clear-task-btn {
     display: none;
   }
+
+  .add-task-assigned-to-input-wrapper{
+    width: 300px;
+  }
 }
 
 @media (max-width: 450px) {
