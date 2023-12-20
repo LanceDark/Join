@@ -9,6 +9,8 @@ const tasks = [];
 let selectedContacts = [];
 let contactStatus = [];
 let contacts = [];
+let contactsShown = false;
+let priority = [];
 
 async function init() {
   await includeHTML();
@@ -96,7 +98,7 @@ function assignedTo(contacts) {
     contactContainer
       .querySelector(".helper-for-contacts")
       .addEventListener("click", () => {
-        toggleCheckbox(i, contactStatus);
+        toggleCheckbox(i);
       });
     contactHTML.appendChild(contactContainer);
   }
@@ -144,6 +146,7 @@ function toggleCheckbox(index) {
       selectedContacts.splice(selectedIndex, 1);
     }
   }
+  renderContactBadges();
 }
 
 /**
@@ -253,9 +256,12 @@ function renderSelectOptionsPersons() {
   let addContactButton = document.getElementById("addNewContact");
   let imgElement = document.querySelector(".add-task-show-contacts-btn");
 
-  contactList.style.display = contactList.style.display === "block" && addContactButton.style.display === "flex" ? "none" : "block";
-  addContactButton.style.display = contactList.style.display === "block" ? "flex" : "none";
-  imgElement.src = `./assets/img/arrow_drop_${contactList.classList.contains("d-none") ? "down" : "up"}.svg`;
+  contactsShown = !contactsShown;
+
+  contactList.style.display = contactsShown ? "block" : "none";
+  addContactButton.style.display = contactsShown ? "flex" : "none";
+  imgElement.src = `./assets/img/arrow_drop_${contactsShown ? "up" : "down"}.svg`;
+
   renderContactBadges();
 }
 
@@ -291,7 +297,7 @@ async function createTask() {
     description: descriptionInput.value,
     dueDate: dateInput.value,
     label: categorySelect.value,
-    priority: selectedPriority,
+    priority: tasks.priority,
     subtasks: taskes,
     assignees: selectedContacts,
     id: (existingTasks.length + 1).toString(),
@@ -457,15 +463,23 @@ function showCurrentPriority(currentPriority) {
 
   resetBackgroundColor(btnUrgent, btnMedium, btnLow);
   resetButtons(urgentImg, mediumImg, lowImg);
-  selectedPriority(currentPriority, btnUrgent, btnMedium, btnLow, urgentImg, mediumImg, lowImg);
+  selectedPriority(
+    currentPriority,
+    btnUrgent,
+    btnMedium,
+    btnLow,
+    urgentImg,
+    mediumImg,
+    lowImg
+  );
 }
 
 /**
  * Add event so on input subtaskformValidation is used
  */
-document.addEventListener("DOMContentLoaded", function() {
-  document.getElementById("selectedSubtask").oninput = function() {
-      subtasksFormValidation(this.value);
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("selectedSubtask").oninput = function () {
+    subtasksFormValidation(this.value);
   };
 });
 
@@ -481,13 +495,29 @@ function changeColorOfPriorityBtn(priority) {
   let lowImg = document.querySelector(".edit-low img");
   resetBackgroundColor(btnUrgent, btnMedium, btnLow);
   resetButtons(urgentImg, mediumImg, lowImg);
-  selectedPriority(priority, btnUrgent, btnMedium, btnLow, urgentImg, mediumImg, lowImg);
+  selectedPriority(
+    priority,
+    btnUrgent,
+    btnMedium,
+    btnLow,
+    urgentImg,
+    mediumImg,
+    lowImg
+  );
 }
 
 /**
  * choosed priority background will change
  */
-function selectedPriority(priority,btnUrgent,btnMedium,btnLow,urgentImg,mediumImg,lowImg) {
+function selectedPriority(
+  priority,
+  btnUrgent,
+  btnMedium,
+  btnLow,
+  urgentImg,
+  mediumImg,
+  lowImg
+) {
   if (priority === "Urgent") {
     btnUrgent.classList.add("urgently-selected");
     urgentImg.src = "./assets/img/urgent-white.svg";

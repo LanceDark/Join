@@ -273,36 +273,6 @@ function setupEditTaskDeleteButton(editTaskDeleteBtn, clickedSubtask, editSubtas
     editTaskDeleteBtn.addEventListener('click', onEditTaskDeleteClick);
 }
 
-// /**
-//  * Handles the action when the "Edit Task Delete" button is clicked.
-//  * @param {object} clickedSubtask - The subtask object being deleted.
-//  */
-// function onEditTaskDeleteClick(clickedSubtask) {
-//     hideEditSubtaskInput();
-//     showSubtaskWrapper();
-//     console.log(newSubtasks);
-//     const indexOfSubtask = currentTaskInEditModal.subtasks.indexOf(clickedSubtask);
-//     currentTaskInEditModal.subtasks.splice(indexOfSubtask, 1);
-//     console.log(newSubtasks);
-//     renderSubtasksInEditModal();
-    
-//     // Nach der Verwendung den EventListener entfernen, um doppelte Listener zu vermeiden
-//     editTaskDeleteBtn.removeEventListener('click', onEditTaskDeleteClick);
-// }
-
-// /**
-//  * Handles the action when the "Edit Task Confirm" button is clicked.
-//  * @param {object} clickedSubtask - The subtask object being edited.
-//  */
-// function onEditTaskConfirmClick(clickedSubtask) {
-//     const editSubtaskInputfield = document.querySelector('.add-task-task-inputfield');
-//     clickedSubtask.text = editSubtaskInputfield.value;
-//     hideEditSubtaskInput();
-//     showSubtaskWrapper();
-//     renderSubtasksInAddTasksModal();
-// }
-
-
 /**
  * Deletes a subtask and hides it from display in the edit modal.
  * @param {number} i - The index of the subtask to delete.

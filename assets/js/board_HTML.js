@@ -85,20 +85,6 @@ function renderAssigneesInCard(
       profilBadgePosition = profilBadgePosition - 20;
     }
   }
-
-  // for (let i = 0; i < assigneesArray.length; i++) {
-  //   const name = assigneesArray[i].name;
-  //   const initials = generateInitials(name);
-  //   const color = assigneesArray[i].color;
-  //   console.log(assigneesArray.length);
-  //   assigneesContainer.innerHTML += /*html*/ `
-  //             <div class="assignee" style="background: ${color}; z-index: ${
-  //     zIndex + 1
-  //   }; transform: translate(${profilBadgePosition}%) " >${initials}</div>
-  //         `;
-  //   zIndex++;
-  //   profilBadgePosition = profilBadgePosition - 20;
-  // }
 }
 
 /**
