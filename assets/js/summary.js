@@ -54,6 +54,8 @@ async function initSummary() {
   updateCounter();
   updateNumbers();
   renderMostUrgentDate();
+  renderGreetingName();
+  getTime();
 }
 
 function updateCounter() {
@@ -140,14 +142,10 @@ function renderMostUrgentDate() {
  * These functions enable the greeting, depending on the time of day
  */
 const getTime = function () {
-  if (window.location.href === "./summary.html") {
-    const date = new Date();
-    const hours = date.getHours();
-    getDaytime(hours);
-    renderGreetingName();
-  } else {
-    return;
-  }
+  const date = new Date();
+  const hours = date.getHours();
+  getDaytime(hours);
+  renderGreetingName();
 };
 
 const getDaytime = function (hours) {
@@ -169,15 +167,13 @@ const renderTime = function (daytime) {
   } else greetingWrapper.innerHTML = `Good ${daytime},`;
 };
 
-getTime();
-
 // Name in greeting
 function renderGreetingName() {
   let currentUser = localStorage.getItem("Usercurrent");
   const greetingNameContainer = document.getElementById("greeting-name");
-  const greetingContainer = document.getElementById("greeting");
   if (currentUser !== "Guest") {
     greetingNameContainer.innerHTML = /*html*/ `${currentUser}`;
+  } else {
+    greetingNameContainer.innerHTML = "Guest"
   }
 }
-
