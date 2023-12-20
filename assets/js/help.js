@@ -21,8 +21,7 @@ function redirectToLegalNotice() {
 }
 
 function backButton() {
-  window.location.href = "./privacy_policy.html";
-  
+  window.history.back();
 }
 
 document.addEventListener("DOMContentLoaded", function () {
