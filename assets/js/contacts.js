@@ -666,7 +666,7 @@ function okClearButtonClick() {
  */
 function editUser() {
   console.log(userToEdit)
-  const userDetailsContainer = document.getElementById("showUsers");
+  let userDetailsContainer = document.getElementById("showUsers");
   let { name, email, phone } = userToEdit[0];
   let editFormHTML = generateEditFormHTML(name, email, phone);
   userDetailsContainer.innerHTML = editFormHTML;
@@ -730,10 +730,12 @@ function attachEventListeners() {
  * @returns {void}
  */
 function updateContact() {
-  const editName = document.getElementById("editName").value;
-  const editEmail = document.getElementById("editEmail").value;
-  const editPhone = document.getElementById("editPhone").value;
-  const contacts = JSON.parse(localStorage.getItem("contacts")) || [];
+  let editName = document.getElementById("editName").value;
+  let editEmail = document.getElementById("editEmail").value;
+  let editPhone = document.getElementById("editPhone").value;
+  console.log(userToEdit);
+  let contacts = JSON.parse(localStorage.getItem("contacts")) || [];
+  console.log(userToEdit);
   if (
     selectedUserIndex === undefined ||
     selectedUserIndex < 0 ||
@@ -747,7 +749,7 @@ function updateContact() {
   contacts[selectedUserIndex].phone = editPhone;
   localStorage.setItem("contacts", JSON.stringify(contacts));
   loadAndDisplayUsers();
-  showUser(selectedUserIndex);
+  //showUser(selectedUserIndex);
 }
 /**
  * go to contacts.html

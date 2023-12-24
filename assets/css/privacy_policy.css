@@ -26,6 +26,10 @@ nav {
 
 }
 
+.logo {
+    height: 60px;
+}
+
 .single-nav-links {
     display: flex;
     align-items: center;
