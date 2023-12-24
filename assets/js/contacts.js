@@ -1,4 +1,4 @@
-let contacts = JSON.parse(localStorage.getItem("contacts"));
+let contacts;
 let selectedUserIndex;
 const userToEdit = [];
 
@@ -8,11 +8,20 @@ const userToEdit = [];
  * @returns {void}
  */
 async function init() {
-  await includeHTML();
+  includeHTML();
+  await loadContacts();
   loadAndDisplayUsers();
   await setHeaderInitials();
   await setProfileBadgeEventListener();
   await setActiveNavLink();
+}
+
+async function loadContacts() {
+  const keyToSearch = "users";
+  contacts = await getItem(keyToSearch);
+  console.log("Daten vom Server:", contacts);
+  contacts.push(contacts);
+  localStorage.setItem("contacts", JSON.stringify(contacts));
 }
 /**
  * Logs out the user by removing the user token from sessionStorage, redirecting to the login page,
@@ -92,8 +101,7 @@ async function getItem(key) {
  */
 async function loadAndDisplayUsers() {
   try {
-    const contacts = await getContactsFromLocalStorage();
-    const sortedContacts = sortContactsByName(contacts);
+    let sortedContacts = sortContactsByName(contacts);
     const userListHTML = generateUserListHTML(sortedContacts);
     displayUserList(userListHTML, sortedContacts);
   } catch (error) {
@@ -323,12 +331,12 @@ async function showUser(sortedIndex) {
  */
 function generateUserDetailsHTML(user, userId) {
   userToEdit.push(user);
-  console.log(userToEdit[0].name)
+  console.log(userToEdit[0].name);
   const nameInitials = userToEdit[0].name
     .split(" ")
     .map((word) => word[0])
     .join("");
-   return /*html*/ `
+  return /*html*/ `
         <div class="textandcolor">
         <img class="arrowleftimg" onclick="goBackToContacts()" src="./assets/img/arrowLeft.png" alt="" srcset="">
             <div class="showcircle" style="background-color: ${userToEdit[0].color}; ">${nameInitials}</div>
@@ -665,7 +673,7 @@ function okClearButtonClick() {
  * @returns {void}
  */
 function editUser() {
-  console.log(userToEdit)
+  console.log(userToEdit);
   let userDetailsContainer = document.getElementById("showUsers");
   let { name, email, phone } = userToEdit[0];
   let editFormHTML = generateEditFormHTML(name, email, phone);
