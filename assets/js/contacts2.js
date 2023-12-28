@@ -114,10 +114,40 @@ async function setNewIdForContact(users) {
   });
 }
 
-function clearInfoAbout(infoAbout) {
+function clearInfoAbout() {
+  let infoAbout = document.getElementById("showUsers");
   infoAbout.innerHTML = "";
 }
 
-function reloadPage(){
+function reloadPage() {
   location.reload();
+}
+
+function editUser() {
+  console.log(chosenUser);
+  let infoAbout = document.getElementById("showUsers");
+  clearInfoAbout(infoAbout);
+  infoAbout.innerHTML += /*html*/ `
+  <div class="headerFromAddContact">
+  <b onclick="goBackToContacts()" id="xButton">X</b>
+      <img class="joinImg" src="./assets/img/capWhite.png" alt="Join Logo">
+      <h3>Edit Contact</h3>
+      <p>Edit the contact details below:</p>
+  </div>
+  <form class="formInput">
+      <label for="editName"></label>
+      <input type="text" id="editName" name="name" placeholder="Name" required value="${chosenUser.name}"><br><br>
+      
+      <label for="editEmail"></label>
+      <input type="email" id="editEmail" name="email" placeholder="Email" required value="${chosenUser.email}"><br><br>
+      
+      <label for="editPhone"></label>
+      <input type="tel" id="editPhone" name="phone" placeholder="+49" title="tel" required value="${chosenUser.phone ? chosenUser.phone : ''}"><br><br>
+      
+      <div class="bContainer">
+          <button class="contactbuttonsone" onclick="clearInfoAbout()">Cancel &#10006;</button>
+          <button class="contactbuttonsonetwo" onclick="updateContact()">Update contact &#10003;</button>
+      </div>
+  </form>
+  `;
 }
