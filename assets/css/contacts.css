@@ -273,10 +273,13 @@ header {
   top: 168px;
   left: 750px;
   gap: 21px;
-  position: absolute;
+  position: fixed;
+  right: -200px;
+  transition: transform 5s ease-in-out;
 }
 
 .email-details {
+  top: 21px;
   font-size: 16px;
   font-weight: 700;
   line-height: 19.2px;
@@ -285,11 +288,17 @@ header {
   justify-content: flex-start;
 }
 
-.email-details-user{
+.gapper-between{
+  gap:21px;
+  display: flex;
+  flex-direction: column;
+}
+
+.email-details-user {
   font-weight: 400;
   font-size: 16px;
   line-height: 19.2px;
-  font-family: "Open-Sans", sans-serif
+  font-family: "Open-Sans", sans-serif;
 }
 
 .circle {
@@ -327,6 +336,17 @@ header {
   color: #ffffff;
   line-height: 56.4px;
   font-weight: 500;
+}
+
+.phone-details-user {
+  top: 21px;
+  display: fleX;
+  justify-content: flex-start;
+  color: black;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19.2px;
+  font-family: "Open-Sans", sans-serif;
 }
 
 .information-details {

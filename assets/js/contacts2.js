@@ -85,14 +85,14 @@ function openContactDetails(index, firstLetter) {
       </div>
     </div>
     <div class="information-details">Contact Information</div>
-    <div>
+    <div class="gapper-between">
       <div>
         <p class="email-details">Email</p>
         <a href="" class="email-details-user">${chosenUser.email}</a>
       </div>
       <div>
-        <p>Phone</p>
-        <p>${chosenUser.phone}</p>
+        <p class="email-details">Phone</p>
+        <p class="phone-details-user">${chosenUser.phone}</p>
       </div>
     </div>
   </div>  
@@ -137,13 +137,19 @@ function editUser() {
   </div>
   <label class="formInput">
       <label for="editName"></label>
-      <input type="text" id="editName" name="name" placeholder="Name" required value="${chosenUser.name}"><br><br>
+      <input type="text" id="editName" name="name" placeholder="Name" required value="${
+        chosenUser.name
+      }"><br><br>
       
       <label for="editEmail"></label>
-      <input type="email" id="editEmail" name="email" placeholder="Email" required value="${chosenUser.email}"><br><br>
+      <input type="email" id="editEmail" name="email" placeholder="Email" required value="${
+        chosenUser.email
+      }"><br><br>
       
       <label for="editPhone"></label>
-      <input type="tel" id="editPhone" name="phone" placeholder="+49" title="tel" required value="${chosenUser.phone ? chosenUser.phone : ''}"><br><br>
+      <input type="tel" id="editPhone" name="phone" placeholder="+49" title="tel" required value="${
+        chosenUser.phone ? chosenUser.phone : ""
+      }"><br><br>
       
       <div class="bContainer">
           <button class="contactbuttonsone" onclick="clearInfoAbout()">Cancel</button>
@@ -153,7 +159,7 @@ function editUser() {
   `;
 }
 
-async function updateContact(){
+async function updateContact() {
   let newName = document.getElementById("editName").value;
   let newMail = document.getElementById("editEmail").value;
   let newPhone = document.getElementById("editPhone").value;
@@ -165,3 +171,75 @@ async function updateContact(){
   await initContacts();
   reloadPage();
 }
+
+function createNewContactDiv() {
+  let infoAbout = document.getElementById("showUsers");
+  infoAbout.innerHTML = /*html*/ `
+        <div>
+            <div class="headerFromAddContact">
+            <b onclick="clearInfoAbout()" id="xButton">X</b>
+                <img class="joinImg" src="./assets/img/capWhite.png" alt="Join Logo">
+                <h3>Add Contact</h3>
+                <p>Tasks are better with a team!</p>
+            </div>
+            <div class="imgContainer" >
+                <img class="addLogo deaktiviert-hover " src="./assets/img/person_add.svg" alt="logoContact">
+            </div>
+            <label class="formInput" >
+                <label for="name"></label>
+                <input type="text" id="name" name="name" placeholder="Name" required><br><br> 
+                <label for="email"></label>
+                <input type="email" id="email" name="email" placeholder="Email" required><br><br>
+                <label for="phone"></label>
+                <input type="tel" id="phone" name="phone" placeholder="+49" required><br><br>
+                <div class="bContainer">
+                <button class="contactbuttonsone" onclick="clearInfoAbout()">Cancel</button>
+                    <button class="contactbuttonsonetwo" onclick="createContactOnline()">Create contact</button>
+                </div>
+            </label>
+        </div>
+    `;
+}
+
+async function createContactOnline() {
+  // Lokale Deklaration der Variable users
+  let users;
+
+  // Validierung der Eingaben
+  let newName = document.getElementById("name").value;
+  let newMail = document.getElementById("email").value;
+  let newPhone = document.getElementById("phone").value;
+
+  // Neues Benutzerobjekt erstellen
+  let newUser = {
+    name: newName,
+    email: newMail,
+    phone: newPhone,
+  };
+
+  // Benutzerliste aus dem Local Storage abrufen (als JSON)
+  let usersJSON = await getItem("users");
+
+  // Überprüfen, ob usersJSON vorhanden ist
+  if (usersJSON) {
+    // Konvertieren des JSON in ein JavaScript-Objekt
+    users = JSON.parse(usersJSON);
+
+    // Überprüfen, ob users ein Array ist
+    if (!Array.isArray(users)) {
+      users = [];
+    }
+
+    // Benutzer hinzufügen
+    users.push(newUser);
+
+    // Benutzerliste im Local Storage speichern
+    await setItem("users", JSON.stringify(users));
+    reloadPage();
+  } else {
+    // Wenn usersJSON nicht vorhanden ist, erstelle ein neues Array mit dem neuen Benutzer
+    await setItem("users", JSON.stringify([newUser]));
+    reloadPage();
+  }
+}
+
