@@ -55,7 +55,6 @@ async function createNewTask() {
     category: columnCategory,
   };
   addTaskLocalTasks.push(newTask);
-  // await setNewIdsForTasks(addTaskLocalTasks);
   await setItem("tasks", JSON.stringify(addTaskLocalTasks));
   resetRequiredWrapper();
   resetRequiredMessages();

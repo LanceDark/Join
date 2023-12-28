@@ -342,10 +342,7 @@ function generateUserDetailsHTML(user, userId) {
             <div class="showcircle" style="background-color: ${userToEdit[0].color}; ">${nameInitials}</div>
             <div class="h1andtext">
                 <h1>${userToEdit[0].name}</h1>
-                <div class="textContainer" >
-                <p onclick="deleteUser(${userId})" class="deleteText"><img src="./assets/img/delete.svg">Delete </p>
-                    <p onclick="editUser()" class="deleteText" ><img src="./assets/img/edit.svg">Edit </p>
-                </div>
+ 
             </div> 
         </div>
                     </div>

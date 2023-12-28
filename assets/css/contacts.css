@@ -266,10 +266,30 @@ header {
 }
 
 #showUsers {
-  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  width: 461px;
+  height: 318px;
+  top: 168px;
+  left: 750px;
+  gap: 21px;
   position: absolute;
-  left: 25%;
-  top: 12%;
+}
+
+.email-details {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 19.2px;
+  color: black;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.email-details-user{
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19.2px;
+  font-family: "Open-Sans", sans-serif
 }
 
 .circle {
@@ -282,6 +302,46 @@ header {
   align-items: center;
   color: white;
   font-family: "Open Sans", sans-serif;
+}
+
+.wrapper-for-details {
+  display: flex;
+  flex-direction: column;
+  width: 461px;
+  height: 318px;
+  top: 168px;
+  left: 750px;
+  gap: 21px;
+}
+
+.showcircle-detail {
+  display: flex;
+  background-color: rgb(255, 94, 179);
+  width: 120px;
+  height: 120px;
+  border-radius: 70px;
+  gap: 10px;
+  justify-content: center;
+  font-size: 47px;
+  align-items: center;
+  color: #ffffff;
+  line-height: 56.4px;
+  font-weight: 500;
+}
+
+.information-details {
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 27.6px;
+  font-family: "Open Sans", sans-serif;
+}
+.headline-contacts {
+  width: 461px;
+  height: 120px;
+  gap: 54px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .showcircle {
@@ -328,7 +388,7 @@ a {
 }
 
 .wrapper-for-contacts:hover {
-  background-color:  #D2E3FF;
+  background-color: #d2e3ff;
   cursor: pointer;
 }
 
