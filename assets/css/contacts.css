@@ -216,6 +216,7 @@ a:-webkit-any-link {
   height: auto;
   padding: 24px;
   overscroll-behavior: contain;
+  padding-bottom: 100px;
 }
 
 .user-initials {
@@ -276,6 +277,7 @@ header {
   position: fixed;
   right: -200px;
   transition: transform 5s ease-in-out;
+  padding-bottom: 100px;
 }
 
 .email-details {
@@ -1032,6 +1034,7 @@ button:hover {
 
   #showUsers {
     left: 0%;
+    padding-bottom: 100px;
   }
 }
 
@@ -1076,6 +1079,7 @@ button:hover {
 
   #userList {
     width: 240px;
+    padding-bottom: 100px;
   }
 
   .textContent {
@@ -1111,6 +1115,7 @@ button:hover {
     position: absolute;
     left: 50px;
     top: 100px;
+    padding-bottom: 100px;
   }
 
   .h1andtext {
@@ -1167,6 +1172,7 @@ button:hover {
     top: 12px;
     padding: 0px;
     margin: 12px;
+    padding-bottom: 100px;
   }
 }
 
@@ -1196,6 +1202,7 @@ button:hover {
     left: 21px;
     top: 100px;
     width: 250px;
+    padding-bottom: 100px;
   }
 
   .h1andtext {
@@ -1265,6 +1272,7 @@ button:hover {
 @media (max-width: 370px) {
   #userList {
     padding: 0;
+    padding-bottom: 100px;
   }
 
   button {

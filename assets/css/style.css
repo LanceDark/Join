@@ -758,7 +758,7 @@ h5 {
     display: none;
   }
 
-  .add-task-assigned-to-input-wrapper{
+  .add-task-assigned-to-input-wrapper {
     width: 300px;
   }
 }
@@ -770,6 +770,14 @@ h5 {
 }
 
 @media (max-width: 370px) {
+  .add-task-assigned-to-input-wrapper {
+    width: 275px;
+  }
+
+  .main-page-right{
+    width: 275px;
+  }
+
   .title-input {
     width: 275px;
   }
