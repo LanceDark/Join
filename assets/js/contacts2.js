@@ -104,6 +104,7 @@ async function deleteUser() {
   users.splice(index, 1);
   console.log(users);
   await setNewIdForContact(users);
+  await setItem("users", JSON.stringify(users));
   await initContacts();
   reloadPage();
 }
@@ -129,12 +130,12 @@ function editUser() {
   clearInfoAbout(infoAbout);
   infoAbout.innerHTML += /*html*/ `
   <div class="headerFromAddContact">
-  <b onclick="goBackToContacts()" id="xButton">X</b>
+  <b onclick="clearInfoAbout()" id="xButton">X</b>
       <img class="joinImg" src="./assets/img/capWhite.png" alt="Join Logo">
       <h3>Edit Contact</h3>
       <p>Edit the contact details below:</p>
   </div>
-  <form class="formInput">
+  <label class="formInput">
       <label for="editName"></label>
       <input type="text" id="editName" name="name" placeholder="Name" required value="${chosenUser.name}"><br><br>
       
@@ -145,9 +146,22 @@ function editUser() {
       <input type="tel" id="editPhone" name="phone" placeholder="+49" title="tel" required value="${chosenUser.phone ? chosenUser.phone : ''}"><br><br>
       
       <div class="bContainer">
-          <button class="contactbuttonsone" onclick="clearInfoAbout()">Cancel &#10006;</button>
-          <button class="contactbuttonsonetwo" onclick="updateContact()">Update contact &#10003;</button>
+          <button class="contactbuttonsone" onclick="clearInfoAbout()">Cancel</button>
+          <button class="contactbuttonsonetwo" onclick="updateContact()">Update contact</button>
       </div>
-  </form>
+</label>
   `;
+}
+
+async function updateContact(){
+  let newName = document.getElementById("editName").value;
+  let newMail = document.getElementById("editEmail").value;
+  let newPhone = document.getElementById("editPhone").value;
+  chosenUser.email = newMail;
+  chosenUser.name = newName;
+  chosenUser.phone = newPhone;
+  await setNewIdForContact(users);
+  await setItem("users", JSON.stringify(users));
+  await initContacts();
+  reloadPage();
 }
