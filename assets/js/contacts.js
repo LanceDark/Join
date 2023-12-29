@@ -66,7 +66,7 @@ function groupUsersByFirstLetter(users) {
 function openContactDetails(index, firstLetter) {
   let infoAbout = document.getElementById("showUsers");
   infoAbout.style.display = "flex";
-  clearInfoAbout();
+  //clearInfoAbout();
   chosenUser = groupedUsers.get(firstLetter)[index];
   infoAbout.innerHTML += createDetailsContact();
 }
@@ -99,6 +99,7 @@ async function setNewIdForContact(users) {
 function clearInfoAbout() {
   let infoAbout = document.getElementById("showUsers");
   infoAbout.innerHTML = "";
+  infoAbout.style.display = "none"
 }
 
 /**
@@ -113,8 +114,11 @@ function reloadPage() {
  */
 function editUser() {
   let infoAbout = document.getElementById("showUsers");
-  infoAbout.style.display = "flex";
-  clearInfoAbout(infoAbout);
+  if (infoAbout.style.display = "flex") {
+    infoAbout.innerHTML = createEditInterface();
+  } else {
+    infoAbout.style.display = "flex";
+  }
   infoAbout.innerHTML = createEditInterface();
 }
 

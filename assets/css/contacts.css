@@ -267,7 +267,7 @@ header {
 }
 
 #showUsers {
-  display: flex;
+  display: none;
   flex-direction: column;
   width: 461px;
   height: 318px;
@@ -887,7 +887,7 @@ button:hover {
   }
 
   #showUsers {
-    display: flex;
+    display: none;
     left: 0px;
     justify-content: center;
     align-items: center;
@@ -909,6 +909,10 @@ button:hover {
 
   #email {
     padding: 12px;
+  }
+
+  .formInput{
+    padding: 0px;
   }
 }
 
@@ -948,13 +952,7 @@ button:hover {
   }
 
   #showUsers {
-    top: 13%;
-  }
-}
-
-@media (max-width: 680px) {
-  #showUsers {
-    top: 10%;
+    top: 0;
   }
 }
 
@@ -968,63 +966,8 @@ button:hover {
   }
 }
 
-@media (max-width: 580px) {
-  h1 {
-    font-size: 30px;
-  }
-
-  .logo {
-    width: auto;
-    height: 60px;
-  }
-
-  .contactbuttonsonetwo {
-    font-size: 12px;
-  }
-
-  .contactbuttonsone {
-    font-size: 12px;
-  }
-
-  #editName,
-  #editEmail,
-  #editPhone {
-    font-size: 12px;
-    width: 150px;
-  }
-
-  .wrapper-for-details{
-    width: 300px;
-  }
-
-  h2,
-  h3 {
-    font-size: 15px;
-  }
-
-  b {
-    font-size: 15px;
-  }
-
-  a {
-    font-size: 12px;
-  }
-
-  .deleteText {
-    font-size: 12px;
-  }
-
-  img {
-    width: 18px;
-  }
-}
-
 @media (max-width: 550px) {
   .openContainer {
-    width: 450px;
-  }
-
-  .formInput {
     width: 450px;
   }
 
@@ -1048,8 +991,12 @@ button:hover {
     width: 350px;
   }
 
-  .formInput {
-    width: 350px;
+  .wrapper-for-details{
+    width: 300px
+  }
+
+  .headline-contacts {
+    gap: 20px;
   }
 
   #name,
@@ -1068,9 +1015,6 @@ button:hover {
 }
 
 @media (max-width: 450px) {
-  .headerFromAddContact {
-    width: 350px;
-  }
 
   .openContainer {
     width: 299px;
@@ -1091,7 +1035,7 @@ button:hover {
   }
 
   #xButton {
-    margin-right: 170px;
+    margin-right: 20px;
   }
 
   #showUsers {
@@ -1174,7 +1118,6 @@ button:hover {
   }
 
   #showUsers {
-    top: 100px;
     padding-bottom: 100px;
   }
 
@@ -1201,12 +1144,8 @@ button:hover {
     width: 280px;
   }
 
-  .formInput {
-    width: 238px;
-  }
-
   #xButton {
-    margin-right: 200px;
+    margin-right: 50px;
   }
 
   .contactbuttonsone {
@@ -1241,6 +1180,10 @@ button:hover {
     width: 100%;
   }
 
+  .headline-contacts{
+    gap: 20px;
+  }
+
   .popup-container {
     width: 120px;
   }
@@ -1258,10 +1201,6 @@ button:hover {
   }
 
   #showUsers {
-    position: absolute;
-    left: 21px;
-    top: 100px;
-    width: 250px;
     padding-bottom: 100px;
   }
 
@@ -1296,10 +1235,6 @@ button:hover {
 
   .deleteText {
     font-size: 12px;
-  }
-
-  img {
-    width: 16px;
   }
 }
 
