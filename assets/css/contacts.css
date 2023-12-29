@@ -275,9 +275,6 @@ header {
   left: 750px;
   gap: 21px;
   position: fixed;
-  right: -200px;
-  transition: transform 5s ease-in-out;
-  padding-bottom: 100px;
 }
 
 .email-details {
@@ -290,8 +287,8 @@ header {
   justify-content: flex-start;
 }
 
-.gapper-between{
-  gap:21px;
+.gapper-between {
+  gap: 21px;
   display: flex;
   flex-direction: column;
 }
@@ -633,6 +630,8 @@ p {
   align-items: center;
   flex-direction: column;
   border-radius: 20px 0 0 0;
+  width: 461px;
+  height: 276px;
 }
 
 .contactbuttonsone {
@@ -803,6 +802,65 @@ button:hover {
   }
 }
 
+@media (max-width: 1230px) {
+  .headerFromAddContact {
+    position: relative;
+    right: 100px;
+  }
+
+  .formInput {
+    position: relative;
+    right: 100px;
+  }
+
+  #xButton {
+    left: 120px;
+  }
+}
+
+@media (max-width: 1150px) {
+  #showUsers {
+    left: 650px;
+  }
+
+  .headerFromAddContact {
+    right: 0px;
+  }
+
+  .formInput {
+    right: 0px;
+  }
+}
+
+@media (max-width: 1130px) {
+  .headerFromAddContact {
+    width: 300px;
+  }
+
+  .formInput {
+    width: 300px;
+  }
+
+  .imgContainer {
+    width: 300px;
+  }
+
+  #name {
+    width: 300px;
+    background-position: 300px 15px;
+  }
+
+  #email {
+    width: 300px;
+    background-position: 300px 15px;
+  }
+
+  #phone {
+    width: 300px;
+    background-position: 300px 15px;
+  }
+}
+
 @media (max-width: 1080px) {
   .nav-Container {
     height: 70px;
@@ -827,6 +885,31 @@ button:hover {
   .nav-bottom {
     display: none;
   }
+
+  #showUsers {
+    display: flex;
+    left: 0px;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    width: 100%;
+    height: 100vh;
+    background-color: transparent;
+    bottom: 40px;
+    top: 0px;
+  }
+
+  #name {
+    padding: 12px;
+  }
+
+  #phone {
+    padding: 12px;
+  }
+
+  #email {
+    padding: 12px;
+  }
 }
 
 @media (max-width: 1450px) {
@@ -840,12 +923,6 @@ button:hover {
     left: 25%;
   }
 
-  #showUsers {
-    position: absolute;
-    top: 12%;
-    left: 25%;
-  }
-
   div#addContacts {
     top: 110px;
     display: flex;
@@ -855,24 +932,9 @@ button:hover {
   }
 }
 
-@media (max-width: 1400px) {
-}
-
 @media (max-width: 800px) {
   .navbarLeft {
     width: 0;
-  }
-}
-
-@media (max-width: 880px) {
-  #showUsers {
-    left: 15%;
-  }
-}
-
-@media (max-width: 730px) {
-  #showUsers {
-    left: 2%;
   }
 }
 
@@ -886,17 +948,13 @@ button:hover {
   }
 
   #showUsers {
-    position: absolute;
-    left: 10%;
-    top: 12%;
+    top: 13%;
   }
 }
 
 @media (max-width: 680px) {
   #showUsers {
-    position: absolute;
-    left: 2%;
-    top: 12%;
+    top: 10%;
   }
 }
 
@@ -933,6 +991,10 @@ button:hover {
   #editPhone {
     font-size: 12px;
     width: 150px;
+  }
+
+  .wrapper-for-details{
+    width: 300px;
   }
 
   h2,
@@ -983,11 +1045,11 @@ button:hover {
 
 @media (max-width: 500px) {
   .openContainer {
-    width: 400px;
+    width: 350px;
   }
 
   .formInput {
-    width: 400px;
+    width: 350px;
   }
 
   #name,
@@ -1112,8 +1174,6 @@ button:hover {
   }
 
   #showUsers {
-    position: absolute;
-    left: 50px;
     top: 100px;
     padding-bottom: 100px;
   }
@@ -1162,7 +1222,7 @@ button:hover {
 
 @media (max-width: 390px) and (min-width: 250px) {
   .w3-include {
-    width: 120%;
+    width: 100%;
   }
 
   #contactsContainer {
@@ -1178,7 +1238,7 @@ button:hover {
 
 @media (max-width: 380px) {
   .w3-include {
-    width: 117%;
+    width: 100%;
   }
 
   .popup-container {
@@ -1245,7 +1305,7 @@ button:hover {
 
 @media (max-width: 350px) {
   .w3-include {
-    width: 115%;
+    width: 100%;
   }
 }
 
@@ -1261,7 +1321,7 @@ button:hover {
 
 @media (max-width: 340px) {
   .w3-include {
-    width: 109%;
+    width: 100%;
   }
 
   .textContent {
