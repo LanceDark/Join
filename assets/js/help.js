@@ -44,6 +44,9 @@ function handleMouseUp(event) {
   let contactList = document.getElementById("contactList");
   let addContactButton = document.getElementById("addNewContact");
   let imgElement = document.querySelector(".add-task-show-contacts-btn");
+  if (!contactList || !addContactButton) {
+    return;
+  }
 
   if (contactList.contains(event.target) || event.target === addContactButton) {
     window.clickedInsideContactList = true;
@@ -62,3 +65,4 @@ function handleMouseUp(event) {
   }
   renderContactBadges();
 }
+

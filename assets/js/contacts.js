@@ -2,6 +2,8 @@ let users;
 let groupedUsers;
 let chosenUser;
 let isShowUsersDivOpen = false;
+let highlighted = false;
+let conactIsChosen = null;
 
 /**
  * initialContacts on load of Webpage
@@ -38,7 +40,7 @@ function displayContactList(groupedUsers) {
   for (let [firstLetter, usersGroup] of groupedUsers) {
     list.innerHTML += `<h2>${firstLetter}</h2>`;
     for (let i = 0; i < usersGroup.length; i++) {
-      let userId = `user_${i}_${firstLetter}`;
+      let userId = `user${i}${firstLetter}`;
       list.innerHTML += createContactList(userId, firstLetter, usersGroup, i);
     }
   }
@@ -67,16 +69,35 @@ function groupUsersByFirstLetter(users) {
  * @param {string} index
  * @param {string} firstLetter
  */
-function openContactDetails(index, firstLetter) {
+function openContactDetails(index, firstLetter, userId) {
+  let id = userId.getAttribute('id');
   let infoAbout = document.getElementById("showUsers");
-
+  if(conactIsChosen) {
+    resetHighlight(conactIsChosen)
+  }
+  conactIsChosen = id
+  highlightChosenUser(id);
   if (isShowUsersDivOpen) {
     clearInfoAbout();
-  }
+  } 
   infoAbout.style.display = "flex";
   chosenUser = groupedUsers.get(firstLetter)[index];
   infoAbout.innerHTML = createDetailsContact();
   isShowUsersDivOpen = true;
+}
+
+function highlightChosenUser(id) {
+ let chosen = document.getElementById(id)
+ chosen.style.backgroundColor = "#4589FF";
+ setTimeout(function (){
+  resetHighlight(chosen)
+ }, 2000)
+ 
+}
+
+function resetHighlight(chosen){
+  chosen.style.backgroundColor = "";
+  conactIsChosen = null;
 }
 
 /**
@@ -248,7 +269,7 @@ function createContactDiv() {
           <div class="error-message" id="wrongName"></div>
         <label for="email" class="name-label">
             <input type="email" id="email" name="email" placeholder="Email" required>
-            <img src="./assets/img/mail.png" alt="" class="person-img">
+            <img src="./assets/img/mail.png" alt="" class="person-img-mail">
         </label>
           <div class="error-message" id="wrongEmail"></div>
         <label for="phone" class="name-label">
@@ -357,7 +378,7 @@ function createDetailsContact() {
 function createContactList(userId, firstLetter, usersGroup, i) {
   let initials = generateInitials(usersGroup[i].name);
   return /*html*/ `
-        <div class="wrapper-for-contacts" id="${userId}" onclick="openContactDetails(${i}, '${firstLetter}')">
+        <div class="wrapper-for-contacts" id="${userId}" onclick="openContactDetails(${i}, '${firstLetter}', ${userId})">
           <div class="showcircle" style="background-color: ${usersGroup[i].color}">${initials}</div>
           <div class="wrapper-for-name-email">
             <h1 class="contact-name">${usersGroup[i].name}</h1>
