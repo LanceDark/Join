@@ -1,34 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contacts</title>
-    <link rel="stylesheet" href="./assets/css/contacts.css">
-    <link rel="stylesheet" href="./assets/css/board.css">
+    <link rel="stylesheet" href="./assets/css/contacts.css" />
+    <link rel="stylesheet" href="./assets/css/board.css" />
     <script src="./assets/js/storage.js"></script>
     <script src="./assets/js/contacts.js"></script>
-    <link rel="shortcut icon" href="./assets/img/fav_icon_blue.svg" type="image/x-icon">
+    <script src="./assets/js/help.js"></script>
+    <link
+      rel="shortcut icon"
+      href="./assets/img/fav_icon_blue.svg"
+      type="image/x-icon"
+    />
+  </head>
 
-</head>
-
-<body onload="initContacts()">
-
-    <div class="w3-include" w3-include-html="./assets/templates/header_nav.html"></div>
+  <body onload="initContacts()">
+    <div
+      class="w3-include"
+      w3-include-html="./assets/templates/header_nav.html"
+    ></div>
     <div id="addContacts"></div>
     <div id="container" class="container">
-        <div class="navbarLeft"></div>
-        
-        <main id="contactsContainer">
-            <button onclick="createNewContactDiv()" class="addButton" >Add new Contact</button>
-            
-            <div id="userList"></div>
-        </main>
+      <div class="navbarLeft"></div>
 
-        <div id="showUsers"></div>
+      <main id="contactsContainer">
+        <button onclick="createNewContactDiv()" class="addButton">
+          Add new Contact
+        </button>
+
+        <div id="userList"></div>
+      </main>
+
+      <div id="showUsers"></div>
     </div>
     <script src="./assets/js/header_nav.js"></script>
-</body>
-
+  </body>
 </html>

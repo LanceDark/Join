@@ -732,16 +732,6 @@ if (addTaskModal.classList.contains("is-active")) {
   document.body.style.overflow = "auto";
 }
 
-/**
- * Attaches event listeners to the "Add Task" buttons within board columns to toggle the modal.
- */
-// const boardColumnAddTaskBtns = document.querySelectorAll(".plus-btn-container");
-// boardColumnAddTaskBtns.forEach((button) =>
-//   button.addEventListener("click", () => {
-//     overlay.classList.toggle("hidden");
-//     addTaskModal.classList.toggle("is-active");
-//   })
-// );
 
 const boardColumnAddTaskBtnTodo = document.querySelector(
   "#plus-btn-container-todo"

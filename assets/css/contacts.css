@@ -22,6 +22,11 @@ nav {
   top: 0;
 }
 
+.error-message {
+  color: red;
+  font-size: 0.8em;
+}
+
 .colorContainer {
   display: flex;
   justify-content: center;
@@ -300,6 +305,26 @@ header {
   font-family: "Open-Sans", sans-serif;
 }
 
+.go-back-button {
+  display: none;
+  height: 20px;
+  padding: 20px 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  border: 1px solid #4589ff;
+  background: var(--white, #fff);
+}
+
+.go-back-button:hover {
+  box-shadow: 3px 12px 18px -12px rgba(0, 0, 0, 0.75);
+  transform: scale(1.02);
+  cursor: pointer;
+  transition: all 0.3s;
+  color: #000000;
+}
+
 .circle {
   background-color: rgb(255, 94, 179);
   height: 42px;
@@ -478,7 +503,7 @@ div#addContacts {
   border-bottom: 1px solid rgb(221, 221, 221);
   width: 422px;
   padding: 12px 24px;
-  background-image: url("/assets/img/person.svg");
+  background-image: url("../img/person.svg");
   background-position: 400px 15px;
   background-size: 15px;
   background-repeat: no-repeat;
@@ -492,7 +517,7 @@ div#addContacts {
   border-bottom: 1px solid rgb(221, 221, 221);
   width: 422px;
   padding: 12px 24px;
-  background-image: url("/assets/img/mail.png");
+  background-image: url("../img/mail.png");
   background-position: 400px 15px;
   background-size: 15px;
   background-repeat: no-repeat;
@@ -507,7 +532,7 @@ div#addContacts {
   border-bottom: 1px solid rgb(221, 221, 221);
   width: 422px;
   padding: 12px 24px;
-  background-image: url("/assets/img/call.svg");
+  background-image: url("../img/call.svg");
   background-position: 400px 15px;
   background-size: 15px;
   background-repeat: no-repeat;
@@ -564,7 +589,7 @@ div#addContacts {
   border-left: none;
   border-right: none;
   border-color: rgb(0, 0, 0, 0.2);
-  background-image: url(/assets/img/person.svg);
+  background-image: url(../img/person.svg);
   background-position: 220px 12px;
   background-size: 18px;
   background-repeat: no-repeat;
@@ -578,7 +603,7 @@ div#addContacts {
   border-left: none;
   border-right: none;
   border-color: rgb(0, 0, 0, 0.2);
-  background-image: url(/assets/img/call.svg);
+  background-image: url(../img/call.svg);
   background-position: 220px 12px;
   background-size: 18px;
   background-repeat: no-repeat;
@@ -592,7 +617,7 @@ div#addContacts {
   border-left: none;
   border-right: none;
   border-color: rgb(0, 0, 0, 0.2);
-  background-image: url(/assets/img/mail.svg);
+  background-image: url(../img/mail.svg);
   background-position: 220px 12px;
   background-size: 18px;
   background-repeat: no-repeat;
@@ -866,6 +891,18 @@ button:hover {
     height: 70px;
   }
 
+  .go-back-button {
+    display: flex;
+    height: 20px;
+    padding: 20px 20px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    border: 1px solid #4589ff;
+    background: var(--white, #fff);
+  }
+
   div#addContacts {
     top: 110px;
     display: flex;
@@ -911,7 +948,7 @@ button:hover {
     padding: 12px;
   }
 
-  .formInput{
+  .formInput {
     padding: 0px;
   }
 }
@@ -991,8 +1028,8 @@ button:hover {
     width: 350px;
   }
 
-  .wrapper-for-details{
-    width: 300px
+  .wrapper-for-details {
+    width: 300px;
   }
 
   .headline-contacts {
@@ -1015,7 +1052,6 @@ button:hover {
 }
 
 @media (max-width: 450px) {
-
   .openContainer {
     width: 299px;
   }
@@ -1180,7 +1216,7 @@ button:hover {
     width: 100%;
   }
 
-  .headline-contacts{
+  .headline-contacts {
     gap: 20px;
   }
 
@@ -1268,6 +1304,19 @@ button:hover {
   #userList {
     padding: 0;
     padding-bottom: 100px;
+  }
+
+  .go-back-button {
+    display: flex;
+    width: 300px;
+    height: 20px;
+    padding: 20px 20px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    border: 1px solid #4589ff;
+    background: var(--white, #fff);
   }
 
   button {

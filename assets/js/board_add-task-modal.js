@@ -252,18 +252,27 @@ async function renderContactsInAddTaskModal() {
     const name = addTaskLocalContacts[i].name;
     const initials = generateInitials(name);
     const color = addTaskLocalContacts[i].color;
-    assigneesBadgesWrapper.innerHTML += /*html*/ `
-        <div class="add-task-contacts-wrapper" id="add-task-contacts-wrapper-${i}" onclick="markContactsInAddTaskDropdown(${i})">
-            <div class="add-task-contacts-row">
-                <div class="assignee" style="background: ${color}">
-                    <div class="assignee-initals">${initials}</div>
-                </div>
-                <div class="assignee-name">${name}</div>
-            </div>
-            <img id="add-task-contacts-row-checkbox${i}" class="contacts-row-checkbox" src="./assets/img/checkbox.svg" alt="">
-        </div>
-    `;
+    assigneesBadgesWrapper.innerHTML += generateContactsInAddTaskModalHTML(
+      color,
+      initials,
+      name,
+      i
+    );
   }
+}
+
+function generateContactsInAddTaskModalHTML(color, initials, name, i) {
+  return /*html*/ `
+ <div class="add-task-contacts-wrapper" id="add-task-contacts-wrapper-${i}" onclick="markContactsInAddTaskDropdown(${i})">
+     <div class="add-task-contacts-row">
+         <div class="assignee" style="background: ${color}">
+             <div class="assignee-initals">${initials}</div>
+         </div>
+         <div class="assignee-name">${name}</div>
+     </div>
+     <img id="add-task-contacts-row-checkbox${i}" class="contacts-row-checkbox" src="./assets/img/checkbox.svg" alt="">
+ </div>
+`;
 }
 
 /**
@@ -517,17 +526,21 @@ function renderSubtasksInAddTasksModal() {
   const addedSubtasks = document.querySelector(".added-subtasks");
   addedSubtasks.innerHTML = "";
   for (let i = 0; i < newSubtasks.length; i++) {
-    addedSubtasks.innerHTML += /*html*/ `
-        <div id ="add-task-subtask-wrapper${i}" class="existing-subtasks-list-item">
-            <li id="add-task-subtask${i}" class="subtask-list-item">${newSubtasks[i].text}</li>
-            <div class="subtask-list-item-btn">
-                <img id="add-task-edit-subtask-btn${i}" class="edit-subtask-btn" src="./assets/img/edit.svg" alt="" onclick="editSubtaskInAddTaskModal(${i})">
-                <div class="subtask-list-item-divider"></div>
-                <img class="delete-subtask-btn" src="./assets/img/delete.svg" alt="" onclick="deleteSubtaskInAddTaskModal(${i})">
-            </div>
-        </div>
-    `;
+    addedSubtasks.innerHTML += generateRenderSubtasksHTML(newSubtasks[i].text);
   }
+}
+
+function generateRenderSubtasksHTML(newSubtasks){
+  return /*html*/ `
+  <div id ="add-task-subtask-wrapper${i}" class="existing-subtasks-list-item">
+      <li id="add-task-subtask${i}" class="subtask-list-item">${newSubtasks}</li>
+      <div class="subtask-list-item-btn">
+          <img id="add-task-edit-subtask-btn${i}" class="edit-subtask-btn" src="./assets/img/edit.svg" alt="" onclick="editSubtaskInAddTaskModal(${i})">
+          <div class="subtask-list-item-divider"></div>
+          <img class="delete-subtask-btn" src="./assets/img/delete.svg" alt="" onclick="deleteSubtaskInAddTaskModal(${i})">
+      </div>
+  </div>
+`;
 }
 
 /**
@@ -578,11 +591,7 @@ function setupEditSubtaskConfirmButton(clickedSubtask, i) {
   const editTaskConfirmBtn = document.getElementById(
     `add-task-task-confirm-edit-icon${i}`
   );
-
-  // Vor dem Hinzufügen des EventListeners entfernen, falls er bereits vorhanden ist
   editTaskConfirmBtn.removeEventListener("click", onEditTaskConfirmClick);
-
-  // EventListener hinzufügen und eine Funktion mit Zugriff auf clickedSubtask erstellen
   editTaskConfirmBtn.addEventListener("click", function () {
     onEditTaskConfirmClick(clickedSubtask);
   });
@@ -628,11 +637,7 @@ function setupEditSubtaskDeleteButton(clickedSubtask, i) {
   const editTaskDeleteBtn = document.getElementById(
     `add-task-task-delete-icon${i}`
   );
-
-  // Vor dem Hinzufügen des EventListeners entfernen, falls er bereits vorhanden ist
   editTaskDeleteBtn.removeEventListener("click", onEditTaskDeleteClick);
-
-  // EventListener hinzufügen und eine Funktion mit Zugriff auf clickedSubtask erstellen
   editTaskDeleteBtn.addEventListener("click", function () {
     onEditTaskDeleteClick(clickedSubtask);
   });
@@ -651,9 +656,6 @@ function onEditTaskDeleteClick(clickedSubtask) {
   hideEditSubtaskInput();
   showSubtaskWrapper();
   renderSubtasksInAddTasksModal();
-
-  // Nach der Verwendung den EventListener entfernen, um doppelte Listener zu vermeiden
-  // editTaskDeleteBtn.removeEventListener('click', onEditTaskDeleteClick);
 }
 
 /**

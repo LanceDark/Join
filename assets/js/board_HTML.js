@@ -92,54 +92,58 @@ function renderAssigneesInCard(
  * @param {number} taskId - The ID of the task to be displayed in the modal.
  */
 function renderModal(taskId) {
-  const task = localTasks.find((task) => +task.id === +taskId);
-  const priorityImg = getPriorityImg(task.priority);
-  let modal = document.querySelector(".modal");
-  modal.innerHTML = "";
-  modal.innerHTML += /*html*/ `
-        <div class="modal-header">
-            <div class="modal-label">${task.label}</div>
-            <div class="close-modal-wrapper" onclick="closeModal()">
-                <img class="close-modal" src="./assets/img/close.svg" alt="">
-            </div>
-        </div>
-        <div class="modal-headline">${task.title}</div>
-        <div class="modal-description">${task.description}</div>
-        <div class="modal-date"><span class="modal-span">Due date: </span>${formatDate(
-          task.dueDate
-        )}</div>
-        <div class="modal-priority"><span class="modal-span">Priority: </span>${
-          task.priority
-        } <img class="modal-priority-sign" src="./assets/img/${priorityImg}.svg"></div>
-        <div class="assignee-container">
-        <span class="modal-span span-assignees">Assigned To: </span>
-        </div>
-        <div class="modal-subtasks">
-        <span class="modal-span span-subtasks">Subtasks </span>
-            <div class="insert-modal-subtasks">
-            
-            </div>
-        </div>
-        <div class="delete-and-edit-wrapper">
-            <div class="delete-and-edit">
-                <div class="delete" onclick="deleteTask(${task.id})">
-                    <img src="./assets/img/delete.svg" alt=""><span>Delete</span>
-                </div>
-                <div class="small-divider"></div>
-                <div class="edit" id="editTask">
-                    <img src="./assets/img/edit.svg" alt=""><span>Edit</span>
-                </div>
-            </div>
-        </div>
-    `;
-  setColorOfCategoryInModal(task.label);
-  renderAssignees(task.assignees);
-  renderSubtasks(task.subtasks);
-  // checkSubtasksInModal();
-  document
-    .getElementById("editTask")
-    .addEventListener("click", () => editTask(task));
-}
+    const task = localTasks.find((task) => +task.id === +taskId);
+    const priorityImg = getPriorityImg(task.priority);
+    let modal = document.querySelector(".modal");
+    modal.innerHTML = "";
+    modal.innerHTML += renderHTMLModal(task, priorityImg);
+    setColorOfCategoryInModal(task.label);
+    renderAssignees(task.assignees);
+    renderSubtasks(task.subtasks);
+    document
+      .getElementById("editTask")
+      .addEventListener("click", () => editTask(task));
+  }
+  
+  function renderHTMLModal(task, priorityImg) {
+    return /*html*/ `
+      <div class="modal-header">
+          <div class="modal-label">${task.label}</div>
+          <div class="close-modal-wrapper" onclick="closeModal()">
+              <img class="close-modal" src="./assets/img/close.svg" alt="">
+          </div>
+      </div>
+      <div class="modal-headline">${task.title}</div>
+      <div class="modal-description">${task.description}</div>
+      <div class="modal-date"><span class="modal-span">Due date: </span>${formatDate(
+      task.dueDate
+    )}</div>
+      <div class="modal-priority"><span class="modal-span">Priority: </span>${
+      task.priority
+    } <img class="modal-priority-sign" src="./assets/img/${priorityImg}.svg"></div>
+      <div class="assignee-container">
+      <span class="modal-span span-assignees">Assigned To: </span>
+      </div>
+      <div class="modal-subtasks">
+      <span class="modal-span span-subtasks">Subtasks </span>
+          <div class="insert-modal-subtasks">
+          
+          </div>
+      </div>
+      <div class="delete-and-edit-wrapper">
+          <div class="delete-and-edit">
+              <div class="delete" onclick="deleteTask(${task.id})">
+                  <img src="./assets/img/delete.svg" alt=""><span>Delete</span>
+              </div>
+              <div class="small-divider"></div>
+              <div class="edit" id="editTask">
+                  <img src="./assets/img/edit.svg" alt=""><span>Edit</span>
+              </div>
+          </div>
+      </div>
+  `;
+  }
+  
 
 /**
  * Renders contacts in the edit modal.

@@ -85,13 +85,13 @@ h1 {
     flex-direction: column;
     display: flex;
     gap: 15px;
+    width: 422px;
 }
 
 input::placeholder {
     color: #000000; 
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
-
 
 
 .inputEmail{
@@ -101,7 +101,7 @@ input::placeholder {
     border-right:none;
     border-color: rgb(0,0,0,0.2);
     background-image: url('../img/mail.png') ;
-    background-position: 180px 12px;
+    background-position: 400px 12px;
     background-size: 10px;
     background-repeat: no-repeat;
     font-size: 16px;
@@ -115,7 +115,7 @@ input::placeholder {
     border-right:none;
     border-color: rgb(0,0,0,0.2);
     background-image: url('../img/lock.png') ;
-    background-position: 180px 12px;
+    background-position: 400px 12px;
     background-size: 10px;
     background-repeat: no-repeat;
     font-size: 16px;
@@ -242,6 +242,10 @@ input::placeholder {
         font-size:16px ;
     }
 
+    .inputContainer{
+        align-items: center;
+    }
+
     .pJoin{
         font-size: 15px;
     }
@@ -272,16 +276,12 @@ input::placeholder {
         height: auto;
     }
 
-    .main{
-        
-    }
-
     h1{
         font-size: 35px;
     }
 
     .inputEmail, .inputPassword{
-        width: 200px;
+        width: 400px;
     }
 
     ::placeholder{
@@ -326,7 +326,9 @@ input::placeholder {
     }
 
     .inputEmail, .inputPassword{
-        width: 120px;
+        width: 300px;
+        background-position: 300px, 12px;
+        
     }
 
     ::placeholder{
@@ -370,6 +372,7 @@ input::placeholder {
 
     .inputEmail, .inputPassword{
         width: 110px;
+        background-position: 110px, 12px;
     }
 
     ::placeholder{

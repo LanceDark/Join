@@ -29,13 +29,19 @@ body {
     padding: 48px 88px;
     width: 652px;
     height: 510px;
+    flex-direction: column;
+}
+
+.header-div {
+    display: flex;
+    width: 100%;
+    gap: 80px;
 }
 
 .main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    
     gap: 35px;
     background: var(--white, #FFF);
     width: 652px;
@@ -62,8 +68,6 @@ h1 {
     line-height: 120%;
     margin: 0;
     padding: 0; 
-    text-decoration: underline;
-    text-decoration-color: rgb(69, 137, 255);
 }
 
 .labelColor{
@@ -357,6 +361,10 @@ input {
         width: 300px;
     }
 
+    .header-div{
+        width: 300px;
+    }
+
     h1{
         font-size: 40px;
     }
@@ -383,9 +391,6 @@ h1{
     .headerSignupImage{
         display: none;
     }
-    .main{
-        
-    }
 
     #registerBtn{
         font-size: 14px;
@@ -402,8 +407,13 @@ h1{
         width: 6em;
     }
 
+    .header-div {
+        gap: 10px;
+        width: 6em;
+    }
+
     .main{
-        width: 300px;
+        width: 6em;
     }
 
     h1{

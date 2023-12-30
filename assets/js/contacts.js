@@ -1,12 +1,16 @@
 let users;
 let groupedUsers;
 let chosenUser;
+let isShowUsersDivOpen = false;
 
 /**
  * initialContacts on load of Webpage
  */
 async function initContacts() {
-  includeHTML();
+  await includeHTML();
+  await setHeaderInitials();
+  await setProfileBadgeEventListener();
+  await setActiveNavLink();
   await loadContactsLine();
 }
 
@@ -65,10 +69,14 @@ function groupUsersByFirstLetter(users) {
  */
 function openContactDetails(index, firstLetter) {
   let infoAbout = document.getElementById("showUsers");
+
+  if (isShowUsersDivOpen) {
+    clearInfoAbout();
+  }
   infoAbout.style.display = "flex";
-  //clearInfoAbout();
   chosenUser = groupedUsers.get(firstLetter)[index];
-  infoAbout.innerHTML += createDetailsContact();
+  infoAbout.innerHTML = createDetailsContact();
+  isShowUsersDivOpen = true;
 }
 
 /**
@@ -98,8 +106,12 @@ async function setNewIdForContact(users) {
  */
 function clearInfoAbout() {
   let infoAbout = document.getElementById("showUsers");
-  infoAbout.innerHTML = "";
-  infoAbout.style.display = "none"
+
+  if (isShowUsersDivOpen) {
+    infoAbout.innerHTML = "";
+    infoAbout.style.display = "none";
+    isShowUsersDivOpen = false;
+  }
 }
 
 /**
@@ -114,7 +126,7 @@ function reloadPage() {
  */
 function editUser() {
   let infoAbout = document.getElementById("showUsers");
-  if (infoAbout.style.display = "flex") {
+  if ((infoAbout.style.display = "flex")) {
     infoAbout.innerHTML = createEditInterface();
   } else {
     infoAbout.style.display = "flex";
@@ -155,25 +167,59 @@ async function createContactOnline() {
   let newName = document.getElementById("name").value;
   let newMail = document.getElementById("email").value;
   let newPhone = document.getElementById("phone").value;
+  let errorName = document.getElementById("wrongName");
+  let errorMail = document.getElementById("wrongEmail");
+  let errorPhone = document.getElementById("wrongPhone");
   let newUser = {
     name: newName,
     email: newMail,
     phone: newPhone,
   };
-  let usersJSON = await getItem("users");
+  errorName.innerHTML = "";
+  errorMail.innerHTML = "";
+  errorPhone.innerHTML = "";
 
-  if (usersJSON) {
-    users = JSON.parse(usersJSON);
-    if (!Array.isArray(users)) {
-      users = [];
+  let usersJSON = await getItem("users");
+  if (checkValues()) {
+    if (usersJSON) {
+      users = JSON.parse(usersJSON);
+      if (!Array.isArray(users)) {
+        users = [];
+      }
+      users.push(newUser);
+      await setItem("users", JSON.stringify(users));
+      reloadPage();
+    } else {
+      await setItem("users", JSON.stringify([newUser]));
+      reloadPage();
     }
-    users.push(newUser);
-    await setItem("users", JSON.stringify(users));
-    reloadPage();
-  } else {
-    await setItem("users", JSON.stringify([newUser]));
-    reloadPage();
   }
+}
+
+function checkValues() {
+  let newName = document.getElementById("name").value;
+  let newMail = document.getElementById("email").value;
+  let newPhone = document.getElementById("phone").value;
+  let errorName = document.getElementById("wrongName");
+  let errorMail = document.getElementById("wrongEmail");
+  let errorPhone = document.getElementById("wrongPhone");
+
+  if (!newName) {
+    errorName.innerHTML = "Bitte füllen Sie dieses Feld aus!";
+    return false;
+  }
+
+  if (!newMail) {
+    errorMail.innerHTML = "Bitte füllen Sie dieses Feld aus!";
+    return false;
+  }
+
+  if (!newPhone) {
+    errorPhone.innerHTML = "Bitte füllen Sie dieses Feld aus!";
+    return false;
+  }
+
+  return true;
 }
 
 /**
@@ -191,18 +237,24 @@ function createContactDiv() {
             <div class="imgContainer" >
                 <img class="addLogo deaktiviert-hover " src="./assets/img/person_add.svg" alt="logoContact">
             </div>
-            <label class="formInput" >
+            <form class="formInput" >
                 <label for="name"></label>
-                <input type="text" id="name" name="name" placeholder="Name" required><br><br> 
+                <input type="text" id="name" name="name" placeholder="Name" required><br>
+                <div class="error-message" id="wrongName"></div>
+                <br> 
                 <label for="email"></label>
-                <input type="email" id="email" name="email" placeholder="Email" required><br><br>
+                <input type="email" id="email" name="email" placeholder="Email" required><br>
+                <div class="error-message" id="wrongEmail"></div>
+                <br>
                 <label for="phone"></label>
-                <input type="tel" id="phone" name="phone" placeholder="+49" required><br><br>
+                <input type="tel" id="phone" name="phone" placeholder="+49" required><br>
+                <div class="error-message" id="wrongPhone"></div>
+                <br>
                 <div class="bContainer">
                 <button class="contactbuttonsone" onclick="clearInfoAbout()">Cancel</button>
                     <button class="contactbuttonsonetwo" onclick="createContactOnline()">Create contact</button>
                 </div>
-            </label>
+              </form>
         </div>
     `;
 }
@@ -232,14 +284,15 @@ function createEditInterface() {
       
       <label for="editPhone"></label>
       <input type="tel" id="editPhone" name="phone" placeholder="+49" title="tel" required value="${
-        chosenUser.phone ? chosenUser.phone : ""
-      }"><br><br>
+        chosenUser.phone !== undefined ? chosenUser.phone : ""
+      }">
+<br><br>
       
       <div class="bContainer">
           <button class="contactbuttonsone" onclick="clearInfoAbout()">Cancel</button>
           <button class="contactbuttonsonetwo" onclick="updateContact()">Update contact</button>
       </div>
-</label>
+    </label>
   `;
 }
 
@@ -248,12 +301,14 @@ function createEditInterface() {
  * @returns
  */
 function createDetailsContact() {
-  let initials = generateInitials(chosenUser.name)
+  let initials = generateInitials(chosenUser.name);
   return /*html*/ `
 <div class="wrapper-for-details">
   <div class="headline-contacts">
     <div>
-      <div class="showcircle-detail" style="background-color: ${chosenUser.color}">${initials}</div>
+      <div class="showcircle-detail" style="background-color: ${
+        chosenUser.color
+      }">${initials}</div>
     </div>
     <div>
       <h2>${chosenUser.name}</h2>
@@ -271,23 +326,29 @@ function createDetailsContact() {
     </div>
     <div>
       <p class="email-details">Phone</p>
-      <p class="phone-details-user">${chosenUser.phone}</p>
+      <p class="phone-details-user">${
+        chosenUser.phone !== undefined && chosenUser.phone !== null
+          ? chosenUser.phone
+          : "nicht vorhanden"
+      }</p>
+
     </div>
   </div>
+  <button class="go-back-button" onclick="clearInfoAbout()">Go Back</button>
 </div>  
 `;
 }
 
 /**
- * html code 
- * @param {number} userId 
- * @param {string} firstLetter 
- * @param {string} usersGroup 
- * @param {number} i 
- * @returns 
+ * html code
+ * @param {number} userId
+ * @param {string} firstLetter
+ * @param {string} usersGroup
+ * @param {number} i
+ * @returns
  */
 function createContactList(userId, firstLetter, usersGroup, i) {
-  let initials = generateInitials(usersGroup[i].name)
+  let initials = generateInitials(usersGroup[i].name);
   return /*html*/ `
         <div class="wrapper-for-contacts" id="${userId}" onclick="openContactDetails(${i}, '${firstLetter}')">
           <div class="showcircle" style="background-color: ${usersGroup[i].color}">${initials}</div>
@@ -301,8 +362,8 @@ function createContactList(userId, firstLetter, usersGroup, i) {
 
 /**
  * split initials to showcase better initials
- * @param {string} nameContact 
- * @returns 
+ * @param {string} nameContact
+ * @returns
  */
 function generateInitials(nameContact) {
   const nameParts = nameContact.split(" ");

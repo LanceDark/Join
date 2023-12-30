@@ -41,30 +41,45 @@ async function renderContactBadges() {
  * Toggles the visibility of elements in the edit modal related to contact selection.
  * @description This function toggles the visibility of several elements, such as the assigned badges, the "add contact" button, and the arrow button, in the edit modal for contact selection.
  */
-function toggleContactsInEditModal() {
-    const assigneesBadgesWrapper = document.querySelector('.edit-assigned-to-badges');
-    const imgElement = document.querySelector('.show-contacts-btn');
-    const addContactBtn = document.querySelector('.add-contact-btn');
-    const contactBadges = document.querySelector('.contact-badges-container');
-    
-    // Toggles contacts wrapper to select from
-    assigneesBadgesWrapper.classList.toggle('d-none');
-    
-    // Toggles button to add new contacts to the task
-    addContactBtn.classList.toggle('d-none');
-    
-    // Toggles the arrow button
-    if (assigneesBadgesWrapper.classList.contains('d-none')) {
-        imgElement.src = "./assets/img/arrow_drop_down.svg";
-    } else {
-        imgElement.src = "./assets/img/arrow_drop_up.svg";
-    }
-    
-    // Toggles profile badges under contacts wrapper to select from
-    contactBadges.classList.toggle('d-none');
-    
+document.addEventListener('click', function(event) {
+  const assigneesBadgesWrapper = document.querySelector('.edit-assigned-to-badges');
+  const imgElement = document.querySelector('.show-contacts-btn');
+  const addContactBtn = document.querySelector('.add-contact-btn');
+  const contactBadges = document.querySelector('.contact-badges-container');
+
+  // Überprüfen, ob das geklickte Element außerhalb des edit-assigned-to-badges liegt
+  if (!assigneesBadgesWrapper.contains(event.target) && !imgElement.contains(event.target)) {
+    // Schließe den edit-assigned-to-badges Container, aktualisiere die Symbole
+    assigneesBadgesWrapper.classList.add('d-none');
+    addContactBtn.classList.remove('d-none');
+    imgElement.src = "./assets/img/arrow_drop_down.svg";
+    contactBadges.classList.add('d-none');
     renderContactBadges();
+  }
+});
+
+/**
+ * Toggles the visibility of contacts in the edit modal.
+ */
+function toggleContactsInEditModal() {
+  const assigneesBadgesWrapper = document.querySelector('.edit-assigned-to-badges');
+  const imgElement = document.querySelector('.show-contacts-btn');
+  const addContactBtn = document.querySelector('.add-contact-btn');
+  const contactBadges = document.querySelector('.contact-badges-container');
+
+  assigneesBadgesWrapper.classList.toggle('d-none');
+  addContactBtn.classList.toggle('d-none');
+
+  if (assigneesBadgesWrapper.classList.contains('d-none')) {
+    imgElement.src = "./assets/img/arrow_drop_down.svg";
+  } else {
+    imgElement.src = "./assets/img/arrow_drop_up.svg";
+  }
+
+  contactBadges.classList.toggle('d-none');
+  renderContactBadges();
 }
+
 
 /**
  * Finds a selected contact by its ID.

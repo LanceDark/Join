@@ -568,6 +568,11 @@ h5 {
     padding-right: 100px;
   }
 
+  .headerFromAddContact {
+    width: 300px !important;
+    right: 0px !important;
+  }
+
   .closeButton {
     padding-left: 240px !important;
   }
