@@ -21,19 +21,24 @@
 
     <form onsubmit="register(); return false;" class="signupForm">
       <div class="mainContainer">
-        <div class="header-div">
-          <div class="arrowLeftContainer" onclick="goBackToLogin()">
-            <img
-              class="arrowLeft"
-              src="./assets/img/arrowLeft.png"
-              style="margin-right: 10px"
-            />
-          </div>
+        <div class="main">
           <div>
             <h1>Sign up</h1>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="154"
+              height="3"
+              viewBox="0 0 154 3"
+              fill="none"
+            >
+              <path
+                d="M152 1.5L2 1.5"
+                stroke="#4589FF"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+            </svg>
           </div>
-        </div>
-        <div class="main">
           <div class="inputContainer">
             <input
               id="nem"
@@ -87,12 +92,15 @@
               Sign up
             </button>
           </form>
+          <div class="arrowLeftContainer" onclick="goBackToLogin()">
+            <img src="./assets/img/arrowLeft.png">
+          </div>
         </div>
       </div>
     </form>
     <div class="link-to-special">
-      <button class="privacy-btn">Privacy Policy</button>
-      <button class="legal-btn">Legal Notice</button>
+      <button class="privacy-btn" onclick="">Privacy Policy</button>
+      <button class="legal-btn" onclick="">Legal Notice</button>
     </div>
   </body>
 </html>

@@ -157,6 +157,10 @@ function createNewContactDiv() {
   let infoAbout = document.getElementById("showUsers");
   infoAbout.style.display = "flex";
   infoAbout.innerHTML = createContactDiv();
+  setTimeout(() => {
+    infoAbout.style.transition = "width 0.4s ease";
+    infoAbout.style.width = "590px";
+  }, 1);
 }
 
 /**
@@ -227,35 +231,38 @@ function checkValues() {
  */
 function createContactDiv() {
   return /*html*/ ` 
-        <div>
-            <div class="headerFromAddContact">
-            <b onclick="clearInfoAbout()" id="xButton">X</b>
-                <img class="joinImg" src="./assets/img/capWhite.png" alt="Join Logo">
-                <h3>Add Contact</h3>
-                <p>Tasks are better with a team!</p>
-            </div>
-            <div class="imgContainer" >
-                <img class="addLogo deaktiviert-hover " src="./assets/img/person_add.svg" alt="logoContact">
-            </div>
-            <form class="formInput" >
-                <label for="name"></label>
-                <input type="text" id="name" name="name" placeholder="Name" required><br>
-                <div class="error-message" id="wrongName"></div>
-                <br> 
-                <label for="email"></label>
-                <input type="email" id="email" name="email" placeholder="Email" required><br>
-                <div class="error-message" id="wrongEmail"></div>
-                <br>
-                <label for="phone"></label>
-                <input type="tel" id="phone" name="phone" placeholder="+49" required><br>
-                <div class="error-message" id="wrongPhone"></div>
-                <br>
-                <div class="bContainer">
-                <button class="contactbuttonsone" onclick="clearInfoAbout()">Cancel</button>
-                    <button class="contactbuttonsonetwo" onclick="createContactOnline()">Create contact</button>
-                </div>
-              </form>
-        </div>
+  <div class="modal-for-contacts">
+    <div class="header-for-modal">
+      <img class="joinImg" src="./assets/img/capWhite.png" alt="Join Logo">
+      <p class="add-contact-modal">Add Contact</p>
+      <p class="add-task-modal2">Tasks are better with a team!</p>
+      <img src="./assets/img/close.svg" alt="" class="here-to-close" onclick="clearInfoAbout()">
+    </div>
+    <div class="modal-for-down-contacts">
+      <img class="logo-modal" src="./assets/img/person_add.svg" alt="logoContact">
+      <div class="modal-contacts-inputs">
+        <label for="name" class="name-label">  
+            <input type="text" id="name" name="name" placeholder="Name" required> 
+            <img src="./assets/img/person.svg" alt="" class="person-img">
+        </label>
+          <div class="error-message" id="wrongName"></div>
+        <label for="email" class="name-label">
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <img src="./assets/img/mail.png" alt="" class="person-img">
+        </label>
+          <div class="error-message" id="wrongEmail"></div>
+        <label for="phone" class="name-label">
+          <input type="tel" id="phone" name="phone" placeholder="+49" required>
+          <img src="./assets/img/call.svg" alt="" class="person-img">
+        </label>
+          <div class="error-message" id="wrongPhone"></div>
+      </div>
+      <div class="modal-for-btn">
+        <button class="contactbuttonsone" onclick="clearInfoAbout()">Cancel</button>
+        <button class="contactbuttonsonetwo" onclick="createContactOnline()">Create contact</button>
+      </div>
+    </div>
+  </div>
     `;
 }
 
