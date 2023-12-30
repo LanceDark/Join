@@ -150,9 +150,6 @@ p {
     font-family: 'Open Sans', sans-serif;
 }
 
-.logo {
-    height: 60px;
-}
 
 a:-webkit-any-link {
     color: -webkit-link;
@@ -284,13 +281,6 @@ header {
         flex-direction: column;
         justify-content: center;
     }
-
-    .logo {
-        width: 60px;
-        width: 60px;
-    }
-
-
 }
 
 @media (max-width: 860px) {

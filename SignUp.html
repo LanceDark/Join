@@ -1,58 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign up</title>
-    <link rel="stylesheet" href="./assets/css/Sign_up.css">
+    <link rel="stylesheet" href="./assets/css/Sign_up.css" />
     <script src="./assets/js/SignUp.js"></script>
     <script src="./assets/js/register.js"></script>
-</head>
+  </head>
 
-<body onload="init()">
-
+  <body onload="init()">
     <header>
-        <img class="headerSignupImage" src="./assets/img/capWhite.png" alt="" srcset="">
+      <img
+        class="headerSignupImage"
+        src="./assets/img/capWhite.png"
+        alt=""
+        srcset=""
+      />
     </header>
 
     <form onsubmit="register(); return false;" class="signupForm">
-        <div class="mainContainer">
-            <div class="header-div">
-                <div class="arrowLeftContainer" onclick="goBackToLogin()">
-                    <img class="arrowLeft" src="./assets/img/arrowLeft.png" style="margin-right: 10px;">
-                </div>
-                <div>
-                    <h1>Sign up</h1>
-                </div>
-            </div>
-            <div class="main">
-                
-                <div class="inputContainer">
-                    <input id="nem" class="inputname" type="name" placeholder="Name" required>
-                    <input id="email" class="inputemail" type="email" placeholder="Email" required>
-                    <input id="password" class="inputpassword" type="password" placeholder="Password" required>
-                    <input id="confirmPassword" class="inputconfirmpassword" type="password" placeholder="Confirm Password" required>
-                </div>
-                <div class="acceptPrivacy">
-                    <input style="width: 12px;" type="checkbox" id="remember" name="remember" required>
-                    <label for="remember">I accept the <a onclick="redirectToPrivacyPolicy()" class="privacyLink" href="./privacy_policy.html">Privacy
-                            policy</a>.</label>
-                </div>
-                <form class="signupForm">
-                    <button id="registerBtn" class="signupButton" type="submit">Sign up</button>
-                </form>
-            </div>
+      <div class="mainContainer">
+        <div class="header-div">
+          <div class="arrowLeftContainer" onclick="goBackToLogin()">
+            <img
+              class="arrowLeft"
+              src="./assets/img/arrowLeft.png"
+              style="margin-right: 10px"
+            />
+          </div>
+          <div>
+            <h1>Sign up</h1>
+          </div>
         </div>
+        <div class="main">
+          <div class="inputContainer">
+            <input
+              id="nem"
+              class="inputname"
+              type="name"
+              placeholder="Name"
+              required
+            />
+            <input
+              id="email"
+              class="inputemail"
+              type="email"
+              placeholder="Email"
+              required
+            />
+            <input
+              id="password"
+              class="inputpassword"
+              type="password"
+              placeholder="Password"
+              required
+            />
+            <input
+              id="confirmPassword"
+              class="inputconfirmpassword"
+              type="password"
+              placeholder="Confirm Password"
+              required
+            />
+          </div>
+          <div class="acceptPrivacy">
+            <input
+              style="width: 12px"
+              type="checkbox"
+              id="remember"
+              name="remember"
+              required
+            />
+            <label for="remember"
+              >I accept the
+              <a
+                onclick="redirectToPrivacyPolicy()"
+                class="privacyLink"
+                href="./privacy_policy.html"
+                >Privacy policy</a
+              >.</label
+            >
+          </div>
+          <form class="signupForm">
+            <button id="registerBtn" class="signupButton" type="submit">
+              Sign up
+            </button>
+          </form>
+        </div>
+      </div>
     </form>
-
-    <footer>
-        <div class="nav-bottom">
-            <div onclick="redirectToPrivacyPolicy()" class="privacy-policy">Privacy Policy</div>
-            <div onclick="redirectToLegalNotice()" class="legal-notice">Legal notice</div>
-        </div>
-    </footer>
-
-</body>
-
+    <div class="link-to-special">
+      <button class="privacy-btn">Privacy Policy</button>
+      <button class="legal-btn">Legal Notice</button>
+    </div>
+  </body>
 </html>

@@ -1,4 +1,4 @@
-currentUser = localStorage.getItem('currentUser'); 
+currentUser = localStorage.getItem('Usercurrent'); 
 
 /**
  * generate first letter of first and last name

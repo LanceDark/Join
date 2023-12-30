@@ -178,10 +178,6 @@ p {
   color: #0038ff;
 }
 
-.logo {
-  height: 60px;
-}
-
 a:-webkit-any-link {
   color: -webkit-link;
   cursor: pointer;

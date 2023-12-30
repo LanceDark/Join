@@ -1,23 +1,30 @@
+async function init() {
+  await includeHTML();
+  await setHeaderInitials();
+  await setProfileBadgeEventListener();
+  await setActiveNavLink();
+}
+
 async function includeHTML() {
-    let includeElements = document.querySelectorAll("[w3-include-html]");
-    for (let i = 0; i < includeElements.length; i++) {
-      const element = includeElements[i];
-      file = element.getAttribute("w3-include-html"); // "includes/header.html"
-      let resp = await fetch(file);
-      if (resp.ok) {
-        element.innerHTML = await resp.text();
-      } else {
-        element.innerHTML = "Page not found";
-      }
+  let includeElements = document.querySelectorAll("[w3-include-html]");
+  for (let i = 0; i < includeElements.length; i++) {
+    const element = includeElements[i];
+    file = element.getAttribute("w3-include-html"); // "includes/header.html"
+    let resp = await fetch(file);
+    if (resp.ok) {
+      element.innerHTML = await resp.text();
+    } else {
+      element.innerHTML = "Page not found";
     }
   }
+}
 
-  function redirectToPrivacyPolicy() {
-    window.location.href = "./privacy_policy.html";
+function redirectToPrivacyPolicy() {
+  window.location.href = "./privacy_policy.html";
 }
 
 function redirectToLegalNotice() {
-    window.location.href = "./legal_notice.html";
+  window.location.href = "./legal_notice.html";
 }
 
 function backButton() {
@@ -55,4 +62,3 @@ function handleMouseUp(event) {
   }
   renderContactBadges();
 }
-

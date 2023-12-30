@@ -2,8 +2,11 @@
  * Initializes the application.
  * @description This function includes HTML content from external files to elements with the "w3-include-html" attribute.
  */
-function init() {
-    includeHTML();
+async function init() {
+    await includeHTML();
+    await setHeaderInitials();
+    await setProfileBadgeEventListener();
+    await setActiveNavLink();
   }
  /**
  * Includes HTML content from external files to elements with the "w3-include-html" attribute.

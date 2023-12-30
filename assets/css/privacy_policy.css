@@ -26,10 +26,6 @@ nav {
 
 }
 
-.logo {
-    height: 60px;
-}
-
 .single-nav-links {
     display: flex;
     align-items: center;
@@ -307,10 +303,6 @@ header {
 @media (max-width: 500px) {
     a {
         font-size: 12px;
-    }
-
-    .logo {
-        display: none;
     }
 }
 

@@ -46,10 +46,6 @@ nav {
     display: flex;
 }
 
-a {
-    
-}
-
 .nav-links {
     display: flex;
     flex-direction: column;
@@ -156,10 +152,6 @@ p {
     color: #0038FF;
 }
 
-.logo {
-    height: 80px;
-    width: 80px;
-}
 
 a:-webkit-any-link {
     color: -webkit-link;
@@ -224,10 +216,6 @@ header {
 
 @media (max-width: 1080px) {
 
-    .logo {
-        height: 40px;
-        width: 40px;
-    }
 
     nav {
         background-color: white;
@@ -333,10 +321,6 @@ header {
 @media (max-width: 500px) {
     a {
         font-size: 12px;
-    }
-
-    .logo {
-        display: none;
     }
 }
 
