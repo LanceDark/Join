@@ -92,7 +92,6 @@ function highlightChosenUser(id) {
  setTimeout(function (){
   resetHighlight(chosen)
  }, 2000)
- 
 }
 
 function resetHighlight(chosen){
@@ -178,6 +177,7 @@ function createNewContactDiv() {
   let infoAbout = document.getElementById("showUsers");
   infoAbout.style.display = "flex";
   infoAbout.innerHTML = createContactDiv();
+  isShowUsersDivOpen = true;
   setTimeout(() => {
     infoAbout.style.transition = "width 0.4s ease";
     infoAbout.style.width = "590px";
@@ -293,34 +293,44 @@ function createContactDiv() {
 
 function createEditInterface() {
   return /*html*/ `
-  <div class="headerFromAddContact">
-  <b onclick="clearInfoAbout()" id="xButton">X</b>
+    <div class="modal-for-contacts">
+    <div class="header-for-modal">
       <img class="joinImg" src="./assets/img/capWhite.png" alt="Join Logo">
-      <h3>Edit Contact</h3>
-      <p>Edit the contact details below:</p>
-  </div>
-  <label class="formInput">
-      <label for="editName"></label>
-      <input type="text" id="editName" name="name" placeholder="Name" required value="${
+      <p class="add-contact-modal">Edit Contact</p>
+      <p class="add-task-modal2">edit the contact details below:</p>
+      <img src="./assets/img/close.svg" alt="" class="here-to-close" onclick="clearInfoAbout()">
+    </div>
+    <div class="modal-for-down-contacts">
+      <img class="logo-modal" src="./assets/img/person_add.svg" alt="logoContact">
+      <div class="modal-contacts-inputs">
+        <label for="name" class="name-label">  
+            <input type="text" id="name" name="name" placeholder="Name" required value="${
         chosenUser.name
-      }"><br><br>
-      
-      <label for="editEmail"></label>
-      <input type="email" id="editEmail" name="email" placeholder="Email" required value="${
+      }"> 
+            <img src="./assets/img/person.svg" alt="" class="person-img">
+        </label>
+          <div class="error-message" id="wrongName"></div>
+        <label for="email" class="name-label">
+            <input type="email" id="email" name="email" placeholder="Email" required value="${
         chosenUser.email
-      }"><br><br>
-      
-      <label for="editPhone"></label>
-      <input type="tel" id="editPhone" name="phone" placeholder="+49" title="tel" required value="${
+      }">
+            <img src="./assets/img/mail.png" alt="" class="person-img-mail">
+        </label>
+          <div class="error-message" id="wrongEmail"></div>
+        <label for="phone" class="name-label">
+          <input type="tel" id="phone" name="phone" placeholder="+49" required value="${
         chosenUser.phone !== undefined ? chosenUser.phone : ""
       }">
-<br><br>
-      
-      <div class="bContainer">
-          <button class="contactbuttonsone" onclick="clearInfoAbout()">Cancel</button>
-          <button class="contactbuttonsonetwo" onclick="updateContact()">Update contact</button>
+          <img src="./assets/img/call.svg" alt="" class="person-img">
+        </label>
+          <div class="error-message" id="wrongPhone"></div>
       </div>
-    </label>
+      <div class="modal-for-btn">
+        <button class="contactbuttonsone" onclick="clearInfoAbout()">Cancel</button>
+        <button class="contactbuttonsonetwo" onclick="createContactOnline()">Create contact</button>
+      </div>
+    </div>
+  </div>
   `;
 }
 
