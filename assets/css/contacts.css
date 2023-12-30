@@ -509,7 +509,6 @@ a {
 
 .wrapper-for-name-email {
   display: flex;
-  align-items: center;
   flex-direction: column;
 }
 
@@ -968,6 +967,7 @@ button:hover {
 @media (max-width: 1150px) {
   #showUsers {
     left: 650px;
+    width: 100%;
   }
 
   .headerFromAddContact {
@@ -1008,6 +1008,35 @@ button:hover {
   }
 }
 
+@media (max-width: 1370px) {
+  #showUsers {
+    width: 400px !important;
+  }
+
+  .header-for-modal {
+    width: 300px;
+  }
+
+  .modal-for-down-contacts {
+    width: 300px;
+  }
+
+  .name-label {
+    width: 300px;
+  }
+
+  #name {
+    width: 270px;
+  }
+
+  #phone {
+    width: 270px;
+  }
+
+  #email {
+    width: 270px;
+  }
+}
 @media (max-width: 1080px) {
   .nav-Container {
     height: 70px;
@@ -1047,15 +1076,15 @@ button:hover {
 
   #showUsers {
     display: none;
-    left: 0px;
     justify-content: center;
     align-items: center;
     backdrop-filter: blur(10px);
-    width: 100%;
+    width: 100% !important;
     height: 100vh;
     background-color: transparent;
     bottom: 40px;
     top: 0px;
+    left: 0px;
   }
 
   #name {
@@ -1072,6 +1101,20 @@ button:hover {
 
   .formInput {
     padding: 0px;
+  }
+
+  .header-for-modal {
+    height: 140px;
+  }
+
+  .logo-modal {
+    height: 90px;
+    width: 90px;
+  }
+
+  .here-to-close {
+    top: 150px;
+    right: 360px;
   }
 }
 
@@ -1096,12 +1139,6 @@ button:hover {
 }
 
 @media (max-width: 800px) {
-  .navbarLeft {
-    width: 0;
-  }
-}
-
-@media (max-width: 800px) {
   div#addContacts {
     top: 110px;
     display: flex;
@@ -1113,6 +1150,14 @@ button:hover {
   #showUsers {
     top: 0;
   }
+
+  .navbarLeft {
+    width: 0;
+  }
+
+  .here-to-close {
+    right: 230px;
+  }
 }
 
 @media (max-width: 650px) {
@@ -1122,6 +1167,10 @@ button:hover {
     justify-content: center;
     align-items: center;
     left: 5%;
+  }
+
+  .here-to-close {
+    right: 150px;
   }
 }
 
@@ -1170,6 +1219,10 @@ button:hover {
 
   #xButton {
     margin-right: 70px;
+  }
+
+  .here-to-close {
+    right: 70px;
   }
 }
 
@@ -1314,6 +1367,10 @@ button:hover {
   .contactbuttonsonetwo {
     width: 90px;
     padding: 25px;
+  }
+
+  .here-to-close {
+    right: 20px;
   }
 }
 

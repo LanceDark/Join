@@ -260,7 +260,7 @@ function createContactDiv() {
       <img src="./assets/img/close.svg" alt="" class="here-to-close" onclick="clearInfoAbout()">
     </div>
     <div class="modal-for-down-contacts">
-      <img class="logo-modal" src="./assets/img/person_add.svg" alt="logoContact">
+      <img class="logo-modal" src="./assets/img/Group 9.svg" alt="logoContact">
       <div class="modal-contacts-inputs">
         <label for="name" class="name-label">  
             <input type="text" id="name" name="name" placeholder="Name" required> 
@@ -303,8 +303,7 @@ function createEditInterface() {
     </div>
     <div class="modal-for-down-contacts">
       <div class="showcircle-detail" style="background-color: ${
-        chosenUser.color
-      }">${initials}</div
+        chosenUser.color0}">${initials}</div
       <div class="modal-contacts-inputs">
         <label for="name" class="name-label">  
             <input type="text" id="name" name="name" placeholder="Name" required value="${

@@ -451,7 +451,8 @@ input {
   #email,
   #password,
   #confirmPassword {
-    width: 200px;
+    width: 300px;
+    background-position: 300px;
   }
 
   ::placeholder {
@@ -479,9 +480,33 @@ input {
   .legal-notice {
     font-size: 16px;
   }
+
+  #nem,
+  #email,
+  #password,
+  #confirmPassword {
+    width: 220px;
+    background-position: 200px;
+  }
+
+  .headline-content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .arrowLeftContainer{
+    top: 44px;
+  }
 }
 
 @media (max-width: 400px) {
+  .headline-content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
   .mainContainer {
     width: 6em;
   }
