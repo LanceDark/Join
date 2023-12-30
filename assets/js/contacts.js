@@ -292,16 +292,19 @@ function createContactDiv() {
  */
 
 function createEditInterface() {
+  let initials = generateInitials(chosenUser.name);
   return /*html*/ `
     <div class="modal-for-contacts">
     <div class="header-for-modal">
       <img class="joinImg" src="./assets/img/capWhite.png" alt="Join Logo">
       <p class="add-contact-modal">Edit Contact</p>
-      <p class="add-task-modal2">edit the contact details below:</p>
+      <p class="add-task-modal2">Edit the contact details below:</p>
       <img src="./assets/img/close.svg" alt="" class="here-to-close" onclick="clearInfoAbout()">
     </div>
     <div class="modal-for-down-contacts">
-      <img class="logo-modal" src="./assets/img/person_add.svg" alt="logoContact">
+      <div class="showcircle-detail" style="background-color: ${
+        chosenUser.color
+      }">${initials}</div
       <div class="modal-contacts-inputs">
         <label for="name" class="name-label">  
             <input type="text" id="name" name="name" placeholder="Name" required value="${
