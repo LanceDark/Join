@@ -80,7 +80,7 @@ input {
 }
 
 .inputname {
-  background-image: url("/assets/img/person.svg");
+  background-image: url("./assets/img/person.svg");
   flex-shrink: 0;
   background-position: 380px;
   background-size: 24px;
@@ -99,7 +99,7 @@ input {
 
 .inputemail {
   border-color: rgb(0, 0, 0, 0.2);
-  background-image: url("/assets/img/mail.svg");
+  background-image: url("./assets/img/mail.svg");
   flex-shrink: 0;
   background-position: 380px;
   background-size: 24px;
@@ -118,7 +118,7 @@ input {
 
 .inputpassword {
   border-color: rgb(0, 0, 0, 0.2);
-  background-image: url("/assets/img/lock.svg");
+  background-image: url("./assets/img/lock.svg");
   flex-shrink: 0;
   background-position: 380px;
   background-size: 24px;
@@ -145,7 +145,7 @@ input {
 
 .inputconfirmpassword {
   border-color: rgb(0, 0, 0, 0.2);
-  background-image: url("/assets/img/lock.svg");
+  background-image: url("./assets/img/lock.svg");
   flex-shrink: 0;
   background-position: 380px;
   background-size: 24px;
@@ -431,34 +431,6 @@ input {
   z-index: 9999;
 }
 
-@media (max-width: 900px) {
-  .mainContainer {
-    width: 500px;
-  }
-  .main {
-    width: 300px;
-  }
-
-  .header-div {
-    width: 300px;
-  }
-
-  h1 {
-    font-size: 40px;
-  }
-
-  #nem,
-  #email,
-  #password,
-  #confirmPassword {
-    width: 300px;
-    background-position: 300px;
-  }
-
-  ::placeholder {
-    font-size: 15px;
-  }
-}
 
 @media (max-width: 750px) {
   .mainContainer {

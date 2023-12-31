@@ -30,7 +30,7 @@ nav {
   gap: 12px;
   width: 500px;
   height: 180px;
-  border-radius: 30px 0px 30px 30px;
+  border-radius: 30px 30px 30px 30px;
   background: var(--Ligth-blue, #005dff);
 }
 
@@ -70,7 +70,7 @@ nav {
 .modal-for-btn {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   gap: 4px;
   padding-top: 10px;
@@ -108,7 +108,7 @@ nav {
   flex-direction: column;
   align-items: center;
   gap: 5px;
-  border-radius: 30px 0px 30px 30px;
+  border-radius: 30px 30px 30px 30px;
   background: #fff;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
   transition: width 0.1s ease 0s;
@@ -168,6 +168,10 @@ nav {
   font-size: 16px;
   color: #42526e;
   cursor: pointer;
+}
+
+.name-input {
+  border: none;
 }
 
 h1 {
@@ -502,6 +506,19 @@ a {
   align-items: center;
 }
 
+.showcase-for-contacts {
+  display: fleX;
+  justify-content: center;
+  align-items: center;
+}
+
+.inside-img {
+  display: flex;
+  position: absolute;
+  width: 70px;
+  height: 70px
+}
+
 .wrapper-for-contacts:hover {
   background-color: #d2e3ff;
   cursor: pointer;
@@ -599,6 +616,7 @@ div#addContacts {
   font-weight: 400;
   line-height: 120%;
   border: none;
+  background: transparent;
 }
 
 #name:focus {
@@ -653,6 +671,7 @@ div#addContacts {
   font-weight: 400;
   line-height: 120%;
   border: none;
+  background: transparent;
 }
 
 #phone {
@@ -667,6 +686,7 @@ div#addContacts {
   font-weight: 400;
   line-height: 120%;
   border: none;
+  background: transparent;
 }
 
 .imgContainer {
@@ -966,7 +986,7 @@ button:hover {
 
 @media (max-width: 1150px) {
   #showUsers {
-    left: 650px;
+    left: 680px;
     width: 100%;
   }
 
@@ -1014,7 +1034,7 @@ button:hover {
   }
 
   .header-for-modal {
-    width: 300px;
+    width: 310px;
   }
 
   .modal-for-down-contacts {
@@ -1040,6 +1060,10 @@ button:hover {
 @media (max-width: 1080px) {
   .nav-Container {
     height: 70px;
+  }
+
+  .headline-contacts {
+    width: 10px;
   }
 
   .go-back-button {
@@ -1078,7 +1102,7 @@ button:hover {
     display: none;
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(100px);
     width: 100% !important;
     height: 100vh;
     background-color: transparent;
@@ -1276,6 +1300,16 @@ button:hover {
     width: none;
     padding: 0px;
     margin: 12px;
+  }
+
+  .showcircle-detail {
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
+  }
+
+  .go-back-button {
+    font-size: 20px;
   }
 
   .moreVert {

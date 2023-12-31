@@ -4,6 +4,7 @@ let chosenUser;
 let isShowUsersDivOpen = false;
 let highlighted = false;
 let conactIsChosen = null;
+let chosenColor = false;
 
 /**
  * initialContacts on load of Webpage
@@ -70,16 +71,17 @@ function groupUsersByFirstLetter(users) {
  * @param {string} firstLetter
  */
 function openContactDetails(index, firstLetter, userId) {
-  let id = userId.getAttribute('id');
+  let id = userId.getAttribute("id");
   let infoAbout = document.getElementById("showUsers");
-  if(conactIsChosen) {
-    resetHighlight(conactIsChosen)
+  if (conactIsChosen) {
+    resetHighlight(conactIsChosen);
   }
-  conactIsChosen = id
+  conactIsChosen = id;
   highlightChosenUser(id);
+  chosenColor = true;
   if (isShowUsersDivOpen) {
     clearInfoAbout();
-  } 
+  }
   infoAbout.style.display = "flex";
   chosenUser = groupedUsers.get(firstLetter)[index];
   infoAbout.innerHTML = createDetailsContact();
@@ -87,16 +89,19 @@ function openContactDetails(index, firstLetter, userId) {
 }
 
 function highlightChosenUser(id) {
- let chosen = document.getElementById(id)
- chosen.style.backgroundColor = "#4589FF";
- setTimeout(function (){
-  resetHighlight(chosen)
- }, 2000)
+  let chosen = document.getElementById(id);
+  if ((chosenColor = false)) {
+    resetHighlight(id);
+  } else if (!chosenColor) {
+    chosen.style.backgroundColor = "#4589FF";
+  }
 }
 
-function resetHighlight(chosen){
+function resetHighlight(id) {
+  let chosen = document.getElementById(id);
   chosen.style.backgroundColor = "";
   conactIsChosen = null;
+  chosenColor = true;
 }
 
 /**
@@ -260,7 +265,10 @@ function createContactDiv() {
       <img src="./assets/img/close.svg" alt="" class="here-to-close" onclick="clearInfoAbout()">
     </div>
     <div class="modal-for-down-contacts">
-      <img class="logo-modal" src="./assets/img/Group 9.svg" alt="logoContact">
+      <div class="showcase-for-contacts">
+        <img class="logo-modal" src="./assets/img/Group 9.svg" alt="logoContact">
+        <img src="./assets/img/person.svg" alt="" class="inside-img">
+      </div>
       <div class="modal-contacts-inputs">
         <label for="name" class="name-label">  
             <input type="text" id="name" name="name" placeholder="Name" required> 
@@ -294,45 +302,42 @@ function createContactDiv() {
 function createEditInterface() {
   let initials = generateInitials(chosenUser.name);
   return /*html*/ `
-    <div class="modal-for-contacts">
-    <div class="header-for-modal">
-      <img class="joinImg" src="./assets/img/capWhite.png" alt="Join Logo">
-      <p class="add-contact-modal">Edit Contact</p>
-      <p class="add-task-modal2">Edit the contact details below:</p>
-      <img src="./assets/img/close.svg" alt="" class="here-to-close" onclick="clearInfoAbout()">
-    </div>
-    <div class="modal-for-down-contacts">
+  <div class="wrapper-for-details">
+  <div class="headline-contacts">
+    <div>
       <div class="showcircle-detail" style="background-color: ${
-        chosenUser.color0}">${initials}</div
-      <div class="modal-contacts-inputs">
-        <label for="name" class="name-label">  
-            <input type="text" id="name" name="name" placeholder="Name" required value="${
-        chosenUser.name
-      }"> 
-            <img src="./assets/img/person.svg" alt="" class="person-img">
-        </label>
-          <div class="error-message" id="wrongName"></div>
-        <label for="email" class="name-label">
-            <input type="email" id="email" name="email" placeholder="Email" required value="${
-        chosenUser.email
-      }">
-            <img src="./assets/img/mail.png" alt="" class="person-img-mail">
-        </label>
-          <div class="error-message" id="wrongEmail"></div>
-        <label for="phone" class="name-label">
-          <input type="tel" id="phone" name="phone" placeholder="+49" required value="${
+        chosenUser.color
+      }">${initials}</div>
+    </div>
+    <div>
+      <input type="text" value="${chosenUser.name}" required  id="name">
+      <div class="textContainer" >
+              <p onclick="deleteUser()" class="deleteText"><img src="./assets/img/delete.svg">Delete </p>
+              <p onclick="editUser()" class="deleteText" ><img src="./assets/img/edit.svg">Edit </p>
+      </div>
+    </div>
+
+  </div>
+  <div class="information-details">Contact Information</div>
+  <div class="gapper-between">
+    <div>
+      <p class="email-details">Email</p>
+      <input type="email" value="${chosenUser.email}" id="email">
+      <a href="" class="email-details-user"></a>
+    </div>
+    <div>
+      <p class="email-details">Phone</p>
+      <input type="tel" name="phone" placeholder="+49" required value="${
         chosenUser.phone !== undefined ? chosenUser.phone : ""
-      }">
-          <img src="./assets/img/call.svg" alt="" class="person-img">
-        </label>
-          <div class="error-message" id="wrongPhone"></div>
-      </div>
-      <div class="modal-for-btn">
-        <button class="contactbuttonsone" onclick="clearInfoAbout()">Cancel</button>
-        <button class="contactbuttonsonetwo" onclick="createContactOnline()">Create contact</button>
-      </div>
+      }" id="phone">
+
     </div>
   </div>
+  <div class="modal-for-btn">
+        <button class="contactbuttonsone" onclick="clearInfoAbout()">Cancel</button>
+        <button class="contactbuttonsonetwo" onclick="createContactOnline()">Create contact</button>
+  </div>
+</div> 
   `;
 }
 
