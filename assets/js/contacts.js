@@ -163,9 +163,9 @@ function editUser() {
  * update the current contact
  */
 async function updateContact() {
-  let newName = document.getElementById("editName").value;
-  let newMail = document.getElementById("editEmail").value;
-  let newPhone = document.getElementById("editPhone").value;
+  let newName = document.getElementById("name").value;
+  let newMail = document.getElementById("email").value;
+  let newPhone = document.getElementById("phone").value;
   chosenUser.email = newMail;
   chosenUser.name = newName;
   chosenUser.phone = newPhone;
@@ -335,7 +335,7 @@ function createEditInterface() {
   </div>
   <div class="modal-for-btn">
         <button class="contactbuttonsone" onclick="clearInfoAbout()">Cancel</button>
-        <button class="contactbuttonsonetwo" onclick="createContactOnline()">Create contact</button>
+        <button class="contactbuttonsonetwo" onclick="updateContact()">Edit User</button>
   </div>
 </div> 
   `;

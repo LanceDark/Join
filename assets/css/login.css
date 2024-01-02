@@ -295,11 +295,21 @@ input::placeholder {
     
   }
 
+  @media (max-width: 700px) {
+    .divContainer {
+        width: 350px;
+    }
+  }
+
   @media (max-width: 550px) {
 
     .notJoinButton{
         padding: 6px;
         font-size: 12px;
+    }
+
+    .divContainer {
+        padding:  24px 44px;
     }
 
     .loginButton{
@@ -352,6 +362,16 @@ input::placeholder {
     
   }
 
+  @media (max-width: 450px) {
+    .divContainer {
+        width: 300px;
+    }
+
+    .inputContainer {
+        width: auto;
+    }
+  }
+
   @media (max-width: 400px){
 
     .notJoinButton{
@@ -368,8 +388,8 @@ input::placeholder {
     }
 
     .inputEmail, .inputPassword{
-        width: 110px;
-        background-position: 110px, 12px;
+        width: 220px;
+        background-position: 220px, 12px;
     }
 
     ::placeholder{
@@ -388,6 +408,12 @@ input::placeholder {
         font-size: 10px;
     }
 
+  }
+
+  @media (max-width: 370px) {
+    .divContainer{
+        padding: 14px;
+    }
   }
 
 
