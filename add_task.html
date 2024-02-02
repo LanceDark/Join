@@ -6,7 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="./assets/css/style.css" />
     <link rel="stylesheet" href="./assets/css/board.css" />
-    <link rel="stylesheet" href="./assets/css/contacts.css" />
+    <!-- <link rel="stylesheet" href="./assets/css/contacts.css" /> -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -50,7 +50,7 @@
               </form>
             </div>
             <div id="descriptionEle">
-              <h5>Description</h5>
+              <h5 class="section-headers">Description</h5>
               <input
                 type="text"
                 placeholder="Enter a description"
@@ -71,7 +71,7 @@
               </p>
             </div>
             <div id="date">
-              <h5>Due Date</h5>
+              <h5 class="section-headers">Due Date</h5>
               <input
                 type="date"
                 placeholder="dd/mm/yyyy"
@@ -86,7 +86,7 @@
             </div>
           </div>
           <div id="priority" class="priority">
-            <h5>Priority</h5>
+            <h5 class="section-headers">Priority</h5>
             <div class="help-div">
               <div class="edit-priority-tasks">
                 <div class="priority-btn edit-urgent">
@@ -109,7 +109,7 @@
             </div>
           </div>
           <div id="assignedTo" class="assigned-to-helper">
-            <h5>Assigned to</h5>
+            <h5 class="section-headers">Assigned to</h5>
             <div onclick="renderSelectOptionsPersons()" class="add-task-assigned-to-input-wrapper">
               <input
                 type="text"
@@ -142,7 +142,7 @@
             Bitte fülle dieses Feld aus.
           </p>
           <div id="category" class="category-helper">
-            <h5>Category</h5>
+            <h5 class="section-headers">Category</h5>
             <select
               name="category"
               id="selectedCategory"
@@ -158,7 +158,7 @@
             </p>
           </div>
           <div id="subTasks" class="sub-task-helper">
-            <h5>Subtasks</h5>
+            <h5 class="section-headers">Subtasks</h5>
             <div class="input-subtask-wrapper">
               <input
                 type="text"

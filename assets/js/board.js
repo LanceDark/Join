@@ -1,5 +1,3 @@
-initBoard();
-
 /**
  * Initializes the board by including HTML, setting header initials, and adding profile badge event listener.
  * @description This function initializes the board by performing tasks such as including HTML content, setting header initials, and adding an event listener to the profile badge in header.
@@ -9,13 +7,13 @@ async function initBoard() {
   await setHeaderInitials();
   await setProfileBadgeEventListener();
   await setActiveNavLink();
+  localContacts = JSON.parse(await getItem("contacts"));
+  renderCards();
 }
-
-renderCards();
 
 let localTasks;
 let currentTaskInEditModal;
-let localContacts;
+let localContacts = [];
 
 /**
  * Includes HTML content from external files to elements with the "w3-include-html" attribute.
@@ -35,6 +33,16 @@ async function includeHTML() {
   }
 }
 
+function showToast(message) {
+  const toast = document.querySelector(".toast");
+  toast.innerHTML = message;
+  toast.classList.add("open");
+
+  setTimeout(() => {
+    toast.classList.remove("open");
+  }, 3000);
+}
+
 /**
  * Retrieves to-do items from the server and updates the "localTasks" array.
  * @description This function fetches to-do items from a server and updates the "localTasks" array with the retrieved data.
@@ -49,9 +57,10 @@ async function getToDos() {
  * @description This function fetches contact data from a server and updates the "localContacts" array with the retrieved data.
  */
 async function loadContacts() {
-  const keyToSearch = "users";
-  let contacts = await getItem(keyToSearch);
-  localContacts = JSON.parse(contacts);
+  // const keyToSearch = "contacts";
+  // let contacts = await getItem(keyToSearch);
+  // localContacts = JSON.parse(contacts);
+  localContacts = JSON.parse(await getItem("contacts"));
 }
 
 /**
@@ -135,7 +144,6 @@ const cardDummy = document.querySelector(".card-dummy");
  * @description This function is responsible for rendering to-do cards along with their associated data, such as contacts and task categories. It also adds event listeners for drag-and-drop functionality.
  */
 async function renderCards() {
-  await loadContacts();
   await getToDos();
   await renderTasksByCategory("to-do");
   await renderTasksByCategory("in-progress");
@@ -143,6 +151,7 @@ async function renderCards() {
   await renderTasksByCategory("done");
   await toggleNoTasksCard();
   addEventListenersDragStart();
+  // await loadContacts();
 }
 
 /**
@@ -732,30 +741,71 @@ if (addTaskModal.classList.contains("is-active")) {
   document.body.style.overflow = "auto";
 }
 
-
 const boardColumnAddTaskBtnTodo = document.querySelector(
   "#plus-btn-container-todo"
 );
 boardColumnAddTaskBtnTodo.addEventListener("click", () => {
-  overlay.classList.toggle("hidden");
-  addTaskModal.classList.toggle("is-active");
-  columnCategory = "to-do";
+  const selectedColumn = "to-do";
+  if (window.innerWidth <= 1080) {
+    // Auf der aktuellen Seite, füge selectedColumn als Parameter zur URL hinzu
+    window.location.href = "add-task.html?column=" + selectedColumn;
+  } else {
+    // Auf der aktuellen Seite, zeige das Overlay und das Modal an
+    columnCategory = "to-do";
+    overlay.classList.toggle("hidden");
+    addTaskModal.classList.toggle("is-active");
+  }
 });
 
 const boardColumnAddTaskBtnInProgress = document.querySelector(
   "#plus-btn-container-in-progress"
 );
+
 boardColumnAddTaskBtnInProgress.addEventListener("click", () => {
-  overlay.classList.toggle("hidden");
-  addTaskModal.classList.toggle("is-active");
-  columnCategory = "in-progress";
+  const selectedColumn = "in-progress"; // Setze die ausgewählte Spalte
+
+  if (window.innerWidth <= 1080) {
+    // Auf der aktuellen Seite, füge selectedColumn als Parameter zur URL hinzu
+    window.location.href = "add-task.html?column=" + selectedColumn;
+  } else {
+    // Auf der aktuellen Seite, zeige das Overlay und das Modal an
+    columnCategory = "in-progress";
+    overlay.classList.toggle("hidden");
+    addTaskModal.classList.toggle("is-active");
+  }
 });
 
 const boardColumnAddTaskBtnAwaitFeedback = document.querySelector(
   "#plus-btn-container-await-feedback"
 );
 boardColumnAddTaskBtnAwaitFeedback.addEventListener("click", () => {
-  overlay.classList.toggle("hidden");
-  addTaskModal.classList.toggle("is-active");
-  columnCategory = "await-feedback";
+  const selectedColumn = "await-feedback";
+  if (window.innerWidth <= 1080) {
+    // Auf der aktuellen Seite, füge selectedColumn als Parameter zur URL hinzu
+    window.location.href = "add-task.html?column=" + selectedColumn;
+  } else {
+    // Auf der aktuellen Seite, zeige das Overlay und das Modal an
+    columnCategory = "await-feedback";
+    overlay.classList.toggle("hidden");
+    addTaskModal.classList.toggle("is-active");
+  }
 });
+
+/**back to login.html */
+function goBackToLogin() {
+  window.location.href = "login.html";
+}
+
+/**go to privacy_policy.html */
+function redirectToPrivacyPolicy(userIsLoggedIn) {
+  const navLinks = document.querySelector(".nav-Container");
+
+  userIsLoggedIn === false && navLinks.classList.add("d-none");
+
+  window.location.href = "privacy_policy.html";
+}
+
+/* go to legal_notice.html */
+function redirectToLegalNotice() {
+  window.location.href = "legal_notice.html";
+}

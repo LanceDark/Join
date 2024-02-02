@@ -8,6 +8,10 @@ a {
   font-size: 16px;
 }
 
+.section-headers {
+  margin: 24px 0 16px 0;
+}
+
 .header {
   background-color: #4589ff;
   height: 96px;
@@ -88,6 +92,17 @@ a {
   color: #d1d1d1;
 }
 
+.title-input::placeholder {
+  color: #d1d1d1;
+}
+
+.description h5 {
+  margin: 0;
+  margin-top: 24px;
+  margin-bottom: 8px;
+  font-size: 19px;
+}
+
 .description-input {
   padding: 12px;
   min-height: 103px;
@@ -105,6 +120,10 @@ a {
   position: relative;
   width: 440px;
   font-size: 19px;
+}
+
+.description-input::placeholder {
+  color: #d1d1d1;
 }
 
 .contact-badges-container-task {
@@ -125,6 +144,10 @@ a {
   font-family: "Open Sans", sans-serif;
   font-size: 19px;
   font-weight: 400;
+}
+
+.date-input::placholder {
+  color: #d1d1d1;
 }
 
 .btn-task-div {
@@ -448,6 +471,7 @@ h5 {
   flex-direction: row;
   justify-content: space-between;
   width: 440px;
+  gap: 12px;
 }
 
 .helper-for-contacts {
@@ -566,11 +590,6 @@ h5 {
 @media (max-width: 1550px) {
   .rendered-add-contact {
     padding-right: 100px;
-  }
-
-  .headerFromAddContact {
-    width: 300px !important;
-    right: 0px !important;
   }
 
   .closeButton {
@@ -775,14 +794,6 @@ h5 {
 }
 
 @media (max-width: 370px) {
-  .add-task-assigned-to-input-wrapper {
-    width: 275px;
-  }
-
-  .main-page-right{
-    width: 275px;
-  }
-
   .title-input {
     width: 275px;
   }

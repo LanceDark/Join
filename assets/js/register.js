@@ -1,73 +1,107 @@
-let users = [];
+let localUsers;
 
-/**
- * Initializes the application.
- * @description This function initializes the application by loading user data.
- */
 async function init() {
-    loadUsers();
+  loadUsers();
 }
 
-/**
- * Loads user data.
- * @description This function attempts to load user data from storage and assigns it to the 'users' variable.
- * If an error occurs, it is logged to the console.
- */
 async function loadUsers() {
-    try {
-        users = JSON.parse(await getItem('users'));
-    } catch (e) {
-        console.error('Loading error:', e);
-    }
+  const keyToSearch = "users";
+  let users = await getItem(keyToSearch);
+  localUsers = JSON.parse(users);
 }
 
-/**
- * Creates a popup message.
- * @description This function creates a popup element with the specified message, appends it to the document body,
- * and removes it after a delay of 1000 milliseconds (1 second).
- * @param {string} message - The message to be displayed in the popup.
- */
+/** creates a pop up window with the message for the user*/
 function createPopup(message) {
-    const popup = document.createElement('div');
-    popup.classList.add('popup');
-    popup.textContent = message;
-    document.body.appendChild(popup);
+  const popup = document.createElement("div");
+  popup.classList.add("popup");
+  popup.textContent = message;
+  document.body.appendChild(popup);
 
-    setTimeout(() => {
-        document.body.removeChild(popup);
-    }, 1000);
+  setTimeout(() => {
+    document.body.removeChild(popup);
+  }, 1000); // Das Pop-up wird nach 1 Sekunden automatisch geschlossen
 }
 
-/**
- * Registers a new user.
- * @description This function disables the registration button, collects user input for email, password, and name,
- * adds the new user to the 'users' array, stores the updated array in local storage, resets the form, displays a popup,
- * and redirects to the login page after a delay of 100 milliseconds.
- */
-async function register() {
-    registerBtn.disabled = true;
-    const name = document.getElementById('nem').value;
-    users.push({
-        email: email.value,
-        password: password.value,
-        name: name,
-        id: (users.length + 1)
-    });
-    await setItem('users', JSON.stringify(users));
-    resetForm();
-    createPopup('');
-    setTimeout(() => {
-        window.location.href = 'login.html';
-    }, 100);
+function showToast(message) {
+  const toast = document.querySelector(".toast");
+  toast.innerHTML = message;
+  toast.classList.add("open");
+
+  setTimeout(() => {
+    toast.classList.remove("open");
+  }, 5000);
 }
 
-/**
- * Resets the registration form.
- * @description This function clears the values of the email and password input fields, and enables the registration button.
- */
+function checkPasswordValidation() {
+  const userPassword = document.getElementById("pw-password-input").value;
+  const confirmUserPassword = document.getElementById(
+    "confirm-password-input"
+  ).value;
+
+  if (userPassword !== confirmUserPassword) {
+    showToast("⛔ The passwords do not match. Please check your entry.");
+    return false;
+  }
+
+  return true;
+}
+
+/**The register function disables the registration button, collects user data, updates storage, resets the form, briefly displays a message, and then redirects to 'login.html'. */
+async function register(event) {
+  event.preventDefault();
+  // registerBtn.disabled = true;
+  const userName = document.getElementById("name-input").value;
+  const userEmail = document.getElementById("email-input").value;
+  const userPassword = document.getElementById("pw-password-input").value;
+  const confirmUserPassword = document.getElementById(
+    "confirm-password-input"
+  ).value;
+
+  if (!checkPasswordValidation()) {
+    // Wenn die Passwortvalidierung fehlschlägt, hier abbrechen
+    return;
+  }
+  // START: Müssen Usern Farben zugewiesen werden? Daher erstmal auskommentiert
+  // const randomColor =
+  //   assigneeColors[Math.floor(Math.random() * assigneeColors.length)];
+  // END: Müssen Usern Farben zugewiesen werden? Daher erstmal auskommentiert
+  localUsers.push({
+    email: userEmail,
+    password: userPassword,
+    name: userName,
+    id: localUsers.length + 1,
+    // color: randomColor,
+  });
+  await setItem("users", localUsers);
+
+  showToast("✅ Registered successfully");
+  resetForm();
+  setTimeout(() => {
+    window.location.href = "login.html";
+  }, 1500);
+}
+/**Empties the input fields */
 function resetForm() {
-    email.value = '';
-    password.value = '';
-    registerBtn.disabled = false;
-};
+  userName = "";
+  userEmail = "";
+  userPassword = "";
+  confirmUserPassword = "";
+}
 
+// const assigneeColors = [
+//   "#FF7A00",
+//   "#FF5EB3",
+//   "#9747FF",
+//   "#9327FF",
+//   "#00BEE8",
+//   "#1FD7C1",
+//   "#FF745E",
+//   "#FFA35E",
+//   "#FC71FF",
+//   "#FFC701",
+//   "#0038FF",
+//   "#C3FF2B",
+//   "#FFE62B",
+//   "#FF4646",
+//   "#FFBB2B",
+// ];

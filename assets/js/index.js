@@ -1,12 +1,13 @@
-/**
- * Initializes the login page animation.
- */
-function initAnimation() {
-    setTimeout(function () {
-        let animateImgContainer = document.getElementById('animateImgContainer');
-        animateImgContainer.classList.add('animateImgContainer'); 
-        animateImgContainer.addEventListener('animationend', function () {
-            window.location.href = 'login.html';
-        });
-    }, 500);
+//creates an animation at a specific place on the page
+function startAnimation() {
+    const mainImage = document.getElementById("mainImage");
+    setTimeout(() => {
+        mainImage.style.transform = "translate(-901%, -345%) scale(1)";
+        setTimeout(() => {
+            window.location.href = "login.html";
+        }, 1300);
+    }, 0);
 }
+document.addEventListener("DOMContentLoaded", startAnimation);
+
+

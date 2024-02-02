@@ -1,10 +1,3 @@
-async function init() {
-  await includeHTML();
-  await setHeaderInitials();
-  await setProfileBadgeEventListener();
-  await setActiveNavLink();
-}
-
 async function includeHTML() {
   let includeElements = document.querySelectorAll("[w3-include-html]");
   for (let i = 0; i < includeElements.length; i++) {
@@ -28,15 +21,17 @@ function redirectToLegalNotice() {
 }
 
 function backButton() {
-  window.history.back();
+  window.location.href = "./privacy_policy.html";
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Hinzufügen des Event-Listeners auf das Fenster
   window.addEventListener("mousedown", handleMouseDown);
   window.addEventListener("mouseup", handleMouseUp);
 });
 
 function handleMouseDown() {
+  // Speichern Sie den Zustand des Kontaktlisten-Divs vor dem Klick
   window.clickedInsideContactList = false;
 }
 
@@ -44,16 +39,15 @@ function handleMouseUp(event) {
   let contactList = document.getElementById("contactList");
   let addContactButton = document.getElementById("addNewContact");
   let imgElement = document.querySelector(".add-task-show-contacts-btn");
-  if (!contactList || !addContactButton) {
-    return;
-  }
 
+  // Überprüfen Sie, ob das Klicken innerhalb des Kontaktlisten-Divs erfolgt ist
   if (contactList.contains(event.target) || event.target === addContactButton) {
     window.clickedInsideContactList = true;
   } else {
     window.clickedInsideContactList = false;
   }
 
+  // Überprüfen Sie, ob das Kontaktlisten-Div geöffnet ist und ob außerhalb geklickt wurde
   if (
     contactList.style.display === "block" &&
     addContactButton.style.display === "flex" &&
@@ -65,4 +59,3 @@ function handleMouseUp(event) {
   }
   renderContactBadges();
 }
-

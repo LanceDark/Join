@@ -368,12 +368,28 @@
     padding: 20px;
   }
 
+  .counter-wrapper:hover {
+    scale: 1.05;
+  }
+
+  .icon-and-counter img {
+    height: 48px;
+  }
+
+  .counter-wrapper:hover img {
+    border: 2px solid white;
+  }
+
   .icon-and-counter {
     gap: 9px;
   }
 
   .tasks-todo {
     padding: 10px 40px;
+  }
+
+  .logo {
+    height: 48px;
   }
 
   #urgent-img {
@@ -397,7 +413,7 @@
 @media (max-width: 370px) {
   .urgency {
     padding: 6px;
-    justify-content: space-between;
+    justify-content: space-around;
     gap: 3px;
   }
 

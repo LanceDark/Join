@@ -12,12 +12,50 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 8px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #a8a8a8;
+  border: 8px solid #a8a8a8;
+  border-radius: 8px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 p {
   margin: 0;
 }
 
 a {
   text-decoration: none;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -100%;
+  color: #4589ff;
+  font-weight: 600;
+  background: #d2e3ff;
+  padding: 16px;
+  border-radius: 8px;
+  border: solid 3px white;
+  transition: top 0.5s ease-in-out;
+  z-index: 999;
+}
+
+.toast.open {
+  top: 30px;
 }
 
 .w3-include {
@@ -37,6 +75,7 @@ header {
 
 .logo {
   height: 60px;
+  width: 60px;
 }
 
 .header-right {
@@ -52,7 +91,6 @@ header {
   font-size: 19px;
   font-style: normal;
   font-weight: 400;
-  cursor: pointer;
 }
 
 .help {
@@ -160,7 +198,7 @@ nav {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 8px;
+  padding: 12px 48px;
   cursor: pointer;
   border-radius: 8px;
   color: #42526e;
@@ -523,6 +561,9 @@ main {
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .card-description {
@@ -531,6 +572,9 @@ main {
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .progress {
@@ -592,8 +636,10 @@ main {
 
 .additional-assignees {
   display: flex;
-  justify-context: center;
+  justify-content: center;
   align-items: center;
+  font-family: "Inter";
+  margin-left: -12px;
 }
 
 .assignee {
@@ -716,12 +762,39 @@ main {
 }
 
 .modal-headline {
-  align-self: stretch;
   color: black;
   font-family: Open Sans;
   font-size: 40px;
   font-style: normal;
   font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal !important;
+  min-height: 50px; /* Setze eine angemessene Mindesthöhe */
+  max-height: 65px; /* Setze eine angemessene Maximalhöhe */
+  overflow-y: auto;
+  resize: none;
+  border: none;
+  outline: none;
+}
+
+.modal-headline::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-headline::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 8px;
+}
+
+.modal-headline::-webkit-scrollbar-thumb {
+  background: #a8a8a8;
+  border: 8px solid #a8a8a8;
+  border-radius: 8px;
+}
+
+.modal-headline::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 .modal-description {
@@ -730,6 +803,33 @@ main {
   font-style: normal;
   font-weight: 400;
   color: black;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal !important;
+  min-height: 65px;
+  overflow-y: auto;
+  resize: none;
+  border: none;
+  outline: none;
+}
+
+.modal-description::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-description::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 8px;
+}
+
+.modal-description::-webkit-scrollbar-thumb {
+  background: #a8a8a8;
+  border: 8px solid #a8a8a8;
+  border-radius: 8px;
+}
+
+.modal-description::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 .modal-priority {
@@ -1066,6 +1166,7 @@ main {
   border-bottom: 2px solid rgba(255, 255, 255, 0);
   flex-basis: 100px;
   transition: all 150ms ease-in-out;
+  flex: 1;
 }
 /* 
 START: Styling of assignees section in edit modal */
@@ -1198,15 +1299,18 @@ START: Styling of assignees section in edit modal */
 /* 
 END: Styling of assignees section in edit modal */
 
-.edit-urgent:hover {
+.edit-urgent:hover,
+.add-task-edit-urgent:hover {
   border-bottom: 2px solid #ff3d00;
 }
 
-.edit-medium:hover {
+.edit-medium:hover,
+.add-task-edit-medium:hover {
   border-bottom: 2px solid #ffa800;
 }
 
-.edit-low:hover {
+.edit-low:hover,
+.add-task-edit-low:hover {
   border-bottom: 2px solid #7ae229;
 }
 
@@ -1533,6 +1637,13 @@ END: Styling of assignees section in edit modal */
   /* position: fixed; */
 }
 
+.add-task-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px;
+}
+
 .add-task-modal-wrapper::-webkit-scrollbar {
   /* display: none; */
   height: 56px;
@@ -1583,11 +1694,17 @@ END: Styling of assignees section in edit modal */
   width: 100%;
   border: none;
   font-family: Open Sans;
-  font-size: 24px;
+  font-size: 32px;
   font-weight: 600;
   text-align: left;
   align-self: stretch;
   resize: none;
+  color: #1d2026;
+}
+
+.add-task-modal-headline::placeholder {
+  color: #d1d1d1;
+  font-weight: 500;
 }
 
 .add-task-modal-headline::-webkit-scrollbar {
@@ -1625,6 +1742,10 @@ END: Styling of assignees section in edit modal */
   resize: vertical;
   position: relative;
   width: 100%;
+}
+
+.add-task-description-textarea::placeholder {
+  color: #d1d1d1;
 }
 
 .add-task-description-textarea::-webkit-scrollbar {
@@ -1712,7 +1833,7 @@ END: Styling of assignees section in edit modal */
 
 .add-task-priority-btn-wrapper {
   display: flex;
-  gap: 24px;
+  gap: 14px;
   justify-content: space-between;
 }
 
@@ -2137,15 +2258,30 @@ END: Styling of assignees section in edit modal */
   background-color: #e2e2e2;
 }
 
+.clear-btn {
+  border: 1px solid #647188;
+  background: white;
+}
+
 .add-task-confirm-section {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   position: absolute;
+  right: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 30px;
+}
+
+.add-task-confirm-btn {
+  display: flex;
+  justify-content: flex-end;
+  position: fixed;
   right: 24px;
   bottom: 30px;
 }
 
-.add-task-confirm-section button {
+.create-task-btn button {
   font-family: "Open Sans", sans-serif;
   font-size: 18px;
   color: white;
@@ -2163,9 +2299,30 @@ END: Styling of assignees section in edit modal */
   cursor: pointer;
 }
 
-.add-task-confirm-section button:hover {
+.create-task-btn button:hover {
   background: #005dff;
   box-shadow: 0px 4px 8px 0px #00000033;
+}
+
+.clear-btn {
+  font-family: "Open Sans", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  border: 1px solid #647188;
+  background: white;
+  border-radius: 10px;
+  transition: all 100ms ease-in-out;
+  cursor: pointer;
+  margin-right: 8px;
+  width: 136px;
+}
+
+.clear-btn:hover {
+  border: 1px solid #005dff;
+  /* color: #005dff; */
 }
 
 /* END: STYLING FOR ADD TASK MODAL */
@@ -2312,6 +2469,7 @@ END: Styling of assignees section in edit modal */
   .single-nav-links {
     flex-direction: column;
     justify-content: center;
+    padding: 8px;
   }
 
   .search-add-task {
@@ -2341,7 +2499,6 @@ END: Styling of assignees section in edit modal */
   }
 
   .add-task-confirm-section {
-    right: 40%;
     bottom: 10px;
   }
 
@@ -2415,9 +2572,22 @@ END: Styling of assignees section in edit modal */
     font-size: 14px;
   }
 
+  .add-task-priority-btn span {
+    font-size: 14px;
+  }
+
   .add-task-confirm-section {
-    right: 35%;
     bottom: 10px;
+  }
+
+  .add-task-priority-btn {
+    gap: 5px;
+    padding: 14px 8px;
+  }
+
+  .add-task-priority-btn img {
+    height: 14px;
+    width: 14px;
   }
 
   .add-task-modal {

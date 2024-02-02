@@ -1,295 +1,209 @@
-const STORAGE_TOKEN = '3KR8NDCYECJ9GOUZ12UQQHMLLAMIYOTERR7HKYU8';
-const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
+const STORAGE_TOKEN = "V2EKVKFM9O99OC501HIARH82FGY2SQSIN8JU7MDJ";
+const STORAGE_URL = "https://remote-storage.developerakademie.org/item";
 
-let Usercurrent;
-        /**The getItem function constructs a URL with a key, fetches data from that URL, 
-        * handles the response to retrieve data, and parses the data, returning it,
-        *  allowing retrieval of data associated with the provided key from a remote storage source. */
+let currentUser;
+/**The getItem function constructs a URL with a key, fetches data from that URL,
+ * handles the response to retrieve data, and parses the data, returning it,
+ *  allowing retrieval of data associated with the provided key from a remote storage source. */
 async function getItem(key) {
-    const url = buildStorageUrl(key);
-    const response = await fetchItem(url);
-    const responseData = await handleResponse(response);
-    return parseData(responseData);
+  const url = buildStorageUrl(key);
+  const response = await fetchItem(url);
+  const responseData = await handleResponse(response);
+  return parseData(responseData);
 }
 
-/**
- * Builds a storage URL for a given key using the provided token.
- * @param {string} key - The key for the storage URL.
- * @returns {string} The constructed storage URL.
- */
+//The buildStorageUrl function constructs a URL for accessing data in a storage, appending a key and a token as parameters.
 function buildStorageUrl(key) {
-    return `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
+  return `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
 }
- /**
- * Fetches an item from the specified URL using the fetch API.
- * @param {string} url - The URL to fetch the item from.
- * @returns {Promise<Response>} A Promise that resolves to the fetch response.
- * @throws {Error} If the fetch request is not successful.
- */
+//The fetchItem function retrieves data from a specified URL, handling errors with the handleError function if the response is not successful, and it returns the response object.
 async function fetchItem(url) {
-    const response = await fetch(url);
-    if (!response.ok) {
-        handleError(response);
-    }
-    return response;
+  const response = await fetch(url);
+  if (!response.ok) {
+    handleError(response);
+  }
+  return response;
 }
-/**
- * Handles the response from a fetch request by parsing the JSON data and returning the value.
- * @param {Response} response - The response object from the fetch request.
- * @returns {Promise<any>} A Promise that resolves to the parsed value from the response data.
- * @throws {Error} If the response data does not contain the expected "data" property.
- */
+//This function is designed to handle responses from an asynchronous operation, typically a network request.
 async function handleResponse(response) {
-    const responseData = await response.json();
-    if (!responseData.data) {
-        throw new Error(`Konnte Daten nicht finden.`);
-    }
-    return responseData.data.value;
+  const responseData = await response.json();
+  if (!responseData.data) {
+    throw new Error(`Konnte Daten nicht finden.`);
+  }
+  return responseData.data.value;
 }
-/**
- * Parses JSON data and returns the resulting JavaScript object.
- * @param {string} data - The JSON data to be parsed.
- * @returns {Object} The JavaScript object resulting from parsing the JSON data.
- * @throws {Error} If an error occurs during the JSON parsing process.
- */     
+//The parseData function attempts to parse JSON data. If successful, it returns the parsed data; if there's an error, it logs the error and rethrows it.
 function parseData(data) {
-    try {
-        return JSON.parse(data);
-    } catch (error) {
-        console.error('Fehler beim Parsen der Daten:', error);
-        throw error;
-    }
+  try {
+    return JSON.parse(data);
+  } catch (error) {
+    console.error("Fehler beim Parsen der Daten:", error);
+    throw error;
+  }
 }
-
-/**
- * Handles errors that occur during the retrieval of an element through an HTTP request.
- * @param {Response} response - The HTTP response object.
- * @throws {Error} Error message indicating the failure in retrieving the element.
- */
+// create a error message
 function handleError(response) {
-    console.error('Fehler beim Abrufen des Elements. Statuscode:', response.status);
-    throw new Error('Fehler beim Abrufen des Elements.');
+  console.error(
+    "Fehler beim Abrufen des Elements. Statuscode:",
+    response.status
+  );
+  throw new Error("Fehler beim Abrufen des Elements.");
 }
-
-/**
- * Checks the local storage for a stored password associated with the provided email.
- * @param {string} email - The email for which the password needs to be checked.
- * @param {string} password - The password to be checked against the stored password.
- * @returns {boolean} True if the password matches, false otherwise.
- */        
+//checks the password stored in localstorage via email
 function checkLocalPassword(email, password) {
-    const storedPassword = localStorage.getItem(email);
-    if (storedPassword === password) {
-        return true;
-    }
-    const resetPasswordData = JSON.parse(localStorage.getItem('resetpassword'));
-    if (resetPasswordData && resetPasswordData.email === email && resetPasswordData.password === password) {
-        return true;
-    }
-    return false;
+  const storedPassword = localStorage.getItem(email);
+  if (storedPassword === password) {
+    return true;
+  }
+  const resetPasswordData = JSON.parse(localStorage.getItem("resetpassword"));
+  if (
+    resetPasswordData &&
+    resetPasswordData.email === email &&
+    resetPasswordData.password === password
+  ) {
+    return true;
+  }
+  return false;
 }
-
-/**
- * Asynchronously logs in a user based on the provided email and password.
- * @description This function retrieves user data, attempts to find a matching user, and handles the login process accordingly.
- */
+/** loginUser collects and validates user login data,
+ * then triggers either a successful login or a failed login based on the outcome. Errors are handled using handleError.*/
 async function loginUser() {
-    const inputEmail = document.querySelector('.inputEmail').value;
-    const inputPassword = document.querySelector('.inputPassword').value;
-    try {
-        const userData = await getItem('users');
-        const user = findUser(userData, inputEmail, inputPassword);
-        if (user) {
-            handleSuccessfulLogin(user);
-        } else {
-            handleFailedLogin();
-        }
-    } catch (error) {
-        handleError(error);
-    }
-}
-
-/**
- * Finds a user in the provided user data based on the input email and password.
- * @param {Array} userData - An array of user data.
- * @param {string} inputEmail - The email entered by the user.
- * @param {string} inputPassword - The password entered by the user.
- * @returns {object|null} - The found user object or null if not found.
- * @description This function searches for a user with a matching email and password in the provided user data.
- */
-function findUser(userData, inputEmail, inputPassword) {
-    return userData.find(user => user.email === inputEmail &&
-        (user.password === inputPassword || checkLocalPassword(inputEmail, inputPassword)));
-        }
-        
-/**
- * Handles a successful user login.
- * @param {object} user - The user object representing the logged-in user.
- * @description This function sets the current user in local storage, creates a success popup, and redirects to the summary page after a delay.
- */
-function handleSuccessfulLogin(user) {
-    Usercurrent = user.name;
-    localStorage.setItem('Usercurrent', Usercurrent);
-    createPopup('Anmeldung erfolgreich!');
-    setTimeout(() => {
-        window.location.href = 'summary.html';
-    }, 900);
-}
-
-/**
- * Handles a failed user login attempt.
- * @description This function creates a popup with a message indicating incorrect email or password.
- */
-function handleFailedLogin() {
-    createPopup('Falsche E-Mail oder Passwort.');
-}
-
-/**
- * Handles errors that occur during the login process.
- * @description This function logs the error to the console and creates a modal with an error message.
- * @param {Error} error - The error that occurred during login.
- */
-function handleError(error) {
-    console.error('Fehler bei der Anmeldung:', error);
-    createModal('Bei der Anmeldung ist ein Fehler aufgetreten.');
-}
-
-/**
- * Creates a modal with a specified message.
- * @description This function creates a modal element, adds content (close button and message), and appends it to the document body.
- * @param {string} message - The message to be displayed in the modal.
- */
-function createModal(message) {
-    const modal = createModalElement();
-    const modalContent = createModalContent();
-    const closeButton = createCloseButton(modal);
-    const modalMessage = createModalMessage(message);
-
-    if (document.body) {
-        appendElements(modalContent, [closeButton, modalMessage]);
-        appendElements(document.body, [modal]);
-        showModal(modal);
+  const inputEmail = document.querySelector(".email-input").value;
+  const inputPassword = document.querySelector(".password-input").value;
+  try {
+    const userData = await getItem("users");
+    const user = findUser(userData, inputEmail, inputPassword);
+    if (user) {
+      handleSuccessfulLogin(user);
     } else {
-        
+      handleFailedLogin();
     }
+  } catch (error) {
+    handleError(error);
+  }
+}
+//The findUser function searches for a user in a dataset (userData) based on input email and password.
+//It returns a user if their email matches the input email, and their password matches the input password or passes a local password check.
+function findUser(userData, inputEmail, inputPassword) {
+  return userData.find(
+    (user) =>
+      user.email === inputEmail &&
+      (user.password === inputPassword ||
+        checkLocalPassword(inputEmail, inputPassword))
+  );
 }
 
-/**
- * Creates a modal element.
- * @description This function creates a modal element with the CSS class 'modal'.
- * @returns {HTMLDivElement} - The created modal element.
- */
+//The handleSuccessfulLogin function processes a successful
+//user login on a website by storing the user's name, displaying a "Login Successful" popup, and redirecting to 'summary.html' after a 900-millisecond delay.
+function handleSuccessfulLogin(user) {
+  currentUser = user.name;
+  localStorage.setItem("currentUser", currentUser);
+  createPopup("Login successfull!");
+  setTimeout(() => {
+    window.location.href = "summary.html";
+  }, 900);
+}
+/**create a error message */
+function handleFailedLogin() {
+  createPopup("Wrong email or password.");
+}
+/**produces an error message for the function createmodal */
+function handleError(error) {
+  console.error("Fehler bei der Anmeldung:", error);
+  createModal("Bei der Anmeldung ist ein Fehler aufgetreten.");
+}
+/**The createModal function generates a modal (popup) with a provided message.
+ * It creates the modal structure, including a close button and the message.
+ * If the document's body exists, it appends these elements to it and displays the modal. */
+function createModal(message) {
+  const modal = createModalElement();
+  const modalContent = createModalContent();
+  const closeButton = createCloseButton(modal);
+  const modalMessage = createModalMessage(message);
+
+  if (document.body) {
+    appendElements(modalContent, [closeButton, modalMessage]);
+    appendElements(document.body, [modal]);
+    showModal(modal);
+  } else {
+  }
+}
+
 function createModalElement() {
-    const modal = document.createElement('div');
-    modal.classList.add('modal');
-    return modal;
+  const modal = document.createElement("div");
+  modal.classList.add("modal");
+  return modal;
 }
-
-/**
- * Creates a modal content element.
- * @description This function creates a modal content element with the CSS class 'modal-content'.
- * @returns {HTMLDivElement} - The created modal content element.
- */
+/**creates an html with the css class modal */
 function createModalContent() {
-    const modalContent = document.createElement('div');
-    modalContent.classList.add('modal-content');
-    return modalContent;
+  const modalContent = document.createElement("div");
+  modalContent.classList.add("modal-content");
+  return modalContent;
 }
-        
-/**
- * Creates a close button for the modal.
- * @description This function creates a close button element with the CSS class 'close'.
- * It also adds a click event listener to remove the modal from the document body.
- * @param {HTMLElement} modal - The modal element to which the close button is associated.
- * @returns {HTMLSpanElement} - The created close button element.
- */
+/**The createCloseButton function creates a close button for a modal (popup). This button is created as a span element with a CSS class "close" and an "x" symbol */
 function createCloseButton(modal) {
-    const closeButton = document.createElement('span');
-    closeButton.classList.add('close');
-    closeButton.innerHTML = '&times;';
-    closeButton.addEventListener('click', () => {
-        document.body.removeChild(modal);
-    });
-    return closeButton;
+  const closeButton = document.createElement("span");
+  closeButton.classList.add("close");
+  closeButton.innerHTML = "&times;";
+  closeButton.addEventListener("click", () => {
+    document.body.removeChild(modal);
+  });
+  return closeButton;
 }
 
-/**
- * Creates a message element for the modal.
- * @description This function creates a paragraph element and sets its text content to the provided message.
- * @param {string} message - The message to be displayed in the modal.
- * @returns {HTMLParagraphElement} - The created message element.
- */
 function createModalMessage(message) {
-    const modalMessage = document.createElement('p');
-    modalMessage.textContent = message;
-    return modalMessage;
+  const modalMessage = document.createElement("p");
+  modalMessage.textContent = message;
+  return modalMessage;
 }
-
-/**
- * Appends multiple elements to a parent element.
- * @description This function appends an array of elements to a specified parent element.
- * @param {HTMLElement} parent - The parent element to which the child elements will be appended.
- * @param {Array<HTMLElement>} elements - An array of child elements to be appended.
- */
+/**The appendElements function adds a list of HTML elements to a parent HTML element. */
 function appendElements(parent, elements) {
-    elements.forEach(element => {
-        parent.appendChild(element);
-    });
+  elements.forEach((element) => {
+    parent.appendChild(element);
+  });
 }
-
-/**
- * Creates a popup message and appends it to the body.
- * @description This function creates a popup element with the provided message, appends it to the body, and removes it after a timeout.
- * @param {string} message - The message to be displayed in the popup.
- */
+/* creates a pop up window with the message for the user*/
 function createPopup(message) {
-    const popup = document.createElement('div');
-    popup.classList.add('popup');
-    popup.textContent = message;
-    console.log(document.body); 
-    document.body.appendChild(popup);
+  const popup = document.createElement("div");
+  popup.classList.add("popup");
+  popup.textContent = message;
+  document.body.appendChild(popup);
 
-    setTimeout(() => {
-        document.body.removeChild(popup);
-    }, 1000);
+  setTimeout(() => {
+    document.body.removeChild(popup);
+  }, 1000); // Das Pop-up wird nach 1 Sekunde automatisch geschlossen
 }
-
-
-/**
- * Displays a modal by setting its display style property to 'block'.
- * @description This function sets the display style property of the provided modal element to 'block', making it visible.
- * @param {HTMLElement} modal - The modal element to be displayed.
- */    
+/**modal gets a css property dislpay block */
 function showModal(modal) {
-    modal.style.display = 'block';
+  modal.style.display = "block";
 }
 
-createModal('Anmeldung erfolgreich!');
-        /**go to privacy_policy.html */
+createModal("Anmeldung erfolgreich!");
+/**go to privacy_policy.html */
 function redirectToPrivacyPolicy() {
-    window.location.href = "privacy_policy.html";
+  window.location.href = "privacy_policy.html";
 }
-        /**go to legal_notice.html */
+/**go to legal_notice.html */
 function redirectToLegalNotice() {
-    window.location.href = "legal_notice.html";
+  window.location.href = "legal_notice.html";
 }
-        /**go to SignUp.html */
+/**go to SignUp.html */
 function redirectToSignUp() {
-    window.location.href = 'SignUp.html';
+  window.location.href = "SignUp.html";
 }
-        /**go to summary.html */
+/**go to summary.html */
 function openSummaryHtml() {
-    const targetUrl = './summary.html';
-    window.location.href = targetUrl;
-    Usercurrent = 'Guest';
-    localStorage.setItem('Usercurrent', Usercurrent);
+  const targetUrl = "./summary.html";
+  window.location.href = targetUrl;
+  currentUser = "Guest";
+  localStorage.setItem("currentUser", currentUser);
 }
-        /**go to login.html */
+/**go to login.html */
 function goBackToLogin() {
-    window.location.href = 'login.html';
+  window.location.href = "login.html";
 }
-        /**go to iforgotmypassword.html*/
+/**go to iforgotmypassword.html*/
 function redirectToForgotPassword() {
-    const targetUrl = './iforgotmypassword.html';
-    window.location.href = targetUrl;
+  const targetUrl = "../../iforgotmypassword.html";
+  window.location.href = targetUrl;
 }

@@ -23,7 +23,7 @@ async function initContacts() {
 async function loadContactsLine() {
   let keyToSearch = "users";
   let updatedUsers = JSON.stringify(users);
-  await setItem(keyToSearch, updatedUsers);
+  
   let retrievedUsers = await getItem(keyToSearch);
   users = JSON.parse(retrievedUsers);
   users.sort((a, b) => a.name.localeCompare(b.name));
@@ -56,7 +56,7 @@ function groupUsersByFirstLetter(users) {
   let groupedContacts = new Map();
 
   for (let i = 0; i < users.length; i++) {
-    let firstLetter = users[i].name.charAt(0).toUpperCase();
+    let firstLetter = users[i].name.charAt(0).toUpperCase(); 
     if (!groupedContacts.has(firstLetter)) {
       groupedContacts.set(firstLetter, []);
     }

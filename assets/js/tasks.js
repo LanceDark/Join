@@ -6,11 +6,10 @@ const dataContacts = [];
 const taskes = [];
 const selectedContactsArray = [];
 const tasks = [];
+let selectedPriorityNewTask;
 let selectedContacts = [];
 let contactStatus = [];
 let contacts = [];
-let contactsShown = false;
-let priority = [];
 
 async function init() {
   await includeHTML();
@@ -98,7 +97,7 @@ function assignedTo(contacts) {
     contactContainer
       .querySelector(".helper-for-contacts")
       .addEventListener("click", () => {
-        toggleCheckbox(i);
+        toggleCheckbox(i, contactStatus);
       });
     contactHTML.appendChild(contactContainer);
   }
@@ -146,7 +145,6 @@ function toggleCheckbox(index) {
       selectedContacts.splice(selectedIndex, 1);
     }
   }
-  renderContactBadges();
 }
 
 /**
@@ -256,12 +254,16 @@ function renderSelectOptionsPersons() {
   let addContactButton = document.getElementById("addNewContact");
   let imgElement = document.querySelector(".add-task-show-contacts-btn");
 
-  contactsShown = !contactsShown;
-
-  contactList.style.display = contactsShown ? "block" : "none";
-  addContactButton.style.display = contactsShown ? "flex" : "none";
-  imgElement.src = `./assets/img/arrow_drop_${contactsShown ? "up" : "down"}.svg`;
-
+  contactList.style.display =
+    contactList.style.display === "block" &&
+    addContactButton.style.display === "flex"
+      ? "none"
+      : "block";
+  addContactButton.style.display =
+    contactList.style.display === "block" ? "flex" : "none";
+  imgElement.src = `./assets/img/arrow_drop_${
+    contactList.classList.contains("d-none") ? "down" : "up"
+  }.svg`;
   renderContactBadges();
 }
 
@@ -297,7 +299,7 @@ async function createTask() {
     description: descriptionInput.value,
     dueDate: dateInput.value,
     label: categorySelect.value,
-    priority: tasks.priority,
+    priority: selectedPriorityNewTask,
     subtasks: taskes,
     assignees: selectedContacts,
     id: (existingTasks.length + 1).toString(),
@@ -522,14 +524,17 @@ function selectedPriority(
     btnUrgent.classList.add("urgently-selected");
     urgentImg.src = "./assets/img/urgent-white.svg";
     tasks.priority = "Urgent";
+    selectedPriorityNewTask = "Urgent";
   } else if (priority === "Medium") {
     btnMedium.classList.add("medium-selected");
     mediumImg.src = "./assets/img/medium-white.svg";
     tasks.priority = "Medium";
+    selectedPriorityNewTask = "Medium";
   } else if (priority === "Low") {
     btnLow.classList.add("low-selected");
     lowImg.src = "./assets/img/low-white.svg";
     tasks.priority = "Low";
+    selectedPriorityNewTask = "Low";
   }
 }
 
@@ -569,3 +574,51 @@ function getSelectedPriority() {
     return null;
   }
 }
+
+// Code from add task modal
+// const searchBarContacts = document.querySelector(".add-task-assigned-to-input");
+// const addTaskContactRows = document.querySelectorAll(".add-task-contacts-row");
+// const contactWrapper = document.querySelector(".add-task-assigned-to-badges");
+// const addContacktBtn = document.querySelector(".add-task-add-contact-btn");
+// const imgElement = document.querySelector(".add-task-show-contacts-btn");
+
+// searchBarContacts.addEventListener("click", () => {
+//   contactWrapper.classList.toggle("d-none");
+//   // addContactBtn.classList.toggle("d-none");
+//   if (contactWrapper.classList.contains("d-none")) {
+//     imgElement.src = "./assets/img/arrow_drop_down.svg";
+//   } else {
+//     imgElement.src = "./assets/img/arrow_drop_up.svg";
+//   }
+// });
+
+// searchBarContacts.addEventListener("keyup", (e) => {
+//   const term = e.target.value.toLowerCase();
+//   document.querySelectorAll(".add-task-contacts-row").forEach((contactRow) => {
+//     const contactName = contactRow
+//       .querySelector(".assignee-name")
+//       .textContent.toLowerCase();
+
+//     if (contactName.indexOf(term) !== -1) {
+//       contactRow.closest(".add-task-contacts-wrapper").style.display = "flex";
+//     } else {
+//       contactRow.closest(".add-task-contacts-wrapper").style.display = "none";
+//     }
+//   });
+// });
+
+// // const categoryDiv = document.querySelector('.add-task-category-wrapper');
+
+// /**
+//  * Toggles the visibility of categories in the "Add Task" modal.
+//  */
+// function toggleCategoriesInAddTaskModal() {
+//   const categoryOptions = document.querySelector(".category-options");
+//   categoryOptions.classList.toggle("d-block");
+//   const categoryArrow = document.querySelector(".add-task-show-categories-btn");
+//   if (categoryOptions.classList.contains("d-block")) {
+//     categoryArrow.src = "./assets/img/arrow_drop_up.svg";
+//   } else {
+//     categoryArrow.src = "./assets/img/arrow_drop_down.svg";
+//   }
+// }

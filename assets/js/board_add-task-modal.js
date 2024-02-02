@@ -13,7 +13,7 @@ async function initAddTaskModal() {
  * Loads contacts and stores them in the addTaskLocalContacts variable.
  */
 async function loadContacts() {
-  const keyToSearch = "users";
+  const keyToSearch = "contacts";
   let contacts = await getItem(keyToSearch);
   addTaskLocalContacts = JSON.parse(contacts);
 }
@@ -55,7 +55,9 @@ async function createNewTask() {
     category: columnCategory,
   };
   addTaskLocalTasks.push(newTask);
+  // await setNewIdsForTasks(addTaskLocalTasks);
   await setItem("tasks", JSON.stringify(addTaskLocalTasks));
+  showToast("✅ Task added to board");
   resetRequiredWrapper();
   resetRequiredMessages();
   closeAddTaskModal();
@@ -252,27 +254,18 @@ async function renderContactsInAddTaskModal() {
     const name = addTaskLocalContacts[i].name;
     const initials = generateInitials(name);
     const color = addTaskLocalContacts[i].color;
-    assigneesBadgesWrapper.innerHTML += generateContactsInAddTaskModalHTML(
-      color,
-      initials,
-      name,
-      i
-    );
+    assigneesBadgesWrapper.innerHTML += /*html*/ `
+        <div class="add-task-contacts-wrapper" id="add-task-contacts-wrapper-${addTaskLocalContacts[i].id}" onclick="markContactsInAddTaskDropdown(${addTaskLocalContacts[i].id})">
+            <div class="add-task-contacts-row">
+                <div class="assignee" style="background: ${color}">
+                    <div class="assignee-initals">${initials}</div>
+                </div>
+                <div class="assignee-name">${name}</div>
+            </div>
+            <img id="add-task-contacts-row-checkbox${addTaskLocalContacts[i].id}" class="contacts-row-checkbox" src="./assets/img/checkbox.svg" alt="">
+        </div>
+    `;
   }
-}
-
-function generateContactsInAddTaskModalHTML(color, initials, name, i) {
-  return /*html*/ `
- <div class="add-task-contacts-wrapper" id="add-task-contacts-wrapper-${i}" onclick="markContactsInAddTaskDropdown(${i})">
-     <div class="add-task-contacts-row">
-         <div class="assignee" style="background: ${color}">
-             <div class="assignee-initals">${initials}</div>
-         </div>
-         <div class="assignee-name">${name}</div>
-     </div>
-     <img id="add-task-contacts-row-checkbox${i}" class="contacts-row-checkbox" src="./assets/img/checkbox.svg" alt="">
- </div>
-`;
 }
 
 /**
@@ -301,16 +294,18 @@ function toggleContactsInAddTaskModal() {
     ".add-task-assigned-to-badges"
   );
   const imgElement = document.querySelector(".add-task-show-contacts-btn");
-  const addContactBtn = document.querySelector(".add-task-add-contact-btn");
-  const contactBadges = document.querySelector(".contact-badges-container");
+  // const addContactBtn = document.querySelector(".add-task-add-contact-btn");
+  const contactBadges = document.querySelector(
+    ".add-task-contact-badges-container"
+  );
   assigneesBadgesWrapper.classList.toggle("d-none");
-  addContactBtn.classList.toggle("d-none");
+  contactBadges.classList.toggle("d-none");
+  // addContactBtn.classList.toggle("d-none");
   if (assigneesBadgesWrapper.classList.contains("d-none")) {
     imgElement.src = "./assets/img/arrow_drop_down.svg";
   } else {
     imgElement.src = "./assets/img/arrow_drop_up.svg";
   }
-  contactBadges.classList.toggle("d-none");
 }
 
 /**
@@ -331,7 +326,7 @@ function markContactsInAddTaskDropdown(i) {
     checkboxOfContact.src = "./assets/img/checkbox.svg";
   }
   const selectedContact = addTaskLocalContacts.find(
-    (contact) => contact.id === i + 1
+    (contact) => contact.id === i
   );
   contacts.includes(selectedContact)
     ? contacts.splice(contacts.indexOf(selectedContact), 1)
@@ -343,12 +338,12 @@ function markContactsInAddTaskDropdown(i) {
 const searchBarContacts = document.querySelector(".add-task-assigned-to-input");
 const addTaskContactRows = document.querySelectorAll(".add-task-contacts-row");
 const contactWrapper = document.querySelector(".add-task-assigned-to-badges");
-const addContactBtn = document.querySelector(".add-task-add-contact-btn");
+const addContacktBtn = document.querySelector(".add-task-add-contact-btn");
 const imgElement = document.querySelector(".add-task-show-contacts-btn");
 
 searchBarContacts.addEventListener("click", () => {
   contactWrapper.classList.toggle("d-none");
-  addContactBtn.classList.toggle("d-none");
+  // addContactBtn.classList.toggle("d-none");
   if (contactWrapper.classList.contains("d-none")) {
     imgElement.src = "./assets/img/arrow_drop_down.svg";
   } else {
@@ -526,21 +521,17 @@ function renderSubtasksInAddTasksModal() {
   const addedSubtasks = document.querySelector(".added-subtasks");
   addedSubtasks.innerHTML = "";
   for (let i = 0; i < newSubtasks.length; i++) {
-    addedSubtasks.innerHTML += generateRenderSubtasksHTML(newSubtasks[i].text);
+    addedSubtasks.innerHTML += /*html*/ `
+        <div id ="add-task-subtask-wrapper${i}" class="existing-subtasks-list-item">
+            <li id="add-task-subtask${i}" class="subtask-list-item">${newSubtasks[i].text}</li>
+            <div class="subtask-list-item-btn">
+                <img id="add-task-edit-subtask-btn${i}" class="edit-subtask-btn" src="./assets/img/edit.svg" alt="" onclick="editSubtaskInAddTaskModal(${i})">
+                <div class="subtask-list-item-divider"></div>
+                <img class="delete-subtask-btn" src="./assets/img/delete.svg" alt="" onclick="deleteSubtaskInAddTaskModal(${i})">
+            </div>
+        </div>
+    `;
   }
-}
-
-function generateRenderSubtasksHTML(newSubtasks){
-  return /*html*/ `
-  <div id ="add-task-subtask-wrapper${i}" class="existing-subtasks-list-item">
-      <li id="add-task-subtask${i}" class="subtask-list-item">${newSubtasks}</li>
-      <div class="subtask-list-item-btn">
-          <img id="add-task-edit-subtask-btn${i}" class="edit-subtask-btn" src="./assets/img/edit.svg" alt="" onclick="editSubtaskInAddTaskModal(${i})">
-          <div class="subtask-list-item-divider"></div>
-          <img class="delete-subtask-btn" src="./assets/img/delete.svg" alt="" onclick="deleteSubtaskInAddTaskModal(${i})">
-      </div>
-  </div>
-`;
 }
 
 /**
@@ -591,7 +582,11 @@ function setupEditSubtaskConfirmButton(clickedSubtask, i) {
   const editTaskConfirmBtn = document.getElementById(
     `add-task-task-confirm-edit-icon${i}`
   );
+
+  // Vor dem Hinzufügen des EventListeners entfernen, falls er bereits vorhanden ist
   editTaskConfirmBtn.removeEventListener("click", onEditTaskConfirmClick);
+
+  // EventListener hinzufügen und eine Funktion mit Zugriff auf clickedSubtask erstellen
   editTaskConfirmBtn.addEventListener("click", function () {
     onEditTaskConfirmClick(clickedSubtask);
   });
@@ -637,7 +632,11 @@ function setupEditSubtaskDeleteButton(clickedSubtask, i) {
   const editTaskDeleteBtn = document.getElementById(
     `add-task-task-delete-icon${i}`
   );
+
+  // Vor dem Hinzufügen des EventListeners entfernen, falls er bereits vorhanden ist
   editTaskDeleteBtn.removeEventListener("click", onEditTaskDeleteClick);
+
+  // EventListener hinzufügen und eine Funktion mit Zugriff auf clickedSubtask erstellen
   editTaskDeleteBtn.addEventListener("click", function () {
     onEditTaskDeleteClick(clickedSubtask);
   });
@@ -656,6 +655,9 @@ function onEditTaskDeleteClick(clickedSubtask) {
   hideEditSubtaskInput();
   showSubtaskWrapper();
   renderSubtasksInAddTasksModal();
+
+  // Nach der Verwendung den EventListener entfernen, um doppelte Listener zu vermeiden
+  // editTaskDeleteBtn.removeEventListener('click', onEditTaskDeleteClick);
 }
 
 /**

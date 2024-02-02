@@ -28,6 +28,7 @@ function deleteTaskFunction() {
   setNewIdsForTasks(localTasks);
   closeModal();
   removeListeners();
+  showToast("✅ Task deleted");
 }
 
 function cancelDeleteFunction() {

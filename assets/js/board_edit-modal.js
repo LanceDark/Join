@@ -3,19 +3,19 @@
  * @param {Object} task - The task to be edited.
  */
 async function editTask(task) {
-    currentTaskInEditModal = task;
-    const formattedDate = formatDate(task.dueDate);
-    const modal = document.querySelector('.modal');
-    modal.innerHTML = await generateModalHTML(task, formattedDate);
+  currentTaskInEditModal = task;
+  const formattedDate = formatDate(task.dueDate);
+  const modal = document.querySelector(".modal");
+  modal.innerHTML = await generateModalHTML(task, formattedDate);
 
-    await renderSubtasksInEditModal(task);
-    renderContactsInEditModal();
-    markAssignedContactsInDropdown();
-    renderContactBadges();
-    setupSearchBarContacts();
-    setupPriorityButtons(task);
-    setupSubtasksSection();
-    setupAddSubtaskButton();
+  await renderSubtasksInEditModal(task);
+  renderContactsInEditModal();
+  markAssignedContactsInDropdown();
+  renderContactBadges();
+  setupSearchBarContacts();
+  setupPriorityButtons(task);
+  setupSubtasksSection();
+  setupAddSubtaskButton();
 }
 
 /**
@@ -23,63 +23,52 @@ async function editTask(task) {
  * @description This function updates the contact badges displayed in the edit modal, representing the assignees of the current task.
  */
 async function renderContactBadges() {
-    const contactBadgesWrapper = document.querySelector('.contact-badges-container');
-    contactBadgesWrapper.innerHTML = '';
-    
-    for(let i = 0; i < currentTaskInEditModal.assignees.length; i++) {
-        const name = currentTaskInEditModal.assignees[i].name;
-        const initials = generateInitials(name);
-        const color = currentTaskInEditModal.assignees[i].color;
-    
-        contactBadgesWrapper.innerHTML += /*html*/ `
+  const contactBadgesWrapper = document.querySelector(
+    ".contact-badges-container"
+  );
+  contactBadgesWrapper.innerHTML = "";
+
+  for (let i = 0; i < currentTaskInEditModal.assignees.length; i++) {
+    const name = currentTaskInEditModal.assignees[i].name;
+    const initials = generateInitials(name);
+    const color = currentTaskInEditModal.assignees[i].color;
+
+    contactBadgesWrapper.innerHTML += /*html*/ `
             <div class="assignee" style="background: ${color}">${initials}</div>
-        `
-    }
+        `;
+  }
 }
 
 /**
  * Toggles the visibility of elements in the edit modal related to contact selection.
  * @description This function toggles the visibility of several elements, such as the assigned badges, the "add contact" button, and the arrow button, in the edit modal for contact selection.
  */
-document.addEventListener('click', function(event) {
-  const assigneesBadgesWrapper = document.querySelector('.edit-assigned-to-badges');
-  const imgElement = document.querySelector('.show-contacts-btn');
-  const addContactBtn = document.querySelector('.add-contact-btn');
-  const contactBadges = document.querySelector('.contact-badges-container');
-
-  // Überprüfen, ob das geklickte Element außerhalb des edit-assigned-to-badges liegt
-  if (!assigneesBadgesWrapper.contains(event.target) && !imgElement.contains(event.target)) {
-    // Schließe den edit-assigned-to-badges Container, aktualisiere die Symbole
-    assigneesBadgesWrapper.classList.add('d-none');
-    addContactBtn.classList.remove('d-none');
-    imgElement.src = "./assets/img/arrow_drop_down.svg";
-    contactBadges.classList.add('d-none');
-    renderContactBadges();
-  }
-});
-
-/**
- * Toggles the visibility of contacts in the edit modal.
- */
 function toggleContactsInEditModal() {
-  const assigneesBadgesWrapper = document.querySelector('.edit-assigned-to-badges');
-  const imgElement = document.querySelector('.show-contacts-btn');
-  const addContactBtn = document.querySelector('.add-contact-btn');
-  const contactBadges = document.querySelector('.contact-badges-container');
+  const assigneesBadgesWrapper = document.querySelector(
+    ".edit-assigned-to-badges"
+  );
+  const imgElement = document.querySelector(".show-contacts-btn");
+  const addContactBtn = document.querySelector(".add-contact-btn");
+  const contactBadges = document.querySelector(".contact-badges-container");
 
-  assigneesBadgesWrapper.classList.toggle('d-none');
-  addContactBtn.classList.toggle('d-none');
+  // Toggles contacts wrapper to select from
+  assigneesBadgesWrapper.classList.toggle("d-none");
 
-  if (assigneesBadgesWrapper.classList.contains('d-none')) {
+  // Toggles button to add new contacts to the task
+  addContactBtn.classList.toggle("d-none");
+
+  // Toggles the arrow button
+  if (assigneesBadgesWrapper.classList.contains("d-none")) {
     imgElement.src = "./assets/img/arrow_drop_down.svg";
   } else {
     imgElement.src = "./assets/img/arrow_drop_up.svg";
   }
 
-  contactBadges.classList.toggle('d-none');
+  // Toggles profile badges under contacts wrapper to select from
+  contactBadges.classList.toggle("d-none");
+
   renderContactBadges();
 }
-
 
 /**
  * Finds a selected contact by its ID.
@@ -87,7 +76,7 @@ function toggleContactsInEditModal() {
  * @returns {Object} - The found contact or undefined if no contact with the specified ID is found.
  */
 function findSelectedContact(selectedContactId) {
-    return localContacts.find(contact => contact.id === selectedContactId);
+  return localContacts.find((contact) => contact.id === selectedContactId);
 }
 
 /**
@@ -95,8 +84,10 @@ function findSelectedContact(selectedContactId) {
  * @param {Object} selectedContact - The contact to be removed.
  */
 function removeContactFromAssignees(selectedContact) {
-    const indexOfContact = currentTaskInEditModal.assignees.findIndex(contact => contact.id === selectedContact.id);
-    currentTaskInEditModal.assignees.splice(indexOfContact, 1);
+  const indexOfContact = currentTaskInEditModal.assignees.findIndex(
+    (contact) => contact.id === selectedContact.id
+  );
+  currentTaskInEditModal.assignees.splice(indexOfContact, 1);
 }
 
 /**
@@ -104,7 +95,7 @@ function removeContactFromAssignees(selectedContact) {
  * @param {Object} selectedContact - The contact to be added.
  */
 function addContactToAssignees(selectedContact) {
-    currentTaskInEditModal.assignees.push(selectedContact);
+  currentTaskInEditModal.assignees.push(selectedContact);
 }
 
 /**
@@ -113,7 +104,9 @@ function addContactToAssignees(selectedContact) {
  * @returns {boolean} - true if the contact is assigned in the assignees, otherwise false.
  */
 function isContactAssigned(selectedContact) {
-    return currentTaskInEditModal.assignees.some(contact => contact.id === selectedContact.id);
+  return currentTaskInEditModal.assignees.some(
+    (contact) => contact.id === selectedContact.id
+  );
 }
 
 /**
@@ -121,25 +114,29 @@ function isContactAssigned(selectedContact) {
  * @param {number} i - The index number of the selected contact.
  */
 function markContactsInDropdown(i) {
-    const contactWrapper = document.getElementById(`${i}`);
-    toggleContactSelection(contactWrapper);
+  const contactWrapper = document.getElementById(`${i}`);
+  toggleContactSelection(contactWrapper);
 
-    const checkboxOfContact = document.getElementById(`contacts-row-checkbox${i}`);
-    const isSelected = contactWrapper.classList.contains('contacts-wrapper-selected');
-    updateContactCheckbox(checkboxOfContact, isSelected);
+  const checkboxOfContact = document.getElementById(
+    `contacts-row-checkbox${i}`
+  );
+  const isSelected = contactWrapper.classList.contains(
+    "contacts-wrapper-selected"
+  );
+  updateContactCheckbox(checkboxOfContact, isSelected);
 
-    const selectedContact = findSelectedContact(i);
+  const selectedContact = findSelectedContact(i);
 
-    if (isSelected) {
-        // If the contact is already in the assignees, don't add it again
-        if (!isContactAssigned(selectedContact)) {
-            addContactToAssignees(selectedContact);
-        }
-    } else {
-        removeContactFromAssignees(selectedContact);
+  if (isSelected) {
+    // If the contact is already in the assignees, don't add it again
+    if (!isContactAssigned(selectedContact)) {
+      addContactToAssignees(selectedContact);
     }
+  } else {
+    removeContactFromAssignees(selectedContact);
+  }
 
-    renderContactBadges();
+  renderContactBadges();
 }
 
 /**
@@ -147,17 +144,19 @@ function markContactsInDropdown(i) {
  * @description This function highlights and updates checkboxes for assigned contacts in the dropdown based on the current task's assignees.
  */
 async function markAssignedContactsInDropdown() {
-    for(let i = 0; i < currentTaskInEditModal.assignees.length; i++) {
-        const assigneeId = currentTaskInEditModal.assignees[i].id;
-        const contactWrapper = document.getElementById(`${assigneeId}`);
-        const checkboxOfContact = document.getElementById(`contacts-row-checkbox${assigneeId}`);
-        contactWrapper.classList.add('contacts-wrapper-selected');
-        if(contactWrapper.classList.contains('contacts-wrapper-selected')){
-            checkboxOfContact.src = "./assets/img/checkbox-checked-white.svg";
-        } else {
-            checkboxOfContact.src = "./assets/img/checkbox.svg";
-        }
+  for (let i = 0; i < currentTaskInEditModal.assignees.length; i++) {
+    const assigneeId = currentTaskInEditModal.assignees[i].id;
+    const contactWrapper = document.getElementById(`${assigneeId}`);
+    const checkboxOfContact = document.getElementById(
+      `contacts-row-checkbox${assigneeId}`
+    );
+    contactWrapper.classList.add("contacts-wrapper-selected");
+    if (contactWrapper.classList.contains("contacts-wrapper-selected")) {
+      checkboxOfContact.src = "./assets/img/checkbox-checked-white.svg";
+    } else {
+      checkboxOfContact.src = "./assets/img/checkbox.svg";
     }
+  }
 }
 
 /**
@@ -166,12 +165,12 @@ async function markAssignedContactsInDropdown() {
  * @param {HTMLImageElement} imgElement - The arrow button image element.
  */
 function toggleContactWrapperVisibility(contactWrapper, imgElement) {
-    contactWrapper.classList.toggle('d-none');
-    if (contactWrapper.classList.contains('d-none')) {
-        imgElement.src = "./assets/img/arrow_drop_down.svg";
-    } else {
-        imgElement.src = "./assets/img/arrow_drop_up.svg";
-    }
+  contactWrapper.classList.toggle("d-none");
+  if (contactWrapper.classList.contains("d-none")) {
+    imgElement.src = "./assets/img/arrow_drop_down.svg";
+  } else {
+    imgElement.src = "./assets/img/arrow_drop_up.svg";
+  }
 }
 
 /**
@@ -180,38 +179,40 @@ function toggleContactWrapperVisibility(contactWrapper, imgElement) {
  * @param {string} term - The search term to filter contacts.
  */
 function filterContactRows(contactRows, term) {
-    contactRows.forEach((contactRow) => {
-        const contactName = contactRow.querySelector('.assignee-name').textContent.toLowerCase();
+  contactRows.forEach((contactRow) => {
+    const contactName = contactRow
+      .querySelector(".assignee-name")
+      .textContent.toLowerCase();
 
-        if (contactName.indexOf(term) !== -1) {
-            contactRow.closest('.contacts-wrapper').style.display = 'flex';
-        } else {
-            contactRow.closest('.contacts-wrapper').style.display = 'none';
-        }
-    });
+    if (contactName.indexOf(term) !== -1) {
+      contactRow.closest(".contacts-wrapper").style.display = "flex";
+    } else {
+      contactRow.closest(".contacts-wrapper").style.display = "none";
+    }
+  });
 }
 
 /**
  * Sets up the search bar for contacts in the edit modal.
  */
 function setupSearchBarContacts() {
-    const searchBarContacts = document.querySelector('.edit-assigned-to-input');
-    const contactRows = document.querySelectorAll('.contacts-row');
-    const contactWrapper = document.querySelector('.edit-assigned-to-badges');
-    const imgElement = document.querySelector('.show-contacts-btn');
+  const searchBarContacts = document.querySelector(".edit-assigned-to-input");
+  const contactRows = document.querySelectorAll(".contacts-row");
+  const contactWrapper = document.querySelector(".edit-assigned-to-badges");
+  const imgElement = document.querySelector(".show-contacts-btn");
 
-    searchBarContacts.addEventListener('click', () => {
-        toggleContactWrapperVisibility(contactWrapper, imgElement);
-    });
+  searchBarContacts.addEventListener("click", () => {
+    toggleContactWrapperVisibility(contactWrapper, imgElement);
+  });
 
-    searchBarContacts.addEventListener('keyup', (e) => {
-        const term = e.target.value.toLowerCase();
-        if (contactWrapper.classList.contains('d-none')) {
-            contactWrapper.classList.remove('d-none');
-        }
+  searchBarContacts.addEventListener("keyup", (e) => {
+    const term = e.target.value.toLowerCase();
+    if (contactWrapper.classList.contains("d-none")) {
+      contactWrapper.classList.remove("d-none");
+    }
 
-        filterContactRows(contactRows, term);
-    });
+    filterContactRows(contactRows, term);
+  });
 }
 
 // START: Code for subtasks in edit modal
@@ -221,20 +222,40 @@ function setupSearchBarContacts() {
  * @param {number} i - The index of the subtask to edit.
  */
 function editSubtask(i) {
-    const listElement = document.getElementById(`subtask${i}`);
-    const subtaskText = listElement.innerHTML;
-    const clickedSubtask = currentTaskInEditModal.subtasks.find(subtask => subtask.text === subtaskText);
-    const subtaskWrapper = document.querySelector('.existing-subtasks');
-    const editSubtaskInputWrapper = document.querySelector('.edit-task-input');
-    const editSubtaskInputfield = document.querySelector('.edit-task-inputfield');
-    const editTaskConfirmBtn = document.querySelector('.edit-task-confirm-edit-icon');
-    const editTaskDeleteBtn = document.querySelector('.edit-task-delete-icon');
-    
-    displayEditSubtaskInterface(clickedSubtask, subtaskWrapper, editSubtaskInputWrapper, editSubtaskInputfield);
+  const listElement = document.getElementById(`subtask${i}`);
+  const subtaskText = listElement.innerHTML;
+  const clickedSubtask = currentTaskInEditModal.subtasks.find(
+    (subtask) => subtask.text === subtaskText
+  );
+  const subtaskWrapper = document.querySelector(".existing-subtasks");
+  const editSubtaskInputWrapper = document.querySelector(".edit-task-input");
+  const editSubtaskInputfield = document.querySelector(".edit-task-inputfield");
+  const editTaskConfirmBtn = document.querySelector(
+    ".edit-task-confirm-edit-icon"
+  );
+  const editTaskDeleteBtn = document.querySelector(".edit-task-delete-icon");
 
-    setupEditTaskConfirmButton(editTaskConfirmBtn, clickedSubtask, editSubtaskInputfield, subtaskWrapper, editSubtaskInputWrapper);
+  displayEditSubtaskInterface(
+    clickedSubtask,
+    subtaskWrapper,
+    editSubtaskInputWrapper,
+    editSubtaskInputfield
+  );
 
-    setupEditTaskDeleteButton(editTaskDeleteBtn, clickedSubtask, editSubtaskInputWrapper, subtaskWrapper);
+  setupEditTaskConfirmButton(
+    editTaskConfirmBtn,
+    clickedSubtask,
+    editSubtaskInputfield,
+    subtaskWrapper,
+    editSubtaskInputWrapper
+  );
+
+  setupEditTaskDeleteButton(
+    editTaskDeleteBtn,
+    clickedSubtask,
+    editSubtaskInputWrapper,
+    subtaskWrapper
+  );
 }
 
 /**
@@ -244,10 +265,15 @@ function editSubtask(i) {
  * @param {HTMLElement} editSubtaskInputWrapper - The input field wrapper.
  * @param {HTMLInputElement} editSubtaskInputfield - The input field for editing the subtask text.
  */
-function displayEditSubtaskInterface(clickedSubtask, subtaskWrapper, editSubtaskInputWrapper, editSubtaskInputfield) {
-    subtaskWrapper.style.display = 'none';
-    editSubtaskInputWrapper.style.display = 'flex';
-    editSubtaskInputfield.value = clickedSubtask.text;
+function displayEditSubtaskInterface(
+  clickedSubtask,
+  subtaskWrapper,
+  editSubtaskInputWrapper,
+  editSubtaskInputfield
+) {
+  subtaskWrapper.style.display = "none";
+  editSubtaskInputWrapper.style.display = "flex";
+  editSubtaskInputfield.value = clickedSubtask.text;
 }
 
 /**
@@ -258,15 +284,21 @@ function displayEditSubtaskInterface(clickedSubtask, subtaskWrapper, editSubtask
  * @param {HTMLElement} subtaskWrapper - The subtask display wrapper.
  * @param {HTMLElement} editSubtaskInputWrapper - The input field wrapper.
  */
-function setupEditTaskConfirmButton(editTaskConfirmBtn, clickedSubtask, editSubtaskInputfield, subtaskWrapper, editSubtaskInputWrapper) {
-    function onEditTaskConfirmClick() {
-        clickedSubtask.text = editSubtaskInputfield.value;
-        editSubtaskInputWrapper.style.display = 'none';
-        subtaskWrapper.style.display = 'block';
-        renderSubtasksInEditModal(currentTaskInEditModal);
-        editTaskConfirmBtn.removeEventListener('click', onEditTaskConfirmClick);
-    }
-    editTaskConfirmBtn.addEventListener('click', onEditTaskConfirmClick);
+function setupEditTaskConfirmButton(
+  editTaskConfirmBtn,
+  clickedSubtask,
+  editSubtaskInputfield,
+  subtaskWrapper,
+  editSubtaskInputWrapper
+) {
+  function onEditTaskConfirmClick() {
+    clickedSubtask.text = editSubtaskInputfield.value;
+    editSubtaskInputWrapper.style.display = "none";
+    subtaskWrapper.style.display = "block";
+    renderSubtasksInEditModal(currentTaskInEditModal);
+    editTaskConfirmBtn.removeEventListener("click", onEditTaskConfirmClick);
+  }
+  editTaskConfirmBtn.addEventListener("click", onEditTaskConfirmClick);
 }
 
 /**
@@ -276,16 +308,22 @@ function setupEditTaskConfirmButton(editTaskConfirmBtn, clickedSubtask, editSubt
  * @param {HTMLElement} editSubtaskInputWrapper - The input field wrapper.
  * @param {HTMLElement} subtaskWrapper - The subtask display wrapper.
  */
-function setupEditTaskDeleteButton(editTaskDeleteBtn, clickedSubtask, editSubtaskInputWrapper, subtaskWrapper) {
-    function onEditTaskDeleteClick() {
-        editSubtaskInputWrapper.style.display = 'none';
-        subtaskWrapper.style.display = 'block';
-        const indexOfSubtask = currentTaskInEditModal.subtasks.indexOf(clickedSubtask);
-        currentTaskInEditModal.subtasks.splice(indexOfSubtask, 1);
-        renderSubtasksInEditModal(currentTaskInEditModal);
-        editTaskDeleteBtn.removeEventListener('click', onEditTaskDeleteClick);
-    }
-    editTaskDeleteBtn.addEventListener('click', onEditTaskDeleteClick);
+function setupEditTaskDeleteButton(
+  editTaskDeleteBtn,
+  clickedSubtask,
+  editSubtaskInputWrapper,
+  subtaskWrapper
+) {
+  function onEditTaskDeleteClick() {
+    editSubtaskInputWrapper.style.display = "none";
+    subtaskWrapper.style.display = "block";
+    const indexOfSubtask =
+      currentTaskInEditModal.subtasks.indexOf(clickedSubtask);
+    currentTaskInEditModal.subtasks.splice(indexOfSubtask, 1);
+    renderSubtasksInEditModal(currentTaskInEditModal);
+    editTaskDeleteBtn.removeEventListener("click", onEditTaskDeleteClick);
+  }
+  editTaskDeleteBtn.addEventListener("click", onEditTaskDeleteClick);
 }
 
 /**
@@ -293,13 +331,16 @@ function setupEditTaskDeleteButton(editTaskDeleteBtn, clickedSubtask, editSubtas
  * @param {number} i - The index of the subtask to delete.
  */
 function deleteSubtask(i) {
-    const listItem = document.getElementById(`subtask-wrapper${i}`);
-    listItem.style.display = 'none';
-    const listElement = document.getElementById(`subtask${i}`);
-    const subtaskText = listElement.innerHTML;
-    const clickedSubtask = currentTaskInEditModal.subtasks.find(subtask => subtask.text === subtaskText);
-    const indexOfSubtask = currentTaskInEditModal.subtasks.indexOf(clickedSubtask);
-    currentTaskInEditModal.subtasks.splice(indexOfSubtask, 1);
+  const listItem = document.getElementById(`subtask-wrapper${i}`);
+  listItem.style.display = "none";
+  const listElement = document.getElementById(`subtask${i}`);
+  const subtaskText = listElement.innerHTML;
+  const clickedSubtask = currentTaskInEditModal.subtasks.find(
+    (subtask) => subtask.text === subtaskText
+  );
+  const indexOfSubtask =
+    currentTaskInEditModal.subtasks.indexOf(clickedSubtask);
+  currentTaskInEditModal.subtasks.splice(indexOfSubtask, 1);
 }
 
 /**
@@ -310,20 +351,26 @@ function deleteSubtask(i) {
  * @param {HTMLElement} addSubtaskIcon - The icon for adding subtasks.
  * @param {HTMLElement} startInputIcon - The icon indicating the start of input.
  */
-function handleInputValueChange(editSubtaskInput, clearButtonWrapper, divider, addSubtaskIcon, startInputIcon) {
-    editSubtaskInput.addEventListener('input', () => {
-        if (editSubtaskInput.value === "") {
-            clearButtonWrapper.style.display = "none";
-            divider.style.display = "none";
-            addSubtaskIcon.style.display = 'none';
-            startInputIcon.style.display = 'flex';
-        } else {
-            clearButtonWrapper.style.display = "flex";
-            divider.style.display = "flex";
-            addSubtaskIcon.style.display = 'flex';
-            startInputIcon.style.display = 'none';
-        }
-    });
+function handleInputValueChange(
+  editSubtaskInput,
+  clearButtonWrapper,
+  divider,
+  addSubtaskIcon,
+  startInputIcon
+) {
+  editSubtaskInput.addEventListener("input", () => {
+    if (editSubtaskInput.value === "") {
+      clearButtonWrapper.style.display = "none";
+      divider.style.display = "none";
+      addSubtaskIcon.style.display = "none";
+      startInputIcon.style.display = "flex";
+    } else {
+      clearButtonWrapper.style.display = "flex";
+      divider.style.display = "flex";
+      addSubtaskIcon.style.display = "flex";
+      startInputIcon.style.display = "none";
+    }
+  });
 }
 
 /**
@@ -331,10 +378,12 @@ function handleInputValueChange(editSubtaskInput, clearButtonWrapper, divider, a
  * @param {HTMLInputElement} editSubtaskInput - The input element to focus on when the plus icon is clicked.
  */
 function setupSubtasksPlusIcon(editSubtaskInput) {
-    const editSubtasksPlusIcon = document.querySelector('.edit-subtasks-plus-icon');
-    editSubtasksPlusIcon.addEventListener('click', () => {
-        editSubtaskInput.focus();
-    });
+  const editSubtasksPlusIcon = document.querySelector(
+    ".edit-subtasks-plus-icon"
+  );
+  editSubtasksPlusIcon.addEventListener("click", () => {
+    editSubtaskInput.focus();
+  });
 }
 
 /**
@@ -344,59 +393,84 @@ function setupSubtasksPlusIcon(editSubtaskInput) {
  * @param {HTMLElement} divider - The divider element.
  */
 function setupClearButton(clearButtonWrapper, editSubtaskInput, divider) {
-    clearButtonWrapper.addEventListener('click', () => {
-        editSubtaskInput.value = '';
-        clearButtonWrapper.style.display = 'none';
-        divider.style.display = "none";
-    });
+  clearButtonWrapper.addEventListener("click", () => {
+    editSubtaskInput.value = "";
+    clearButtonWrapper.style.display = "none";
+    divider.style.display = "none";
+  });
 }
 
 /**
  * Sets up the subtasks section for editing, including input, clear button, and plus icon.
  */
 function setupSubtasksSection() {
-    const subtasksWrapper = document.querySelector('.edit-subtasks');
-    const inputDiv = document.querySelector('.edit-subtasks-input-wrapper');
-    const editSubtaskInput = document.querySelector('.edit-subtasks-input');
-    const clearButtonWrapper = document.querySelector('.edit-clear-wrapper');
-    const divider = document.querySelector('.edit-subtasks-icons-divider');
-    const addSubtaskIcon = document.querySelector('.edit-subtasks-icon-add');
-    const startInputIcon = document.querySelector('.edit-subtasks-plus-icon');
+  const subtasksWrapper = document.querySelector(".edit-subtasks");
+  const inputDiv = document.querySelector(".edit-subtasks-input-wrapper");
+  const editSubtaskInput = document.querySelector(".edit-subtasks-input");
+  const clearButtonWrapper = document.querySelector(".edit-clear-wrapper");
+  const divider = document.querySelector(".edit-subtasks-icons-divider");
+  const addSubtaskIcon = document.querySelector(".edit-subtasks-icon-add");
+  const startInputIcon = document.querySelector(".edit-subtasks-plus-icon");
 
-    inputDiv.addEventListener('click', () => editSubtaskInput.focus());
+  inputDiv.addEventListener("click", () => editSubtaskInput.focus());
 
-    handleInputValueChange(editSubtaskInput, clearButtonWrapper, divider, addSubtaskIcon, startInputIcon);
-    setupClearButton(clearButtonWrapper, editSubtaskInput, divider);
-    setupSubtasksPlusIcon(editSubtaskInput, clearButtonWrapper, editSubtaskInput, divider);
+  handleInputValueChange(
+    editSubtaskInput,
+    clearButtonWrapper,
+    divider,
+    addSubtaskIcon,
+    startInputIcon
+  );
+  setupClearButton(clearButtonWrapper, editSubtaskInput, divider);
+  setupSubtasksPlusIcon(
+    editSubtaskInput,
+    clearButtonWrapper,
+    editSubtaskInput,
+    divider
+  );
 }
 
 /**
  * Sets up the "Add Subtask" button in the subtasks section.
  */
 function setupAddSubtaskButton() {
-    const editSubtaskInput = document.querySelector('.edit-subtasks-input');
-    const addSubtaskIcon = document.querySelector('.edit-subtasks-icon-add');
-    const divider = document.querySelector('.edit-subtasks-icons-divider');
-    const startInputIcon = document.querySelector('.edit-subtasks-plus-icon');
-    const clearButtonWrapper = document.querySelector('.edit-clear-wrapper');
-    addSubtaskIcon.addEventListener('click', () => {
-        if (editSubtaskInput.checkValidity()) {
-            currentTaskInEditModal.subtasks.push({ text: editSubtaskInput.value, status: 'todo' });
-            renderSubtasksInEditModal(currentTaskInEditModal);
-            changeInputWrapperButtons(editSubtaskInput, addSubtaskIcon, divider, startInputIcon, clearButtonWrapper);
-            
-        } else {
-            console.log('Please fill in the subtask field.');
-        }
-    });
+  const editSubtaskInput = document.querySelector(".edit-subtasks-input");
+  const addSubtaskIcon = document.querySelector(".edit-subtasks-icon-add");
+  const divider = document.querySelector(".edit-subtasks-icons-divider");
+  const startInputIcon = document.querySelector(".edit-subtasks-plus-icon");
+  const clearButtonWrapper = document.querySelector(".edit-clear-wrapper");
+  addSubtaskIcon.addEventListener("click", () => {
+    if (editSubtaskInput.checkValidity()) {
+      currentTaskInEditModal.subtasks.push({
+        text: editSubtaskInput.value,
+        status: "todo",
+      });
+      renderSubtasksInEditModal(currentTaskInEditModal);
+      changeInputWrapperButtons(
+        editSubtaskInput,
+        addSubtaskIcon,
+        divider,
+        startInputIcon,
+        clearButtonWrapper
+      );
+    } else {
+      console.log("Please fill in the subtask field.");
+    }
+  });
 }
 
-function changeInputWrapperButtons(editSubtaskInput, addSubtaskIcon, divider, startInputIcon, clearButtonWrapper) {
-    editSubtaskInput.value = '';
-    clearButtonWrapper.style.display = "none";
-    divider.style.display = "none";
-    addSubtaskIcon.style.display = 'none';
-    startInputIcon.style.display = 'flex';
+function changeInputWrapperButtons(
+  editSubtaskInput,
+  addSubtaskIcon,
+  divider,
+  startInputIcon,
+  clearButtonWrapper
+) {
+  editSubtaskInput.value = "";
+  clearButtonWrapper.style.display = "none";
+  divider.style.display = "none";
+  addSubtaskIcon.style.display = "none";
+  startInputIcon.style.display = "flex";
 }
 
 // END: Code for subtasks in edit modal
@@ -406,35 +480,44 @@ function changeInputWrapperButtons(editSubtaskInput, addSubtaskIcon, divider, st
  * @param {Object} editedTask - The edited task object to update in the local tasks array.
  */
 function findAndUpdateEditedTask(editedTask) {
-    const currentTask = localTasks.find(task => task.id === currentTaskInEditModal.id);
-    const index = localTasks.indexOf(currentTask);
-    localTasks.splice(index, 1, editedTask);
+  const currentTask = localTasks.find(
+    (task) => task.id === currentTaskInEditModal.id
+  );
+  const index = localTasks.indexOf(currentTask);
+  localTasks.splice(index, 1, editedTask);
 }
 
 /**
  * Saves the edited task by creating and updating it in the local tasks array and then closes the modal.
  */
 function saveEditedTask() {
-    const editedTitle = document.querySelector('.edit-modal-headline');
-    const editedDescription = document.querySelector('.edit-description-textarea');
-    const editedDueDate = document.querySelector('.edit-due-date');
-    const editedTask = createEditedTask(editedTitle, editedDescription, editedDueDate);
-    findAndUpdateEditedTask(editedTask);
-    closeModal();
+  const editedTitle = document.querySelector(".edit-modal-headline");
+  const editedDescription = document.querySelector(
+    ".edit-description-textarea"
+  );
+  const editedDueDate = document.querySelector(".edit-due-date");
+  const editedTask = createEditedTask(
+    editedTitle,
+    editedDescription,
+    editedDueDate
+  );
+  findAndUpdateEditedTask(editedTask);
+  showToast("✅ Task updated");
+  closeModal();
 }
 
 /**
  * Toggles the visibility of work stage options in the "Edit Task" modal.
  */
 function toggleWorkStages() {
-    const workStageOptions = document.querySelector('.change-work-stage-options');
-    workStageOptions.classList.toggle('d-block');
-    const categoryArrow = document.querySelector('.change-work-stage-btn');
-    if(workStageOptions.classList.contains('d-block')) {
-        categoryArrow.src = "./assets/img/arrow_drop_up.svg";
-    } else {
-        categoryArrow.src = "./assets/img/arrow_drop_down.svg";
-    }
+  const workStageOptions = document.querySelector(".change-work-stage-options");
+  workStageOptions.classList.toggle("d-block");
+  const categoryArrow = document.querySelector(".change-work-stage-btn");
+  if (workStageOptions.classList.contains("d-block")) {
+    categoryArrow.src = "./assets/img/arrow_drop_up.svg";
+  } else {
+    categoryArrow.src = "./assets/img/arrow_drop_down.svg";
+  }
 }
 
 /**
@@ -442,20 +525,20 @@ function toggleWorkStages() {
  * @param {string} choosenStage - The selected work stage (category) to set for the task.
  */
 function setWorkStage(choosenStage) {
-    const selectedStage = document.querySelector('.select-category');
-    selectedStage.innerHTML = `${convertToTitleCase(choosenStage)}`;
-   currentTaskInEditModal.category = choosenStage;
-   toggleWorkStages();
+  const selectedStage = document.querySelector(".select-category");
+  selectedStage.innerHTML = `${convertToTitleCase(choosenStage)}`;
+  currentTaskInEditModal.category = choosenStage;
+  toggleWorkStages();
 }
 
 function convertToTitleCase(choosenStage) {
-    let words = choosenStage.split('-');
+  let words = choosenStage.split("-");
 
-    for (let i = 0; i < words.length; i++) {
-      words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
-    }
-  
-    let result = words.join(' ');
-  
-    return result;
+  for (let i = 0; i < words.length; i++) {
+    words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+  }
+
+  let result = words.join(" ");
+
+  return result;
 }

@@ -43,8 +43,15 @@
             <input
               id="nem"
               class="inputname"
-              type="name"
+              type="Vorname"
               placeholder="Name"
+              required
+            />
+            <input
+              id="lastName"
+              class="inputname"
+              type="name"
+              placeholder="Nachname"
               required
             />
             <input
@@ -68,6 +75,13 @@
               placeholder="Confirm Password"
               required
             />
+            <div id="selectColor">
+              <select name="selectColor" id="selectedColor">
+                <option value="" selected style="color: black">
+                  Wähle deine Farbe
+                </option>
+              </select>
+            </div>
           </div>
           <div class="acceptPrivacy">
             <input
@@ -93,7 +107,7 @@
             </button>
           </form>
           <div class="arrowLeftContainer" onclick="goBackToLogin()">
-            <img src="./assets/img/arrowLeft.png">
+            <img src="./assets/img/arrowLeft.png" />
           </div>
         </div>
       </div>

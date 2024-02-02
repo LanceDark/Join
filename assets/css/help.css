@@ -16,10 +16,6 @@ nav {
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
 }
 
-.options-modal {
-    display: none;
-}
-
 .w3-include {
     position: sticky;
     top: 0;
@@ -152,6 +148,9 @@ p {
     color: #0038FF;
 }
 
+.logo {
+    height: 60px;
+}
 
 a:-webkit-any-link {
     color: -webkit-link;
@@ -215,7 +214,6 @@ header {
 }
 
 @media (max-width: 1080px) {
-
 
     nav {
         background-color: white;
@@ -388,7 +386,7 @@ header {
     }
 
     .navbarLeft {
-        display: none;
+        width: 85px;
     }
 
     .mainTextContainer {
@@ -400,7 +398,7 @@ header {
     }
 
     h2 {
-        font-size: 8px;
+        font-size: 12px;
     }
 
     .container {
