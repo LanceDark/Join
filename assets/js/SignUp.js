@@ -1,22 +1,6 @@
 const STORAGE_TOKEN = "V2EKVKFM9O99OC501HIARH82FGY2SQSIN8JU7MDJ";
 const STORAGE_URL = "https://remote-storage.developerakademie.org/item";
-// const assigneeColors = [
-//   "#FF7A00",
-//   "#FF5EB3",
-//   "#9747FF",
-//   "#9327FF",
-//   "#00BEE8",
-//   "#1FD7C1",
-//   "#FF745E",
-//   "#FFA35E",
-//   "#FC71FF",
-//   "#FFC701",
-//   "#0038FF",
-//   "#C3FF2B",
-//   "#FFE62B",
-//   "#FF4646",
-//   "#FFBB2B",
-// ];
+
 
 function togglePassword(input) {
   let passwordInput = document.getElementById(`${input}-password-input`);

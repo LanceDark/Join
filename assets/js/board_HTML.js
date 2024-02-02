@@ -152,7 +152,6 @@ function renderModal(taskId) {
   setColorOfCategoryInModal(task.label);
   renderAssignees(task.assignees);
   renderSubtasks(task.subtasks);
-  // checkSubtasksInModal();
   document
     .getElementById("editTask")
     .addEventListener("click", () => editTask(task));

@@ -55,7 +55,6 @@ async function createNewTask() {
     category: columnCategory,
   };
   addTaskLocalTasks.push(newTask);
-  // await setNewIdsForTasks(addTaskLocalTasks);
   await setItem("tasks", JSON.stringify(addTaskLocalTasks));
   showToast("✅ Task added to board");
   resetRequiredWrapper();
@@ -155,9 +154,6 @@ function resetPriorityButtons() {
   lowImg.src = "./assets/img/lowprio.svg";
 }
 
-// renderContactsInAddTaskModal();
-
-// Priority Buttons
 const btnUrgent = document.querySelector(".add-task-edit-urgent");
 const btnMedium = document.querySelector(".add-task-edit-medium");
 const btnLow = document.querySelector(".add-task-edit-low");
@@ -214,15 +210,12 @@ function selectedPriority(
   if (priority === "Urgent") {
     btnUrgent.classList.add("urgently-selected");
     urgentImg.src = "./assets/img/urgent-white.svg";
-    //   task.priority = "Urgent";
   } else if (priority === "Medium") {
     btnMedium.classList.add("medium-selected");
     mediumImg.src = "./assets/img/medium-white.svg";
-    //   task.priority = "Medium";
   } else if (priority === "Low") {
     btnLow.classList.add("low-selected");
     lowImg.src = "./assets/img/low-white.svg";
-    //   task.priority = "Low";
   }
 }
 
@@ -237,11 +230,6 @@ function resetBackgroundColor(btnUrgent, btnMedium, btnLow) {
   btnMedium.classList.remove("medium-selected");
   btnLow.classList.remove("low-selected");
 }
-
-// END: Code for priority buttons
-
-// START: Code for assigned-to section
-
 /**
  * Renders the contacts in the "Add Task" modal.
  */
@@ -294,13 +282,11 @@ function toggleContactsInAddTaskModal() {
     ".add-task-assigned-to-badges"
   );
   const imgElement = document.querySelector(".add-task-show-contacts-btn");
-  // const addContactBtn = document.querySelector(".add-task-add-contact-btn");
   const contactBadges = document.querySelector(
     ".add-task-contact-badges-container"
   );
   assigneesBadgesWrapper.classList.toggle("d-none");
   contactBadges.classList.toggle("d-none");
-  // addContactBtn.classList.toggle("d-none");
   if (assigneesBadgesWrapper.classList.contains("d-none")) {
     imgElement.src = "./assets/img/arrow_drop_down.svg";
   } else {
@@ -334,7 +320,6 @@ function markContactsInAddTaskDropdown(i) {
   renderAddTaskContactBadges();
 }
 
-// Search Bar for Contacts
 const searchBarContacts = document.querySelector(".add-task-assigned-to-input");
 const addTaskContactRows = document.querySelectorAll(".add-task-contacts-row");
 const contactWrapper = document.querySelector(".add-task-assigned-to-badges");
@@ -343,7 +328,6 @@ const imgElement = document.querySelector(".add-task-show-contacts-btn");
 
 searchBarContacts.addEventListener("click", () => {
   contactWrapper.classList.toggle("d-none");
-  // addContactBtn.classList.toggle("d-none");
   if (contactWrapper.classList.contains("d-none")) {
     imgElement.src = "./assets/img/arrow_drop_down.svg";
   } else {
@@ -365,9 +349,6 @@ searchBarContacts.addEventListener("keyup", (e) => {
     }
   });
 });
-
-// const categoryDiv = document.querySelector('.add-task-category-wrapper');
-
 /**
  * Toggles the visibility of categories in the "Add Task" modal.
  */
@@ -382,7 +363,6 @@ function toggleCategoriesInAddTaskModal() {
   }
 }
 
-// User Story and Technical Task Buttons
 const userStoryBtn = document.querySelector(".add-task-category-user-story");
 const technicalTaskBtn = document.querySelector(
   ".add-task-category-technical-task"
@@ -401,8 +381,6 @@ function setCategory(selectedCategory) {
   categoryOptionsWrapper.classList.add("d-none");
   categoryArrow.src = "./assets/img/arrow_drop_down.svg";
 }
-
-// END: Code for category section
 
 const subtasksWrapper = document.querySelector(".add-task-edit-subtasks");
 const inputDiv = document.querySelector(".add-task-subtasks-input-wrapper");
@@ -582,11 +560,7 @@ function setupEditSubtaskConfirmButton(clickedSubtask, i) {
   const editTaskConfirmBtn = document.getElementById(
     `add-task-task-confirm-edit-icon${i}`
   );
-
-  // Vor dem Hinzufügen des EventListeners entfernen, falls er bereits vorhanden ist
   editTaskConfirmBtn.removeEventListener("click", onEditTaskConfirmClick);
-
-  // EventListener hinzufügen und eine Funktion mit Zugriff auf clickedSubtask erstellen
   editTaskConfirmBtn.addEventListener("click", function () {
     onEditTaskConfirmClick(clickedSubtask);
   });
@@ -632,11 +606,7 @@ function setupEditSubtaskDeleteButton(clickedSubtask, i) {
   const editTaskDeleteBtn = document.getElementById(
     `add-task-task-delete-icon${i}`
   );
-
-  // Vor dem Hinzufügen des EventListeners entfernen, falls er bereits vorhanden ist
   editTaskDeleteBtn.removeEventListener("click", onEditTaskDeleteClick);
-
-  // EventListener hinzufügen und eine Funktion mit Zugriff auf clickedSubtask erstellen
   editTaskDeleteBtn.addEventListener("click", function () {
     onEditTaskDeleteClick(clickedSubtask);
   });
@@ -655,9 +625,6 @@ function onEditTaskDeleteClick(clickedSubtask) {
   hideEditSubtaskInput();
   showSubtaskWrapper();
   renderSubtasksInAddTasksModal();
-
-  // Nach der Verwendung den EventListener entfernen, um doppelte Listener zu vermeiden
-  // editTaskDeleteBtn.removeEventListener('click', onEditTaskDeleteClick);
 }
 
 /**
@@ -675,5 +642,3 @@ function deleteSubtaskInAddTaskModal(i) {
   const indexOfSubtask = newSubtasks.indexOf(clickedSubtask);
   newSubtasks.splice(indexOfSubtask, 1);
 }
-
-// END: Code for subtasks section in add task modal

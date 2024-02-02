@@ -23,7 +23,7 @@ async function includeHTML() {
   let includeElements = document.querySelectorAll("[w3-include-html]");
   for (let i = 0; i < includeElements.length; i++) {
     const element = includeElements[i];
-    const file = element.getAttribute("w3-include-html"); // "includes/header.html"
+    const file = element.getAttribute("w3-include-html"); 
     let resp = await fetch(file);
     if (resp.ok) {
       element.innerHTML = await resp.text();
@@ -57,9 +57,6 @@ async function getToDos() {
  * @description This function fetches contact data from a server and updates the "localContacts" array with the retrieved data.
  */
 async function loadContacts() {
-  // const keyToSearch = "contacts";
-  // let contacts = await getItem(keyToSearch);
-  // localContacts = JSON.parse(contacts);
   localContacts = JSON.parse(await getItem("contacts"));
 }
 
@@ -151,7 +148,6 @@ async function renderCards() {
   await renderTasksByCategory("done");
   await toggleNoTasksCard();
   addEventListenersDragStart();
-  // await loadContacts();
 }
 
 /**
@@ -283,7 +279,7 @@ function updateContactCheckbox(checkboxOfContact, isSelected) {
  * @returns {string} - The formatted date in 'dd/mm/yyyy' format.
  */
 function formatDate(dateString) {
-  const parts = dateString.split("-"); // Teilen Sie das Datum in Teile auf
+  const parts = dateString.split("-");
   const year = parts[0];
   const month = parts[1];
   const day = parts[2];
@@ -533,7 +529,6 @@ function setupSubtaskClickListeners(subtasks, subtasksContainer) {
     document
       .getElementById(`checkbox-${i}`)
       .addEventListener("click", () => checkmarkSubtask(i, subtasks[i]));
-    // document.getElementById(`subtask-${i}`).addEventListener('click', () => checkmarkSubtask(i, subtasks[i]));
   }
 }
 
@@ -708,7 +703,6 @@ boardColumns.forEach((boardColumn) => {
   boardColumn.addEventListener("drop", handleDrop);
 });
 
-// Code for Add Task Modal
 const addTaskBtn = document.querySelector(".search-add-task");
 const addTaskModal = document.querySelector(".add-task-modal");
 const closeAddTaskBtn = document.querySelector(".add-task-close-modal-wrapper");
@@ -747,10 +741,9 @@ const boardColumnAddTaskBtnTodo = document.querySelector(
 boardColumnAddTaskBtnTodo.addEventListener("click", () => {
   const selectedColumn = "to-do";
   if (window.innerWidth <= 1080) {
-    // Auf der aktuellen Seite, füge selectedColumn als Parameter zur URL hinzu
     window.location.href = "add-task.html?column=" + selectedColumn;
   } else {
-    // Auf der aktuellen Seite, zeige das Overlay und das Modal an
+
     columnCategory = "to-do";
     overlay.classList.toggle("hidden");
     addTaskModal.classList.toggle("is-active");
@@ -762,13 +755,11 @@ const boardColumnAddTaskBtnInProgress = document.querySelector(
 );
 
 boardColumnAddTaskBtnInProgress.addEventListener("click", () => {
-  const selectedColumn = "in-progress"; // Setze die ausgewählte Spalte
+  const selectedColumn = "in-progress";
 
   if (window.innerWidth <= 1080) {
-    // Auf der aktuellen Seite, füge selectedColumn als Parameter zur URL hinzu
     window.location.href = "add-task.html?column=" + selectedColumn;
   } else {
-    // Auf der aktuellen Seite, zeige das Overlay und das Modal an
     columnCategory = "in-progress";
     overlay.classList.toggle("hidden");
     addTaskModal.classList.toggle("is-active");
@@ -781,10 +772,8 @@ const boardColumnAddTaskBtnAwaitFeedback = document.querySelector(
 boardColumnAddTaskBtnAwaitFeedback.addEventListener("click", () => {
   const selectedColumn = "await-feedback";
   if (window.innerWidth <= 1080) {
-    // Auf der aktuellen Seite, füge selectedColumn als Parameter zur URL hinzu
     window.location.href = "add-task.html?column=" + selectedColumn;
   } else {
-    // Auf der aktuellen Seite, zeige das Overlay und das Modal an
     columnCategory = "await-feedback";
     overlay.classList.toggle("hidden");
     addTaskModal.classList.toggle("is-active");

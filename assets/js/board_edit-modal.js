@@ -50,21 +50,16 @@ function toggleContactsInEditModal() {
   const imgElement = document.querySelector(".show-contacts-btn");
   const addContactBtn = document.querySelector(".add-contact-btn");
   const contactBadges = document.querySelector(".contact-badges-container");
-
-  // Toggles contacts wrapper to select from
   assigneesBadgesWrapper.classList.toggle("d-none");
 
-  // Toggles button to add new contacts to the task
   addContactBtn.classList.toggle("d-none");
 
-  // Toggles the arrow button
   if (assigneesBadgesWrapper.classList.contains("d-none")) {
     imgElement.src = "./assets/img/arrow_drop_down.svg";
   } else {
     imgElement.src = "./assets/img/arrow_drop_up.svg";
   }
 
-  // Toggles profile badges under contacts wrapper to select from
   contactBadges.classList.toggle("d-none");
 
   renderContactBadges();
@@ -128,7 +123,6 @@ function markContactsInDropdown(i) {
   const selectedContact = findSelectedContact(i);
 
   if (isSelected) {
-    // If the contact is already in the assignees, don't add it again
     if (!isContactAssigned(selectedContact)) {
       addContactToAssignees(selectedContact);
     }
@@ -214,8 +208,6 @@ function setupSearchBarContacts() {
     filterContactRows(contactRows, term);
   });
 }
-
-// START: Code for subtasks in edit modal
 
 /**
  * Edits a subtask, displaying an edit interface for the clicked subtask and setting up confirm and delete buttons.
@@ -472,8 +464,6 @@ function changeInputWrapperButtons(
   addSubtaskIcon.style.display = "none";
   startInputIcon.style.display = "flex";
 }
-
-// END: Code for subtasks in edit modal
 
 /**
  * Finds and updates the edited task in the local tasks array.

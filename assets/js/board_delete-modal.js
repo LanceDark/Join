@@ -1,7 +1,7 @@
 const deleteModal = document.querySelector(".delete-modal");
 const deleteTaskBtn = document.querySelector(".delete-modal-delete-btn");
 const cancelDeleteBtn = document.querySelector(".delete-modal-cancel-btn");
-let currentTaskId; // Variable, um die aktuelle Task-ID zu speichern
+let currentTaskId; 
 
 function addClickListener(element, eventType, eventHandler) {
   element.addEventListener(eventType, eventHandler);
@@ -15,7 +15,7 @@ function deleteTask(taskId) {
   const modal = document.querySelector(".modal");
   modal.classList.toggle("hidden");
   toggleDeleteModal();
-  currentTaskId = taskId; // Speichern der aktuellen Task-ID
+  currentTaskId = taskId;
   addClickListener(deleteTaskBtn, "click", deleteTaskFunction);
   addClickListener(cancelDeleteBtn, "click", cancelDeleteFunction);
 }

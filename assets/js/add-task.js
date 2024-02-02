@@ -84,13 +84,11 @@ async function createNewTask() {
     category: columnCategory || selectedColumn || "to-do",
   };
   addTaskLocalTasks.push(newTask);
-  // await setNewIdsForTasks(addTaskLocalTasks);
   await setItem("tasks", JSON.stringify(addTaskLocalTasks));
   showToast("✅ Task added to board");
   resetRequiredWrapper();
   resetRequiredMessages();
   clearNewTask();
-  //   renderCards();
 }
 
 /**
@@ -176,7 +174,6 @@ function resetPriorityButtons() {
   lowImg.src = "./assets/img/lowprio.svg";
 }
 
-// Priority Buttons
 const btnUrgent = document.querySelector(".add-task-edit-urgent");
 const btnMedium = document.querySelector(".add-task-edit-medium");
 const btnLow = document.querySelector(".add-task-edit-low");
@@ -233,15 +230,12 @@ function selectedPriority(
   if (priority === "Urgent") {
     btnUrgent.classList.add("urgently-selected");
     urgentImg.src = "./assets/img/urgent-white.svg";
-    //   task.priority = "Urgent";
   } else if (priority === "Medium") {
     btnMedium.classList.add("medium-selected");
     mediumImg.src = "./assets/img/medium-white.svg";
-    //   task.priority = "Medium";
   } else if (priority === "Low") {
     btnLow.classList.add("low-selected");
     lowImg.src = "./assets/img/low-white.svg";
-    //   task.priority = "Low";
   }
 }
 
@@ -265,13 +259,13 @@ function toggleContactsInAddTaskModal() {
     ".add-task-assigned-to-badges"
   );
   const imgElement = document.querySelector(".add-task-show-contacts-btn");
-  // const addContactBtn = document.querySelector(".add-task-add-contact-btn");
+
   const contactBadges = document.querySelector(
     ".add-task-contact-badges-container"
   );
   assigneesBadgesWrapper.classList.toggle("d-none");
   contactBadges.classList.toggle("d-none");
-  // addContactBtn.classList.toggle("d-none");
+
   if (assigneesBadgesWrapper.classList.contains("d-none")) {
     imgElement.src = "./assets/img/arrow_drop_down.svg";
   } else {
@@ -305,7 +299,6 @@ function markContactsInAddTaskDropdown(i) {
   renderAddTaskContactBadges();
 }
 
-// Search Bar for Contacts
 const searchBarContacts = document.querySelector(".add-task-assigned-to-input");
 const addTaskContactRows = document.querySelectorAll(".add-task-contacts-row");
 const contactWrapper = document.querySelector(".add-task-assigned-to-badges");
@@ -314,7 +307,6 @@ const imgElement = document.querySelector(".add-task-show-contacts-btn");
 
 searchBarContacts.addEventListener("click", () => {
   contactWrapper.classList.toggle("d-none");
-  // addContactBtn.classList.toggle("d-none");
   if (contactWrapper.classList.contains("d-none")) {
     imgElement.src = "./assets/img/arrow_drop_down.svg";
   } else {
@@ -337,8 +329,6 @@ searchBarContacts.addEventListener("keyup", (e) => {
   });
 });
 
-// const categoryDiv = document.querySelector('.add-task-category-wrapper');
-
 /**
  * Toggles the visibility of categories in the "Add Task" modal.
  */
@@ -353,7 +343,6 @@ function toggleCategoriesInAddTaskModal() {
   }
 }
 
-// User Story and Technical Task Buttons
 const userStoryBtn = document.querySelector(".add-task-category-user-story");
 const technicalTaskBtn = document.querySelector(
   ".add-task-category-technical-task"
@@ -372,8 +361,6 @@ function setCategory(selectedCategory) {
   categoryOptionsWrapper.classList.add("d-none");
   categoryArrow.src = "./assets/img/arrow_drop_down.svg";
 }
-
-// END: Code for category section
 
 const subtasksWrapper = document.querySelector(".add-task-edit-subtasks");
 const inputDiv = document.querySelector(".add-task-subtasks-input-wrapper");
@@ -473,38 +460,6 @@ function initSubtaskHandling() {
 initSubtaskHandling();
 handleAddSubtask();
 
-// function renderEditSubtaskContainer(i) {
-//   const subtaskContainer = document.querySelector(".add-task-task-input");
-//   subtaskContainer.innerHTML = /*html*/ `
-//           <input class="add-task-task-inputfield" type="text">
-//           <div class="add-task-task-input-icons-wrapper">
-//               <img class="add-task-task-delete-icon" id="add-task-task-delete-icon${i}" src="./assets/img/delete.svg" alt="">
-//               <div class="add-task-subtasks-input-icons-divider"></div>
-//               <img class="add-task-task-confirm-edit-icon" id="add-task-task-confirm-edit-icon${i}" src="./assets/img/Subtask's icons.svg" alt="">
-//           </div>
-//       `;
-// }
-
-// /**
-//  * Renders subtasks in the "Add Task" modal.
-//  */
-// function renderSubtasksInAddTasksModal() {
-//   const addedSubtasks = document.querySelector(".added-subtasks");
-//   addedSubtasks.innerHTML = "";
-//   for (let i = 0; i < newSubtasks.length; i++) {
-//     addedSubtasks.innerHTML += /*html*/ `
-//           <div id ="add-task-subtask-wrapper${i}" class="existing-subtasks-list-item">
-//               <li id="add-task-subtask${i}" class="subtask-list-item">${newSubtasks[i].text}</li>
-//               <div class="subtask-list-item-btn">
-//                   <img id="add-task-edit-subtask-btn${i}" class="edit-subtask-btn" src="./assets/img/edit.svg" alt="" onclick="editSubtaskInAddTaskModal(${i})">
-//                   <div class="subtask-list-item-divider"></div>
-//                   <img class="delete-subtask-btn" src="./assets/img/delete.svg" alt="" onclick="deleteSubtaskInAddTaskModal(${i})">
-//               </div>
-//           </div>
-//       `;
-//   }
-// }
-
 /**
  * Handles editing of a subtask in the "Add Task" modal.
  * @param {number} i - The index of the subtask to edit.
@@ -553,11 +508,8 @@ function setupEditSubtaskConfirmButton(clickedSubtask, i) {
   const editTaskConfirmBtn = document.getElementById(
     `add-task-task-confirm-edit-icon${i}`
   );
-
-  // Vor dem Hinzufügen des EventListeners entfernen, falls er bereits vorhanden ist
   editTaskConfirmBtn.removeEventListener("click", onEditTaskConfirmClick);
 
-  // EventListener hinzufügen und eine Funktion mit Zugriff auf clickedSubtask erstellen
   editTaskConfirmBtn.addEventListener("click", function () {
     onEditTaskConfirmClick(clickedSubtask);
   });
@@ -604,10 +556,7 @@ function setupEditSubtaskDeleteButton(clickedSubtask, i) {
     `add-task-task-delete-icon${i}`
   );
 
-  // Vor dem Hinzufügen des EventListeners entfernen, falls er bereits vorhanden ist
   editTaskDeleteBtn.removeEventListener("click", onEditTaskDeleteClick);
-
-  // EventListener hinzufügen und eine Funktion mit Zugriff auf clickedSubtask erstellen
   editTaskDeleteBtn.addEventListener("click", function () {
     onEditTaskDeleteClick(clickedSubtask);
   });
@@ -643,5 +592,3 @@ function deleteSubtaskInAddTaskModal(i) {
   const indexOfSubtask = newSubtasks.indexOf(clickedSubtask);
   newSubtasks.splice(indexOfSubtask, 1);
 }
-
-// END: Code for subtasks section in add task modal

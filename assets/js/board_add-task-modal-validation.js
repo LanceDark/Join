@@ -109,18 +109,6 @@ function validateAssignees() {
   return true;
 }
 
-/**
- * Validates the category selection.
- * @returns {boolean} - Returns true if validation is successful, otherwise false.
- */
-// function validateCategory() {
-//   if (category !== ("User Story" || "Technical Task")) {
-//     showRequiredMessageCategory();
-//     return false;
-//   }
-//   return true;
-// }
-
 function validateCategory() {
   if (category !== "User Story" && category !== "Technical Task") {
     showRequiredMessageCategory();
